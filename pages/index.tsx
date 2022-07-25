@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    maxWidth: "500px",
+    maxWidth: "800px",
   },
   input: { [theme.fn.smallerThan("xs")]: { width: "100%" } },
   wrapper: { display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "100%" },

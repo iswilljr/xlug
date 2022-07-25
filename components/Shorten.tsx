@@ -2,7 +2,7 @@ import { LinkIcon } from "@heroicons/react/solid";
 import { Anchor, Button, createStyles, Group, Text } from "@mantine/core";
 import { useClipboard } from "@mantine/hooks";
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles((theme, { idOnText }: { idOnText?: boolean }) => ({
   control: {
     width: "100%",
     display: "flex",
@@ -17,14 +17,23 @@ const useStyles = createStyles((theme) => ({
   },
   truncate: { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" },
   destination: { flex: 1, [theme.fn.smallerThan("xs")]: { display: "none" } },
-  link: {},
+  link: {
+    display: idOnText ? "none" : undefined,
+    [theme.fn.smallerThan("xs")]: { display: "block" },
+  },
   options: {
-    maxWidth: 200,
+    // maxWidth: 200,
     flexWrap: "nowrap",
     display: "flex",
     alignItems: "center",
     marginLeft: 16,
-    [theme.fn.smallerThan("xs")]: { flex: 1, justifyContent: "space-between", maxWidth: "initial", flexWrap: "wrap" },
+    [theme.fn.smallerThan("xs")]: {
+      marginLeft: 0,
+      flex: 1,
+      justifyContent: "space-between",
+      maxWidth: "initial",
+      flexWrap: "wrap",
+    },
   },
   icon: {
     width: 16,
@@ -43,17 +52,28 @@ interface ShortenProps {
 }
 
 const Shorten = ({ destination, id, idOnText, host }: ShortenProps) => {
-  const { classes, cx } = useStyles();
+  const { classes, cx } = useStyles({ idOnText });
   const clipboard = useClipboard();
 
-  const link = `https://${host}/${id}`;
+  const link = `${process.env.NODE_ENV === "production" ? "https" : "http"}://${host}/${id}`;
 
   return (
     <div className={classes.control}>
       <LinkIcon className={classes.icon} />
       <Text className={cx(classes.truncate, classes.destination)}>{idOnText ? link : destination}</Text>
       <Group spacing="sm" className={classes.options}>
-        {!idOnText && <Anchor className={cx(classes.truncate, classes.link)}>{link}</Anchor>}
+        {idOnText ? (
+          <Text className={cx(classes.truncate, classes.destination, classes.link)}>{link}</Text>
+        ) : (
+          <Anchor
+            href={link}
+            target="_blank"
+            rel="noreferrer"
+            className={cx(classes.truncate, classes.destination, classes.link)}
+          >
+            {link}
+          </Anchor>
+        )}
         <Button onClick={() => clipboard.copy(link)} color={clipboard.copied ? "green" : undefined}>
           {clipboard.copied ? "Copied" : "Copy"}
         </Button>
