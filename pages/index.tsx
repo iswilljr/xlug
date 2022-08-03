@@ -1,6 +1,6 @@
 import type { GetServerSideProps } from "next";
 import { LinkIcon } from "@heroicons/react/outline";
-import { Button, Container, createStyles, Group, Input, Text, Title } from "@mantine/core";
+import { Button, Container, Group, Input, Text, Title } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import Shorten from "components/Shorten/Shorten";

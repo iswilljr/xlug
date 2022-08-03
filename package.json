@@ -26,7 +26,6 @@
     "@mantine/form": "5.0.2",
     "@mantine/hooks": "5.0.2",
     "@mantine/next": "5.0.2",
-    "@mantine/nprogress": "5.0.2",
     "@supabase/supabase-js": "1.35.4",
     "cookies-next": "2.1.1",
     "nanoid": "4.0.0",

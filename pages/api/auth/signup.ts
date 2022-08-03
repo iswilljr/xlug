@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { supabase } from "lib/initSupabase";
-import { AuthChangeEvent, Session } from "@supabase/supabase-js";
 import withMethod from "utils/with-method";
 
-// Example of how to verify and get user data server-side.
 const SignUp = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") return res.status(404).json({ message: "Not Found" });
   const { user } = await supabase.auth.api.getUserByCookie(req, res);
