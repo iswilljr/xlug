@@ -1,9 +1,8 @@
-import { Container, createStyles, Group, useMantineColorScheme } from "@mantine/core";
+import { createStyles, Group, useMantineColorScheme } from "@mantine/core";
 import Logo from "./Logo";
 import { Button } from "./Button";
-import { LoginIcon, LogoutIcon, MoonIcon, SunIcon, UserIcon } from "@heroicons/react/outline";
+import { LoginIcon, LogoutIcon, MoonIcon, SunIcon } from "@heroicons/react/outline";
 import { useStore } from "store/store";
-import { useRouter } from "next/router";
 import { logout } from "utils/requests";
 
 const useStyles = createStyles((theme) => ({
@@ -22,7 +21,6 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function Header() {
-  const router = useRouter();
   const { isSignedIn, setSignIn } = useStore();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const { classes } = useStyles();

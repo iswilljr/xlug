@@ -1,45 +1,36 @@
+import type { GetServerSideProps } from "next";
 import { LinkIcon } from "@heroicons/react/outline";
 import { Button, Container, createStyles, Group, Input, Text, Title } from "@mantine/core";
-import { useForm, useLocalStorage } from "@mantine/hooks";
-import Shorten from "components/Shorten";
+import { useLocalStorage } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
+import Shorten from "components/Shorten/Shorten";
 import { supabase } from "lib/initSupabase";
-import { GetServerSideProps } from "next";
 import { useStore } from "store/store";
 import { HomeGroupStyle, HomeTextStyle } from "styles/styles";
 import { isValidUrl } from "utils/constants";
 import { shorten, Url } from "utils/requests";
+import { useStyles } from "styles/home";
 
-const useStyles = createStyles((theme) => ({
-  control: {
-    width: "100%",
-    height: "100%",
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    maxWidth: "800px",
-  },
-  input: { [theme.fn.smallerThan("xs")]: { width: "100%" } },
-  wrapper: { display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", width: "100%" },
-}));
-
-export default function Profile({ shortenUrls, host }: { shortenUrls: Url[]; host?: string }) {
+export default function Profile({ shortenUrls, host }: { shortenUrls: Url[]; host: string }) {
   const { classes } = useStyles();
-  const [urls, setUrls] = useLocalStorage<Url[]>({ key: "shorten", defaultValue: [], getInitialValueInEffect: true });
   const isSignedIn = useStore((state) => state.isSignedIn);
-  const form = useForm({ initialValues: { url: "" }, validationRules: { url: (val) => isValidUrl(val, host) } });
+
+  const [urls, setUrls] = useLocalStorage<Url[]>({
+    key: "shorten",
+    defaultValue: [],
+    getInitialValueInEffect: true,
+  });
+
+  const form = useForm({
+    initialValues: { url: "" },
+    validate: { url: (val) => isValidUrl(val, host) },
+  });
 
   return (
     <Container className={classes.control}>
-      <Title order={1} align="center">
-        Free URL Shortener
-      </Title>
-      <Text size="sm" color="gray">
-        This is a free tool to shorten URLs.
-      </Text>
+      <Title order={1}>Free URL Shortener</Title>
+      <Text size="sm">This is a free tool to shorten URLs.</Text>
       <form
-        action="/api/url/shorten"
-        method="POST"
         style={{ marginTop: 32, width: "100%" }}
         onSubmit={form.onSubmit(async ({ url }) => {
           try {
@@ -48,7 +39,7 @@ export default function Profile({ shortenUrls, host }: { shortenUrls: Url[]; hos
             if (!isSignedIn) setUrls((prev) => [data, ...prev]);
             else shortenUrls.unshift(data);
             form.reset();
-          } catch (error) {
+          } catch (__) {
             form.setFieldError("url", "Something went wrong, please try again");
           }
         })}
@@ -100,7 +91,7 @@ export default function Profile({ shortenUrls, host }: { shortenUrls: Url[]; hos
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const host = req.headers.host;
+  const host = `${process.env.NODE_ENV === "production" ? "https" : "http"}://${req.headers.host}`;
   const { user } = await supabase.auth.api.getUserByCookie(req, res);
   if (!user) return { props: { shortenUrls: [], host } };
   const { data, error } = await supabase.from("urls").select("*").eq("user_id", user.id);

@@ -1,12 +1,12 @@
 import Head from "next/head";
-import { Anchor, Text, Title } from "@mantine/core";
 import Link from "next/link";
+import { Anchor, Text, Title } from "@mantine/core";
 
 const NotFound = () => {
   return (
     <>
       <Head>
-        <title>Url Shortener | Page Not FOund</title>
+        <title>Url Shortener | Page Not Found</title>
       </Head>
       <Title order={1}>Something&#39;s wrong here.</Title>
       <Text>

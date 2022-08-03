@@ -2,7 +2,8 @@ import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { TextInput, PasswordInput, Text, Paper, Group, Button, Anchor, Notification } from "@mantine/core";
-import { useForm, useToggle, upperFirst } from "@mantine/hooks";
+import { useToggle, upperFirst } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
 import { login, signup } from "utils/requests";
 import { isValidEmail, isValidUsername } from "utils/constants";
 import { LoginNotificationStyle, LoginNotificationWrapperStyle, LoginSx } from "styles/styles";
@@ -11,22 +12,29 @@ import { supabase } from "lib/initSupabase";
 export default function Profile() {
   const router = useRouter();
   const [opened, setOpened] = useState(false);
-  const [type, toggle] = useToggle<"login" | "register">("login", ["login", "register"]);
+  const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
   const form = useForm({
     initialValues: { username: "", email: "", password: "", submit: "" },
-    validationRules: { username: (v) => isValidUsername(v, type), email: isValidEmail, password: (v) => v.length >= 6 },
+    validate: {
+      username: (v) =>
+        isValidUsername(v, type)
+          ? null
+          : "Username must be between 4 and 20 characters and can only contain letters, numbers, dots and underscores",
+      email: isValidEmail,
+      password: (v) => (v.length >= 6 ? null : "Password should include at least 6 characters"),
+    },
   });
 
   return (
     <Paper sx={LoginSx} radius="md" p="xl" mx="xl" withBorder>
-      <Text size="lg" weight={500} style={{ width: "100%" }}>
-        Welcome to Url Shortener
+      <Text align="center" size="xl" mb="xl" weight={500} style={{ width: "100%" }}>
+        Welcome to Url Shortener, please {type === "login" ? "login" : "signup"}
       </Text>
       <form
         onSubmit={form.onSubmit(async ({ email, username, password }) => {
           try {
             const res = await (type === "login" ? login(email, password) : signup(email, username, password));
-            if (!res.ok) return form.setFieldError("submit", "Invalid credentials");
+            if (!res.ok) return form.setErrors({ submit: "Invalid credentials" });
             if (type === "login") return router.push("/");
             form.reset(), toggle("login"), setOpened(true);
           } catch (error) {
@@ -34,48 +42,44 @@ export default function Profile() {
           }
         })}
         style={{ width: "100%" }}
-        action="/api/auth/login"
-        method="post"
       >
-        <Group direction="column" grow>
-          {type === "register" && (
-            <TextInput
-              label="Username"
-              placeholder="Your name"
-              value={form.values.username}
-              onChange={(event) => form.setFieldValue("username", event.currentTarget.value)}
-              error={
-                form.errors.username &&
-                "Username must be between 4 and 20 characters and can only contain letters, numbers, dots and underscores"
-              }
-            />
-          )}
+        {type === "register" && (
           <TextInput
-            label="Email"
-            placeholder="youremail@email.com"
-            value={form.values.email}
-            onChange={(event) => form.setFieldValue("email", event.currentTarget.value)}
-            error={form.errors.email && "Invalid email"}
+            mb={8}
+            label="Username"
+            placeholder="Your name"
+            value={form.values.username}
+            onChange={(event) => form.setFieldValue("username", event.currentTarget.value)}
+            error={form.errors.username}
           />
-          <PasswordInput
-            label="Password"
-            placeholder="Your password"
-            value={form.values.password}
-            onChange={(event) => form.setFieldValue("password", event.currentTarget.value)}
-            error={form.errors.password && "Password should include at least 6 characters"}
-          />
-          {form.errors.submit && (
-            <Text size="sm" color="red">
-              {form.errors.submit}
-            </Text>
-          )}
-        </Group>
+        )}
+        <TextInput
+          mb={8}
+          label="Email"
+          placeholder="youremail@email.com"
+          value={form.values.email}
+          onChange={(event) => form.setFieldValue("email", event.currentTarget.value)}
+          error={form.errors.email}
+        />
+        <PasswordInput
+          mb={8}
+          label="Password"
+          placeholder="Your password"
+          value={form.values.password}
+          onChange={(event) => form.setFieldValue("password", event.currentTarget.value)}
+          error={form.errors.password}
+        />
+        {form.errors.submit && (
+          <Text size="sm" color="red">
+            {form.errors.submit}
+          </Text>
+        )}
         <Group position="apart" mt="xl">
           <Anchor
             component="button"
             type="button"
-            color="gray"
-            onClick={() => (toggle(), form.resetErrors())}
+            color="dimmed"
+            onClick={() => (toggle(), form.clearErrors())}
             size="xs"
           >
             {type === "register" ? "Already have an account? Login" : "Don't have an account? Register"}

@@ -1,5 +1,4 @@
-import { createStyles, Container, Group, ActionIcon, Text } from "@mantine/core";
-import Link from "next/link";
+import { createStyles, Group, ActionIcon, Text } from "@mantine/core";
 import React from "react";
 import { GithubIcon, TwitterIcon } from "./icons";
 
@@ -10,7 +9,6 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
     padding: "8px 64px",
-    // [theme.fn.smallerThan("xs")]: { flexDirection: "column" },
   },
 }));
 

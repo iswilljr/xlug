@@ -3,7 +3,11 @@ import Link from "next/link";
 import { LogoIcon } from "./icons";
 
 const useStyles = createStyles((theme) => ({
-  wrapper: { display: "flex", alignItems: "center", "& svg": { display: "block" } },
+  wrapper: {
+    display: "flex",
+    alignItems: "center",
+    "& svg": { display: "block" },
+  },
   logo: {
     ...theme.fn.focusStyles(),
     textDecoration: "none",
@@ -11,10 +15,24 @@ const useStyles = createStyles((theme) => ({
     color: theme.colorScheme === "dark" ? theme.white : theme.black,
     display: "block",
   },
-  image: { height: 30 },
-  version: { ...theme.fn.focusStyles(), fontWeight: 700, textDecoration: "none", marginLeft: theme.spacing.md },
-  iconWrrapper: { display: "flex", alignItems: "center", justifyContent: "center" },
-  iconText: { marginLeft: 8, [theme.fn.smallerThan("xs")]: { display: "none" } },
+  image: {
+    height: 30,
+  },
+  version: {
+    ...theme.fn.focusStyles(),
+    fontWeight: 700,
+    textDecoration: "none",
+    marginLeft: theme.spacing.md,
+  },
+  iconWrrapper: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  iconText: {
+    marginLeft: 8,
+    [theme.fn.smallerThan("xs")]: { display: "none" },
+  },
 }));
 
 export default function Logo({ className, ...others }: any) {
