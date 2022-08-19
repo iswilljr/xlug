@@ -32,17 +32,21 @@ export default function Header() {
         <Button hide onClick={() => toggleColorScheme()} tooltip={`${colorScheme === "dark" ? "Light" : "Dark"} mode`}>
           {colorScheme === "dark" ? <SunIcon width={22} height={22} /> : <MoonIcon width={22} height={22} />}
         </Button>
-        <Button
-          link={isSignedIn ? undefined : "/login"}
-          tooltip={isSignedIn ? "Logout" : "Login"}
-          onClick={async () => {
-            if (!isSignedIn) return;
-            await logout();
-            setSignIn(false);
-          }}
-        >
-          {isSignedIn ? <LogoutIcon width={22} height={22} /> : <LoginIcon width={22} height={22} />}
-        </Button>
+        {isSignedIn ? (
+          <Button
+            link="/login"
+            tooltip="Login"
+            onClick={() => {
+              logout()
+                .then(() => setSignIn(false))
+                .catch(() => setSignIn(false));
+            }}
+          >
+            <LogoutIcon width={22} height={22} />
+          </Button>
+        ) : (
+          <Button tooltip="Login">{<LoginIcon width={22} height={22} />}</Button>
+        )}
       </Group>
     </header>
   );

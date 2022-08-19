@@ -1,5 +1,5 @@
-import { createStyles, Text } from "@mantine/core";
 import Link from "next/link";
+import { createStyles, Text } from "@mantine/core";
 import { LogoIcon } from "./icons";
 
 const useStyles = createStyles((theme) => ({
@@ -40,8 +40,8 @@ export default function Logo({ className, ...others }: any) {
 
   return (
     <div className={classes.wrapper}>
-      <Link href="/" {...others}>
-        <a className={cx(classes.logo, className)} aria-label="Url Shortener">
+      <Link href="/">
+        <a className={cx(classes.logo, className)} aria-label="Url Shortener" {...others}>
           <div className={classes.iconWrrapper} id="url-shortener-icon">
             <span>
               <LogoIcon className={classes.image} />

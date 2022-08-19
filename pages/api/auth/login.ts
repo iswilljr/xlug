@@ -12,7 +12,8 @@ const Login = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ message: `Missing required value ${!email ? "email" : "password"}` });
   }
   const { data: session, error } = await supabase.auth.api.signInWithEmail(email, password);
-  if (error || !session) return res.status(400).json({ error: error?.message || "Invalid email or password" });
+  if (error ?? !session) return res.status(400).json({ error: error?.message ?? "Invalid email or password" });
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   req.body = { event: "SIGNED_IN", session } as { event: AuthChangeEvent; session: Session };
   return supabase.auth.api.setAuthCookie(req, res);
 };

@@ -35,6 +35,6 @@ export default function App({ Component, pageProps, preferredColorScheme, isSign
 }
 
 App.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
-  preferredColorScheme: getCookie("preferred-color-theme", ctx) || "light",
+  preferredColorScheme: getCookie("preferred-color-theme", ctx) ?? "light",
   isSignedIn: !!(getCookie("sb-access-token", ctx) && getCookie("sb-refresh-token", ctx)),
 });

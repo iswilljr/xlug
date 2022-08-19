@@ -9,6 +9,7 @@ const Logout = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!user || !token) return res.status(401).json({ message: "Not logged in" });
   const { error } = await supabase.auth.api.signOut(token);
   if (error) return res.status(401).json({ message: error.message });
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   req.body = { session: {}, event: "SIGNED_OUT" } as { event: AuthChangeEvent; session: Session };
   return supabase.auth.api.setAuthCookie(req, res);
 };

@@ -1,12 +1,13 @@
 import type { GetServerSideProps } from "next";
+import type { Url } from "utils/requests";
 import Head from "next/head";
 import { Anchor, Text, Title } from "@mantine/core";
 import Shorten from "components/Shorten/Shorten";
-import { getUrlInfoFromId, Url } from "utils/requests";
 import { getDate } from "utils/constants";
 import { IdTitleStyle, IdWrapperStyle } from "styles/styles";
+import { supabase } from "lib/initSupabase";
 
-const UrlShortener = ({ data, host }: { data: Url; host?: string }) => (
+const UrlShortener = ({ data }: { data: Url }) => (
   <>
     <Head>
       <title>{`Url Sortener | ${data.destination}`}</title>
@@ -18,7 +19,7 @@ const UrlShortener = ({ data, host }: { data: Url; host?: string }) => (
       <time dateTime={data.created_at} style={{ marginBottom: 16 }}>
         {getDate(data.created_at)}
       </time>
-      <Shorten idOnText destination={data.destination} id={data.id} host={host} />
+      <Shorten idOnText destination={data.destination} id={data.id} />
       <Text style={{ overflowWrap: "anywhere", marginTop: 16 }}>
         <strong>Destination:</strong>{" "}
         <Anchor href={data.destination} target="_blank" rel="noreferrer">
@@ -32,12 +33,12 @@ const UrlShortener = ({ data, host }: { data: Url; host?: string }) => (
 export default UrlShortener;
 
 export const getServerSideProps: GetServerSideProps = async ({ query = { id: "" }, req }) => {
-  const host = `${process.env.NODE_ENV === "production" ? "https" : "http"}://${req.headers.host}`;
   const idRegExp = /(.+)(\+)$/;
   const id = (query.id as string).replace(idRegExp, "$1");
-  const { data } = await getUrlInfoFromId(id, host);
-  if (!data) return { notFound: true };
+  const { data } = await supabase.from<Url>("urls").select("*").eq("id", id);
+  if (!data?.length) return { notFound: true };
+  const shortenUrl = data[0];
   const shouldDisplayInfo = !!(query.id as string).match(idRegExp);
-  if (shouldDisplayInfo) return { props: { data, host } };
-  return { redirect: { destination: data.destination, permanent: false } };
+  if (shouldDisplayInfo) return { props: { data: shortenUrl } };
+  return { redirect: { destination: shortenUrl.destination, permanent: false } };
 };

@@ -33,12 +33,6 @@ export function signup(email: string, password: string, username: string) {
   return makeRequest("/api/auth/signup", { body: { email, password, username }, isContentTypeJson: true });
 }
 
-export function getUrlInfoFromId(id: string, host: string): Promise<{ data: Url | null }> {
-  return makeRequest(`${host}/api/url/${id}`)
-    .then((res) => (res.ok ? res.json() : { data: null }))
-    .catch(() => ({ data: null }));
-}
-
 export function shorten(destination: string): Promise<{ data: Url | null }> {
   return makeRequest("/api/url/shorten", { body: { destination }, isContentTypeJson: true }).then((res) => {
     if (res.ok) return res.json();

@@ -15,7 +15,7 @@ export default function Layout({ children, preferredColorScheme }: LayoutProps) 
   const [colorScheme, setColorScheme] = useState(preferredColorScheme);
 
   const toggleColorScheme = (value?: ColorScheme) => {
-    const newColorScheme = value || (colorScheme === "dark" ? "light" : "dark");
+    const newColorScheme = value ?? (colorScheme === "dark" ? "light" : "dark");
     setColorScheme(newColorScheme);
     setCookie("preferred-color-theme", newColorScheme, { maxAge: 60 * 60 * 24 * 30 });
   };

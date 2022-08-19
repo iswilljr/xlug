@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/return-await */
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -16,10 +17,7 @@ export default function Profile() {
   const form = useForm({
     initialValues: { username: "", email: "", password: "", submit: "" },
     validate: {
-      username: (v) =>
-        isValidUsername(v, type)
-          ? null
-          : "Username must be between 4 and 20 characters and can only contain letters, numbers, dots and underscores",
+      username: (v) => isValidUsername(v, type),
       email: isValidEmail,
       password: (v) => (v.length >= 6 ? null : "Password should include at least 6 characters"),
     },
@@ -30,13 +28,19 @@ export default function Profile() {
       <Text align="center" size="xl" mb="xl" weight={500} style={{ width: "100%" }}>
         Welcome to Url Shortener, please {type === "login" ? "login" : "signup"}
       </Text>
+
       <form
         onSubmit={form.onSubmit(async ({ email, username, password }) => {
           try {
             const res = await (type === "login" ? login(email, password) : signup(email, username, password));
+
             if (!res.ok) return form.setErrors({ submit: "Invalid credentials" });
+
             if (type === "login") return router.push("/");
-            form.reset(), toggle("login"), setOpened(true);
+
+            form.reset();
+            toggle("login");
+            setOpened(true);
           } catch (error) {
             form.setFieldError("submit", "Something went wrong, please try again");
           }
@@ -53,6 +57,7 @@ export default function Profile() {
             error={form.errors.username}
           />
         )}
+
         <TextInput
           mb={8}
           label="Email"
@@ -61,6 +66,7 @@ export default function Profile() {
           onChange={(event) => form.setFieldValue("email", event.currentTarget.value)}
           error={form.errors.email}
         />
+
         <PasswordInput
           mb={8}
           label="Password"
@@ -69,24 +75,31 @@ export default function Profile() {
           onChange={(event) => form.setFieldValue("password", event.currentTarget.value)}
           error={form.errors.password}
         />
+
         {form.errors.submit && (
           <Text size="sm" color="red">
             {form.errors.submit}
           </Text>
         )}
+
         <Group position="apart" mt="xl">
           <Anchor
             component="button"
             type="button"
             color="dimmed"
-            onClick={() => (toggle(), form.clearErrors())}
+            onClick={() => {
+              toggle();
+              form.clearErrors();
+            }}
             size="xs"
           >
             {type === "register" ? "Already have an account? Login" : "Don't have an account? Register"}
           </Anchor>
+
           <Button type="submit">{upperFirst(type)}</Button>
         </Group>
       </form>
+
       {opened && (
         <div style={LoginNotificationWrapperStyle}>
           <Notification

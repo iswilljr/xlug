@@ -1,21 +1,21 @@
-import { EyeIcon, LinkIcon } from "@heroicons/react/outline";
+import Link from "next/link";
 import { Anchor, Button, Group, Text } from "@mantine/core";
 import { useClipboard } from "@mantine/hooks";
-import Link from "next/link";
+import { EyeIcon, LinkIcon } from "@heroicons/react/outline";
 import { useStyles } from "./styles";
 
 interface ShortenProps {
   destination: string;
   id: string;
   idOnText?: boolean;
-  host?: string;
 }
 
-const Shorten = ({ destination, id, idOnText, host }: ShortenProps) => {
+const Shorten = ({ destination, id, idOnText }: ShortenProps) => {
   const { classes, cx } = useStyles({ idOnText });
   const clipboard = useClipboard();
 
-  const link = `${host}/${id}`;
+  const link =
+    typeof window !== "undefined" ? `${window.location.origin}/${id}` : `${process.env.NEXT_PUBLIC_URL ?? ""}/${id}`;
 
   return (
     <div className={classes.control}>

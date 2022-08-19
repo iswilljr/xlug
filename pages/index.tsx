@@ -11,7 +11,7 @@ import { isValidUrl } from "utils/constants";
 import { shorten, Url } from "utils/requests";
 import { useStyles } from "styles/home";
 
-export default function Profile({ shortenUrls, host }: { shortenUrls: Url[]; host: string }) {
+export default function Profile({ shortenUrls }: { shortenUrls: Url[] }) {
   const { classes } = useStyles();
   const isSignedIn = useStore((state) => state.isSignedIn);
 
@@ -23,19 +23,22 @@ export default function Profile({ shortenUrls, host }: { shortenUrls: Url[]; hos
 
   const form = useForm({
     initialValues: { url: "" },
-    validate: { url: (val) => isValidUrl(val, host) },
+    validate: { url: isValidUrl },
   });
 
   return (
     <Container className={classes.control}>
       <Title order={1}>Free URL Shortener</Title>
       <Text size="sm">This is a free tool to shorten URLs.</Text>
+
       <form
         style={{ marginTop: 32, width: "100%" }}
         onSubmit={form.onSubmit(async ({ url }) => {
           try {
             const { data } = await shorten(url);
+
             if (!data) throw new Error("No data");
+
             if (!isSignedIn) setUrls((prev) => [data, ...prev]);
             else shortenUrls.unshift(data);
             form.reset();
@@ -58,12 +61,14 @@ export default function Profile({ shortenUrls, host }: { shortenUrls: Url[]; hos
             Shorten
           </Button>
         </Group>
+
         {form.errors.url && (
           <Text color="red" style={{ marginTop: 4 }}>
             {typeof form.errors.url === "string" ? form.errors.url : "Invalid url, please try again"}
           </Text>
         )}
       </form>
+
       <div className={classes.wrapper}>
         {isSignedIn && !!shortenUrls.length && (
           <>
@@ -71,17 +76,18 @@ export default function Profile({ shortenUrls, host }: { shortenUrls: Url[]; hos
               Your account&#39;s Shorten URLS
             </Text>
             {shortenUrls.map((url) => (
-              <Shorten key={url.id} destination={url.destination} id={url.id} host={host} />
+              <Shorten key={url.id} destination={url.destination} id={url.id} />
             ))}
           </>
         )}
+
         {!!urls.length && (
           <>
             <Text weight={700} style={HomeTextStyle}>
               Your local Shorten URLS
             </Text>
             {urls.map((url) => (
-              <Shorten key={url.id} destination={url.destination} id={url.id} host={host} />
+              <Shorten key={url.id} destination={url.destination} id={url.id} />
             ))}
           </>
         )}
@@ -91,10 +97,9 @@ export default function Profile({ shortenUrls, host }: { shortenUrls: Url[]; hos
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const host = `${process.env.NODE_ENV === "production" ? "https" : "http"}://${req.headers.host}`;
   const { user } = await supabase.auth.api.getUserByCookie(req, res);
-  if (!user) return { props: { shortenUrls: [], host } };
+  if (!user) return { props: { shortenUrls: [] } };
   const { data, error } = await supabase.from("urls").select("*").eq("user_id", user.id);
-  if (error || !data || !data.length) return { props: { shortenUrls: [], host } };
-  return { props: { shortenUrls: data, host } };
+  if (error ?? !data ?? !data.length) return { props: { shortenUrls: [] } };
+  return { props: { shortenUrls: data } };
 };

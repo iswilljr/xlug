@@ -9,7 +9,7 @@ const SignUp = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email, password, username } = req.body;
   if (!email || !password || !username) return res.status(400).json({ message: "Missing required value" });
   const { data: session, error } = await supabase.auth.api.signUpWithEmail(email, password, { data: { username } });
-  if (error || !session) return res.status(400).json({ error: error?.message || "Invalid email or password" });
+  if (error ?? !session) return res.status(400).json({ error: error?.message ?? "Invalid email or password" });
   return res.status(200).json({ message: "Success" });
 };
 
