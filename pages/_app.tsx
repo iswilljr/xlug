@@ -1,24 +1,17 @@
-import type { GetServerSidePropsContext } from "next";
+import Head from "next/head";
+import { DefaultSeo } from "next-seo";
+import { getCookie } from "cookies-next";
+import Layout from "components/Layout";
+import SEO from "utils/seo";
 import type { AppProps as NextAppProps } from "next/app";
 import type { ColorScheme } from "@mantine/core";
-import Head from "next/head";
-import { useEffect } from "react";
-import { DefaultSeo } from "next-seo";
-import SEO from "config/seo";
-import { getCookie } from "cookies-next";
-import { useStore } from "store/store";
-import Layout from "components/Layout/Layout";
+import type { GetServerSidePropsContext } from "next";
 
 interface AppProps extends NextAppProps {
   preferredColorScheme: ColorScheme;
-  isSignedIn: boolean;
 }
 
-export default function App({ Component, pageProps, preferredColorScheme, isSignedIn }: AppProps) {
-  const setSignIn = useStore((state) => state.setSignIn);
-
-  useEffect(() => setSignIn(isSignedIn), [isSignedIn, setSignIn]);
-
+export default function App({ Component, pageProps, preferredColorScheme }: AppProps) {
   return (
     <>
       <Head>
@@ -36,5 +29,4 @@ export default function App({ Component, pageProps, preferredColorScheme, isSign
 
 App.getInitialProps = ({ ctx }: { ctx: GetServerSidePropsContext }) => ({
   preferredColorScheme: getCookie("preferred-color-theme", ctx) ?? "light",
-  isSignedIn: !!(getCookie("sb-access-token", ctx) && getCookie("sb-refresh-token", ctx)),
 });

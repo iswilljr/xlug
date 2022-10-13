@@ -1,21 +1,22 @@
 import Link from "next/link";
 import { Anchor, Button, Group, Text } from "@mantine/core";
 import { useClipboard } from "@mantine/hooks";
-import { EyeIcon, LinkIcon } from "@heroicons/react/outline";
-import { useStyles } from "./styles";
+import { EyeIcon, LinkIcon } from "@heroicons/react/24/outline";
+import { useStyles } from "../styles/shorten";
 
 interface ShortenProps {
   destination: string;
   id: string;
-  idOnText?: boolean;
+  onlyShowShortenLink?: boolean;
 }
 
-const Shorten = ({ destination, id, idOnText }: ShortenProps) => {
-  const { classes, cx } = useStyles({ idOnText });
+const { NEXT_PUBLIC_URL = "" } = process.env;
+
+const Shorten = ({ destination, id, onlyShowShortenLink }: ShortenProps) => {
+  const { classes, cx } = useStyles({ idOnText: onlyShowShortenLink });
   const clipboard = useClipboard();
 
-  const link =
-    typeof window !== "undefined" ? `${window.location.origin}/${id}` : `${process.env.NEXT_PUBLIC_URL ?? ""}/${id}`;
+  const link = `${NEXT_PUBLIC_URL}/${id}`;
 
   return (
     <div className={classes.control}>
@@ -24,12 +25,10 @@ const Shorten = ({ destination, id, idOnText }: ShortenProps) => {
           <EyeIcon width="24" height="24" />
         </Anchor>
       </Link>
-
       <LinkIcon className={classes.icon} />
-      <Text className={cx(classes.truncate, classes.destination)}>{idOnText ? link : destination}</Text>
-
+      <Text className={cx(classes.truncate, classes.destination)}>{onlyShowShortenLink ? link : destination}</Text>
       <Group spacing="sm" className={classes.options}>
-        {idOnText ? (
+        {onlyShowShortenLink ? (
           <Text className={cx(classes.truncate, classes.destination, classes.link)}>{link}</Text>
         ) : (
           <Anchor
@@ -41,9 +40,11 @@ const Shorten = ({ destination, id, idOnText }: ShortenProps) => {
             {link}
           </Anchor>
         )}
-
-        <Button onClick={() => clipboard.copy(link)} color={clipboard.copied ? "green" : undefined}>
-          {clipboard.copied ? "Copied" : "Copy"}
+        <Button
+          onClick={() => clipboard.copy(link)}
+          color={clipboard.error ? "red" : clipboard.copied ? "green" : undefined}
+        >
+          {clipboard.error ? "Error Copying" : clipboard.copied ? "Copied" : "Copy"}
         </Button>
       </Group>
     </div>

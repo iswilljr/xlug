@@ -1,5 +1,4 @@
 import { createStyles, Group, ActionIcon, Text } from "@mantine/core";
-import React from "react";
 import { GithubIcon, TwitterIcon } from "./icons";
 
 const useStyles = createStyles((theme) => ({
@@ -10,6 +9,9 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     padding: "8px 64px",
   },
+  text: {
+    color: theme.colors.gray[6],
+  },
 }));
 
 export function Footer() {
@@ -17,7 +19,7 @@ export function Footer() {
 
   return (
     <footer className={classes.footer}>
-      <Text size="xs" color="gray">
+      <Text className={classes.text} size="xs">
         Copyright © {new Date().getFullYear()} iswilljr.
       </Text>
       <Group spacing={4} position="right" noWrap>

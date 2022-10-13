@@ -1,50 +1,35 @@
-import type { GetServerSideProps } from "next";
-import { LinkIcon } from "@heroicons/react/outline";
 import { Button, Container, Group, Input, Text, Title } from "@mantine/core";
-import { useLocalStorage } from "@mantine/hooks";
+import { HomeGroupStyle, HomeTextStyle } from "styles/css";
+import { isValidUrl } from "utils/is-valid-url";
+import { LinkIcon } from "@heroicons/react/24/outline";
+import { shortenUrl, Url } from "utils/shorten-url";
 import { useForm } from "@mantine/form";
-import Shorten from "components/Shorten/Shorten";
-import { supabase } from "lib/initSupabase";
-import { useStore } from "store/store";
-import { HomeGroupStyle, HomeTextStyle } from "styles/styles";
-import { isValidUrl } from "utils/constants";
-import { shorten, Url } from "utils/requests";
+import { useLocalStorage } from "@mantine/hooks";
 import { useStyles } from "styles/home";
+import Shorten from "components/Shorten";
 
-export default function Profile({ shortenUrls }: { shortenUrls: Url[] }) {
+export default function Profile() {
   const { classes } = useStyles();
-  const isSignedIn = useStore((state) => state.isSignedIn);
-
-  const [urls, setUrls] = useLocalStorage<Url[]>({
-    key: "shorten",
-    defaultValue: [],
-    getInitialValueInEffect: true,
-  });
-
-  const form = useForm({
-    initialValues: { url: "" },
-    validate: { url: isValidUrl },
-  });
+  const [urls, setUrls] = useLocalStorage<Url[]>({ key: "shorten", defaultValue: [] });
+  const form = useForm({ initialValues: { url: "" }, validate: { url: isValidUrl } });
 
   return (
     <Container className={classes.control}>
-      <Title order={1}>Free URL Shortener</Title>
-      <Text size="sm">This is a free tool to shorten URLs.</Text>
-
+      <Title style={{ textAlign: "center" }} order={1}>
+        Free URL Shortener
+      </Title>
+      <Text style={{ textAlign: "center" }} size="sm">
+        This is a free tool to shorten URLs.
+      </Text>
       <form
         style={{ marginTop: 32, width: "100%" }}
-        onSubmit={form.onSubmit(async ({ url }) => {
-          try {
-            const { data } = await shorten(url);
-
-            if (!data) throw new Error("No data");
-
-            if (!isSignedIn) setUrls((prev) => [data, ...prev]);
-            else shortenUrls.unshift(data);
-            form.reset();
-          } catch (__) {
-            form.setFieldError("url", "Something went wrong, please try again");
-          }
+        onSubmit={form.onSubmit(({ url }) => {
+          return shortenUrl(url)
+            .then(({ data }) => {
+              setUrls((prev) => [data, ...prev]);
+              form.reset();
+            })
+            .catch(() => form.setFieldError("url", "Something went wrong, please try again"));
         })}
       >
         <Group style={HomeGroupStyle} spacing="xs">
@@ -61,33 +46,20 @@ export default function Profile({ shortenUrls }: { shortenUrls: Url[] }) {
             Shorten
           </Button>
         </Group>
-
         {form.errors.url && (
-          <Text color="red" style={{ marginTop: 4 }}>
+          <Text color="red" mt="xs">
             {typeof form.errors.url === "string" ? form.errors.url : "Invalid url, please try again"}
           </Text>
         )}
       </form>
-
       <div className={classes.wrapper}>
-        {isSignedIn && !!shortenUrls.length && (
-          <>
-            <Text weight={700} style={HomeTextStyle}>
-              Your account&#39;s Shorten URLS
-            </Text>
-            {shortenUrls.map((url) => (
-              <Shorten key={url.id} destination={url.destination} id={url.id} />
-            ))}
-          </>
-        )}
-
-        {!!urls.length && (
+        {urls.length !== 0 && (
           <>
             <Text weight={700} style={HomeTextStyle}>
               Your local Shorten URLS
             </Text>
             {urls.map((url) => (
-              <Shorten key={url.id} destination={url.destination} id={url.id} />
+              <Shorten key={url.id} {...url} />
             ))}
           </>
         )}
@@ -95,11 +67,3 @@ export default function Profile({ shortenUrls }: { shortenUrls: Url[] }) {
     </Container>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const { user } = await supabase.auth.api.getUserByCookie(req, res);
-  if (!user) return { props: { shortenUrls: [] } };
-  const { data, error } = await supabase.from("urls").select("*").eq("user_id", user.id);
-  if (error ?? !data ?? !data.length) return { props: { shortenUrls: [] } };
-  return { props: { shortenUrls: data } };
-};

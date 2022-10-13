@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { MantineProvider, ColorScheme, ColorSchemeProvider } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
-import Header from "./Header";
-import { Footer } from "./Footer";
 import { setCookie } from "cookies-next";
-import { LayoutMainStyle, LayoutWrapperStyles } from "styles/styles";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { LayoutMainStyle, LayoutWrapperStyles } from "styles/css";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,7 +18,6 @@ export default function Layout({ children, preferredColorScheme }: LayoutProps) 
     setColorScheme(newColorScheme);
     setCookie("preferred-color-theme", newColorScheme, { maxAge: 60 * 60 * 24 * 30 });
   };
-  useHotkeys([["mod+J", () => toggleColorScheme()]]);
 
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>

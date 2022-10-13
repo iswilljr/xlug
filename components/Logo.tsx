@@ -31,7 +31,9 @@ const useStyles = createStyles((theme) => ({
   },
   iconText: {
     marginLeft: 8,
-    [theme.fn.smallerThan("xs")]: { display: "none" },
+    [theme.fn.smallerThan("xs")]: {
+      display: "none",
+    },
   },
 }));
 
