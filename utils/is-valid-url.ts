@@ -9,5 +9,5 @@ export function isValidUrl(url: string): string | null {
 }
 
 export function isUrl(url: string) {
-  return !validatorIsURL(url, { require_protocol: true, require_host: true });
+  return validatorIsURL(url, { require_protocol: true, require_host: true });
 }
