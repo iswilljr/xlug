@@ -10,13 +10,11 @@ interface ShortenProps {
   onlyShowShortenLink?: boolean;
 }
 
-const { NEXT_PUBLIC_URL = "" } = process.env;
-
 const Shorten = ({ destination, id, onlyShowShortenLink }: ShortenProps) => {
   const { classes, cx } = useStyles({ idOnText: onlyShowShortenLink });
   const clipboard = useClipboard();
 
-  const link = `${NEXT_PUBLIC_URL}/${id}`;
+  const link = `${process.env.NEXT_PUBLIC_URL ?? ""}/${id}`;
 
   return (
     <div className={classes.control}>
