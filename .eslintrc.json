@@ -10,5 +10,6 @@
     "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/no-misused-promises": "off",
     "prettier/prettier": "error"
-  }
+  },
+  "ignorePatterns": ["next-env.d.ts"]
 }

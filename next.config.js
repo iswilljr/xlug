@@ -1,10 +1,13 @@
-/** @type {import("next").NextConfig} */
-
-const config = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
   swcMinify: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    appDir: true,
+  },
 };
 
-module.exports = config;
+module.exports = nextConfig;
