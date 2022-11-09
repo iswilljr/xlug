@@ -17,6 +17,7 @@
     "postinstall": "husky install"
   },
   "dependencies": {
+    "@heroicons/react": "2.0.13",
     "@next/font": "13.0.2",
     "next": "13.0.2",
     "next-seo": "5.14.0",
