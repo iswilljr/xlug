@@ -1,12 +1,5 @@
 import { supabase } from "./supabase";
-
-interface Xlug {
-  created_at: string;
-  description?: string;
-  destination: string;
-  id: number;
-  xlug: string;
-}
+import type { XlugProps as Xlug } from "components/xlug";
 
 export async function getXlug(xlug: string): Promise<Xlug | null> {
   const { data: xlugData, error } = await supabase.from("xlugs").select("*").eq("xlug", xlug);
