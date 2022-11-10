@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 "use client";
 
 import toast from "react-hot-toast";
@@ -43,7 +44,7 @@ const Xlug = (props: XlugProps) => {
         </button>
       </div>
       <p className="truncate text-gray-400 mb-2">{props.destination}</p>
-      <p className="text-gray-500">{props.description}</p>
+      <p className="text-gray-500">{props.description || "No description provided"}</p>
     </div>
   );
 };
