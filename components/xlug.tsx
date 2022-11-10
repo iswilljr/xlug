@@ -29,7 +29,7 @@ const Xlug = (props: XlugProps) => {
     <div className="bg-primary border border-light rounded-lg  hover:shadow-lg transition-all p-4 mt-3 hover:bg-secondary">
       <div className="flex items-center">
         <a
-          className="text-gray-100 text-xl hover:text-gray-300 transition-all"
+          className="truncate text-gray-100 text-xl hover:text-gray-300 transition-all"
           target="_blank"
           rel="noreferrer"
           href={`https://xlug.vercel.app/x/${props.xlug}`}
@@ -44,7 +44,7 @@ const Xlug = (props: XlugProps) => {
         </button>
       </div>
       <p className="truncate text-gray-400 mb-2">{props.destination}</p>
-      <p className="text-gray-500">{props.description || "No description provided"}</p>
+      <p className="text-gray-500 break-all">{props.description || "No description provided"}</p>
     </div>
   );
 };
