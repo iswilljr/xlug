@@ -8,7 +8,7 @@ const Header = () => {
       <div className="flex container pl-4 pr-4 items-center justify-between mx-auto">
         <Link href="/">
           <div className="flex items-center cursor-pointer text-white hover:text-gray-300 transition-all">
-            <Image src="/logo.png" alt="Logo" className="w-8 h-8" />
+            <Image src="/logo.png" alt="Logo" width={32} height={32} className="w-8 h-8" />
             <h1 className="text-xl ml-2 mr-2">xlug</h1>
           </div>
         </Link>
