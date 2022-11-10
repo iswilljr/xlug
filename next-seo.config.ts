@@ -38,7 +38,7 @@ const config: NextSeoProps = {
     locale: "en_US",
     images: [
       {
-        url: "/banner.jpg",
+        url: "https://xlug.vercel.app/banner.jpg",
         width: 1920,
         height: 1080,
         type: "image/jpg",

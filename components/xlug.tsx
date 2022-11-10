@@ -1,14 +1,17 @@
 "use client";
 
+import toast from "react-hot-toast";
 import { Square2StackIcon } from "@heroicons/react/24/outline";
 
-interface CardProps {
-  url: string;
+export interface XlugProps {
+  created_at: string;
+  description?: string;
+  destination: string;
+  id: number;
   xlug: string;
-  description: string;
 }
 
-const Xlug = (props: CardProps) => {
+const Xlug = (props: XlugProps) => {
   const copyToClipboard = async (txt: string) => {
     try {
       const clipboardItem = new ClipboardItem({
@@ -18,6 +21,7 @@ const Xlug = (props: CardProps) => {
     } catch (error) {
       await navigator.clipboard.writeText(txt);
     }
+    toast.success("Copied to clipboard!");
   };
 
   return (
@@ -38,7 +42,7 @@ const Xlug = (props: CardProps) => {
           <Square2StackIcon className="mr-2 w-4 h-4" />
         </button>
       </div>
-      <p className="truncate text-gray-400 mb-2">{props.url}</p>
+      <p className="truncate text-gray-400 mb-2">{props.destination}</p>
       <p className="text-gray-500">{props.description}</p>
     </div>
   );
