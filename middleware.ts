@@ -1,19 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 
-function getXlugData(xlug?: string): null | { url: string } {
-  return null;
-}
-
 export async function middleware(req: NextRequest) {
   const xlug = req.nextUrl.pathname.split("/").pop();
-  const xlugData = getXlugData(xlug);
+  const data = await fetch(`${req.nextUrl.origin}/api/xlug?xlug=${xlug ?? ""}`);
 
-  if (!xlugData) {
+  if (!data.ok) {
     return NextResponse.redirect(req.nextUrl.origin);
   }
 
-  if (xlugData.url) {
-    return NextResponse.redirect(new URL(xlugData.url));
+  const xlugData = await data.json();
+  console.log(data.ok, xlugData);
+
+  if (data?.url) {
+    return NextResponse.redirect(new URL(xlugData.xlug.destination));
   }
 }
 

@@ -1,7 +1,7 @@
 import Button from "components/button";
 import { RocketLaunchIcon } from "@heroicons/react/24/outline";
 
-export default function page() {
+export default function Page() {
   return (
     <div className="container mx-auto px-4">
       <form>
@@ -11,7 +11,7 @@ export default function page() {
             id="url"
             type="text"
             placeholder="https://"
-            className="outline-none rounded-md px-4 py-2 w-full focus:border-none mt-1 bg-secondary text-white"
+            className="mt-2 outline-none rounded-md px-4 py-2 w-full focus:border-none bg-secondary text-white"
           />
         </div>
         <div className="mb-5">
@@ -22,7 +22,7 @@ export default function page() {
               id="xlug"
               type="text"
               placeholder="Custom slug"
-              className="outline-none rounded-md px-4 py-2 w-full focus:border-none bg-secondary text-white"
+              className="mt-2 outline-none rounded-md px-4 py-2 w-full focus:border-none bg-secondary text-white"
             />
             <Button className="ml-2 bg-secondary">Random</Button>
           </div>
@@ -31,8 +31,7 @@ export default function page() {
           <label htmlFor="description">Description (optional):</label>
           <textarea
             id="description"
-            className="outline-none focus:border-white rounded-md px-4 py-2 w-full  mt-1 bg-secondary text-white"
-            // {...register("description")}
+            className="mt-2 outline-none focus:border-white rounded-md px-4 py-2 w-full bg-secondary text-white"
           />
         </div>
         <Button type="submit" className="bg-secondary">
