@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import Button from "components/button";
 import { RocketLaunchIcon } from "@heroicons/react/24/outline";
