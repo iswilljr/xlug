@@ -31,6 +31,12 @@ const config: NextSeoProps = {
       sizes: "152x152",
     },
   ],
+  additionalMetaTags: [
+    {
+      name: "viewport",
+      content: "width=device-width, initial-scale=1.0",
+    },
+  ],
   openGraph: {
     site_name: "xlug",
     url: "https://xlug.vercel.app",
