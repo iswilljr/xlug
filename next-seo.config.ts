@@ -37,6 +37,8 @@ const config: NextSeoProps = {
       content: "width=device-width, initial-scale=1.0",
     },
   ],
+  canonical: "https://xlug.vercel.app",
+  themeColor: "#00060d",
   openGraph: {
     site_name: "xlug",
     url: "https://xlug.vercel.app",
