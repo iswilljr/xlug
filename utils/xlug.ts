@@ -4,7 +4,7 @@ import type { XlugProps as Xlug } from "components/xlug";
 export async function getXlug(xlug: string): Promise<Xlug | null> {
   const { data: xlugData, error } = await supabase.from("xlugs").select("*").eq("xlug", xlug);
 
-  if (error) throw Error("Something went wrong, please try agnin");
+  if (error) throw Error("Something went wrong, please try again");
 
   return xlugData?.[0] ?? null;
 }
