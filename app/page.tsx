@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="text-center flex flex-col items-center justify-center py-20 px-4 bg-gradient-to-r transition-all duration-100">
       <h1 className="text-3xl md:text-6xl mb-2 md:mb-5">Open Source Link Shortener</h1>
-      <h3 className="text-2xl mb-6 text-gray-400">unlimited links & custom slugs</h3>
+      <h2 className="text-2xl mb-6 text-gray-400">unlimited links & custom slugs</h2>
       <div className="flex">
         <Link href="/profile">
           <RocketLaunchIcon className="mr-2 w-4 h-4" />
