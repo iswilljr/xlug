@@ -49,7 +49,7 @@ export default function Page() {
         </div>
         <div className="mb-5">
           <label htmlFor="xlug">Custom slug:</label>
-          <p className="text-gray-500">https://xlug.vercel.app/x/</p>
+          <p className="text-gray-400">https://xlug.vercel.app/x/</p>
           <input
             id="xlug"
             type="text"
