@@ -15,6 +15,7 @@ const Header = () => {
         <div className="flex items-center">
           <a
             href="https://github.com/iswilljr/xlug"
+            aria-label="See project on Github"
             rel="noreferrer"
             target="_blank"
             className="hover:transform hover:scale-110 transition duration-200 ease-in-out"
