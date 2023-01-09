@@ -12,7 +12,7 @@ handler
 
     const xlug = await getXlug((req.query.xlug as string) ?? "");
 
-    if (!xlug || !xlug.xlug) return res.status(404).json(null);
+    if (!xlug?.xlug) return res.status(404).json(null);
 
     res.json({ xlug });
   })
@@ -45,7 +45,7 @@ handler
       xlug,
     });
 
-    if (!xlugData || !xlugData.xlug) return res.status(404).json(null);
+    if (!xlugData?.xlug) return res.status(404).json(null);
 
     res.json({ xlug: xlugData });
   });
