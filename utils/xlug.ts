@@ -14,7 +14,7 @@ export async function createXlug(data: Partial<Xlug>): Promise<Xlug | null> {
 
   if (error)
     throw Error(
-      error.code === "23505" ? "This xlug is alreadt taken, try another one" : "Something went wrong, please try agnin"
+      error.code === "23505" ? "This xlug is alreadt taken, try another one" : "Something went wrong, please try again"
     );
 
   return xlugData?.[0] ?? null;
