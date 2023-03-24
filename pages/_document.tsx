@@ -1,4 +1,14 @@
-import { Html, Head, Main, NextScript } from "next/document";
+import { createStylesServer, ServerStyles } from "@mantine/next";
+import NextDocument, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  type DocumentContext,
+  type DocumentInitialProps,
+} from "next/document";
+
+const stylesServer = createStylesServer();
 
 export default function Document() {
   return (
@@ -11,3 +21,12 @@ export default function Document() {
     </Html>
   );
 }
+
+Document.getInitialProps = async (ctx: DocumentContext): Promise<DocumentInitialProps> => {
+  const initialProps = await NextDocument.getInitialProps(ctx);
+
+  return {
+    ...initialProps,
+    styles: [initialProps.styles, <ServerStyles html={initialProps.html} server={stylesServer} key="styles" />],
+  };
+};
