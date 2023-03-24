@@ -1,9 +1,9 @@
 import type { NextSeoProps } from "next-seo";
 
-const config: NextSeoProps = {
+export const defaultSeo: NextSeoProps = {
   title: "URL Shortener",
   titleTemplate: "%s - xlug",
-  description: "A URL shortener built with Nextjs",
+  description: "A URL shortener built with NextJs",
   defaultTitle: "xlug",
   additionalLinkTags: [
     {
@@ -51,5 +51,3 @@ const config: NextSeoProps = {
     cardType: "summary_large_image",
   },
 };
-
-export default config;
