@@ -1,4 +1,11 @@
-import { type MantineColor, UnstyledButton, type UnstyledButtonProps, createStyles, rem } from "@mantine/core";
+import {
+  rem,
+  createStyles,
+  UnstyledButton,
+  createPolymorphicComponent,
+  type MantineColor,
+  type UnstyledButtonProps,
+} from "@mantine/core";
 
 interface ButtonParams {
   color?: MantineColor;
@@ -40,8 +47,10 @@ const useStyles = createStyles((theme, { color = "blue.7", size }: ButtonParams)
   },
 }));
 
-export function Button({ color, size, className, ...props }: ButtonProps) {
+export function _Button({ color, size, className, ...props }: ButtonProps) {
   const { classes, cx } = useStyles({ color, size });
 
   return <UnstyledButton className={cx(classes.button, className)} {...props} />;
 }
+
+export const Button = createPolymorphicComponent<"button", ButtonProps>(_Button);
