@@ -9,7 +9,6 @@ specifiers:
   "@mantine/modals": 6.0.4
   "@mantine/next": 6.0.4
   "@mantine/nprogress": 6.0.4
-  "@mantine/spotlight": 6.0.4
   "@tabler/icons-react": 2.11.0
   "@types/node": 18.15.6
   "@types/react": 18.0.28
@@ -41,7 +40,6 @@ dependencies:
   "@mantine/modals": 6.0.4_ordvvez6mrxlqyz6sv56zwslmq
   "@mantine/next": 6.0.4_qqau3dvbojnwvgou4gzbrwl7sy
   "@mantine/nprogress": 6.0.4_ordvvez6mrxlqyz6sv56zwslmq
-  "@mantine/spotlight": 6.0.4_ordvvez6mrxlqyz6sv56zwslmq
   "@tabler/icons-react": 2.11.0_react@18.2.0
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   next-seo: 5.15.0_ld2jel3hspngo3u5lti2kgl2sq
@@ -404,22 +402,6 @@ packages:
   /@mantine/nprogress/6.0.4_ordvvez6mrxlqyz6sv56zwslmq:
     resolution:
       { integrity: sha512-OVDMsUPHBWa3psgTkNbWEWqgkcidqiGhdGiwufSG8pszlZwweL+R59bQCt+Y0KClJQAKiR45NbJ/T7IgeQaYug== }
-    peerDependencies:
-      "@mantine/core": 6.0.4
-      "@mantine/hooks": 6.0.4
-      react: ">=16.8.0"
-      react-dom: ">=16.8.0"
-    dependencies:
-      "@mantine/core": 6.0.4_t7jtalnwvyidfaogp2b564lbfq
-      "@mantine/hooks": 6.0.4_react@18.2.0
-      "@mantine/utils": 6.0.4_react@18.2.0
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-    dev: false
-
-  /@mantine/spotlight/6.0.4_ordvvez6mrxlqyz6sv56zwslmq:
-    resolution:
-      { integrity: sha512-aKnInC2M+jaxq3LkFRTXxorGSpBzAdlGEPrYEFDO/akhAhok6W893Y6mXAs2Wtbc5IkaelIWpFv3EehR2gA5iA== }
     peerDependencies:
       "@mantine/core": 6.0.4
       "@mantine/hooks": 6.0.4
