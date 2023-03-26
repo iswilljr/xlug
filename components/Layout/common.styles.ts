@@ -18,7 +18,7 @@ export const useStyles = createStyles((theme) => {
       height: "100%",
       alignItems: "center",
       justifyContent: "space-between",
-      maxWidth: theme.breakpoints.xl,
+      maxWidth: theme.breakpoints.lg,
       padding: `0 ${rem(24)}`,
       [theme.fn.largerThan("sm")]: {
         padding: `0 ${rem(64)}`,
