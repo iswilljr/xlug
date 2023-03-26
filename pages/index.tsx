@@ -1,13 +1,12 @@
 import { Button } from "@/components/Button";
-import { createStyles, rem, SimpleGrid, Text, Title } from "@mantine/core";
+import { createStyles, Flex, SimpleGrid, Text, Title } from "@mantine/core";
 import Link from "next/link";
 
 const useStyles = createStyles((theme) => ({
   container: {
     position: "relative",
     margin: "auto",
-    maxWidth: theme.breakpoints.xl,
-    padding: `5rem ${rem(24)}`,
+    padding: "5rem 0",
     "::before": {
       content: '""',
       background: theme.fn.rgba(theme.colors.blue[7], 0.1),
@@ -19,14 +18,23 @@ const useStyles = createStyles((theme) => ({
       top: -50,
       zIndex: -1,
     },
-    [theme.fn.largerThan("sm")]: {
-      padding: `5rem ${rem(64)}`,
-    },
   },
   body: {
     gridColumn: "span 2",
   },
 }));
+
+const links = [
+  {
+    href: "/new",
+    label: "Get Started",
+  },
+  {
+    href: "/dashboard",
+    label: "Go to dashboard",
+    color: "cyan.7",
+  },
+];
 
 export default function Home() {
   const { classes } = useStyles();
@@ -39,9 +47,13 @@ export default function Home() {
           A link shortener tool that allows you to create shorter, more manageable versions of long URLs. Take the long
           URL and generate a unique, shortened URL that redirects to the original website when clicked.
         </Text>
-        <Button component={Link} href="/dashboard" w="fit-content" mt="xl" px="xl" py={8} lh={1} size={18}>
-          Get Started
-        </Button>
+        <Flex mt="xl" gap="xs">
+          {links.map((link) => (
+            <Button key={link.href} component={Link} href={link.href} color={link.color} px="md" py={8} size={16}>
+              {link.label}
+            </Button>
+          ))}
+        </Flex>
       </section>
     </SimpleGrid>
   );
