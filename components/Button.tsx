@@ -20,7 +20,7 @@ interface ButtonProps
 const useStyles = createStyles((theme, { color = "blue.7", size }: ButtonParams) => ({
   button: {
     color: "#ededed",
-    borderRadius: theme.radius.xs,
+    borderRadius: theme.radius.sm,
     paddingTop: rem(4),
     paddingBottom: rem(4),
     paddingLeft: theme.spacing.xs,
@@ -36,13 +36,10 @@ const useStyles = createStyles((theme, { color = "blue.7", size }: ButtonParams)
     transitionTimingFunction: "cubic-bezier(0,0,.2,1)",
     display: "block",
     backgroundColor: theme.fn.themeColor(color),
-    boxShadow: `${theme.colors.dark[0]} 0 0 0 0,${theme.colors.dark[0]} 0 0 0 0,${
-      theme.colors.dark[7]
-    } 0 1px 1px 0,${theme.fn.lighten(theme.fn.themeColor(color), 0.2)} 0 0 0 1px,${theme.colors.dark[0]} 0 0 0 0,${
-      theme.colors.dark[0]
-    } 0 0 0 0,rgb(64 68 82/8%) 0 2px 5px 0`,
+    boxShadow: theme.other.getBoxShadow(theme, theme.fn.lighten(theme.fn.themeColor(color), 0.2)),
     ":hover": {
       backgroundColor: theme.fn.lighten(theme.fn.themeColor(color), 0.1),
+      boxShadow: theme.other.getBoxShadow(theme, theme.fn.lighten(theme.fn.themeColor(color), 0.4)),
     },
   },
 }));
