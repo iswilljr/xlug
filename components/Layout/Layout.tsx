@@ -9,7 +9,7 @@ export function Layout(props: LayoutProps) {
     <AppShell
       styles={(theme) => ({
         main: {
-          minHeight: "calc(100vh - var(--mantine-header-height, 65px))",
+          minHeight: "calc(100vh - var(--mantine-header-height, 65px) - var(--mantine-footer-height, 65px))",
           maxWidth: theme.breakpoints.lg,
           margin: "auto",
           padding: `0 ${rem(24)}`,
