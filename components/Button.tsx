@@ -1,32 +1,32 @@
 import {
   rem,
   createStyles,
-  UnstyledButton,
   createPolymorphicComponent,
   type MantineColor,
-  type UnstyledButtonProps,
+  type ButtonProps,
+  Button,
 } from "@mantine/core";
 
 interface ButtonParams {
   color?: MantineColor;
-  size?: number;
 }
 
-interface ButtonProps
+interface _ButtonProps
   extends ButtonParams,
-    UnstyledButtonProps,
+    ButtonProps,
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color"> {}
 
-const useStyles = createStyles((theme, { color = "blue.7", size }: ButtonParams) => ({
-  button: {
+const useStyles = createStyles((theme, { color = "blue.7" }: ButtonParams) => ({
+  root: {
     color: "#ededed",
+    textDecoration: "none",
+    border: 0,
     borderRadius: theme.radius.sm,
     paddingTop: rem(4),
     paddingBottom: rem(4),
     paddingLeft: theme.spacing.xs,
     paddingRight: theme.spacing.xs,
     textAlign: "center",
-    fontSize: size ?? theme.fontSizes.xs,
     lineHeight: "1rem",
     outline: "2px solid transparent",
     outlineOffset: 2,
@@ -34,20 +34,23 @@ const useStyles = createStyles((theme, { color = "blue.7", size }: ButtonParams)
     transitionProperty: "all",
     transitionDuration: ".2s",
     transitionTimingFunction: "cubic-bezier(0,0,.2,1)",
-    display: "block",
     backgroundColor: theme.fn.themeColor(color),
     boxShadow: theme.other.getBoxShadow(theme, theme.fn.lighten(theme.fn.themeColor(color), 0.2)),
-    ":hover": {
+    ":not([data-disabled]):hover": {
       backgroundColor: theme.fn.lighten(theme.fn.themeColor(color), 0.1),
       boxShadow: theme.other.getBoxShadow(theme, theme.fn.lighten(theme.fn.themeColor(color), 0.4)),
     },
   },
+  leftIcon: { marginRight: 4 },
+  rightIcon: { marginLeft: 4 },
 }));
 
-export function _Button({ color, size, className, ...props }: ButtonProps) {
-  const { classes, cx } = useStyles({ color, size });
+export function _Button({ color, size, ...props }: _ButtonProps) {
+  const { classes } = useStyles({ color });
 
-  return <UnstyledButton className={cx(classes.button, className)} {...props} />;
+  return <Button h="auto" size={size ?? "md"} classNames={classes} {...props} />;
 }
 
-export const Button = createPolymorphicComponent<"button", ButtonProps>(_Button);
+const PolymorphicButton = createPolymorphicComponent<"button", ButtonProps>(_Button);
+
+export { PolymorphicButton as Button };

@@ -1,7 +1,6 @@
 import { Button } from "@/components/Button";
 import { IconGithub } from "@/components/icons";
 import { Box, Center } from "@mantine/core";
-import React from "react";
 
 export default function SignIn() {
   return (
@@ -20,7 +19,6 @@ export default function SignIn() {
           })}
           mt="sm"
           mx="auto"
-          size={16}
           color="gray.5"
         >
           <Center mr={4}>

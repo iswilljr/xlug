@@ -49,7 +49,7 @@ export default function Home() {
         </Text>
         <Flex mt="xl" gap="xs">
           {links.map((link) => (
-            <Button key={link.href} component={Link} href={link.href} color={link.color} px="md" py={8} size={16}>
+            <Button key={link.href} component={Link} href={link.href} color={link.color} px="md" py={8}>
               {link.label}
             </Button>
           ))}

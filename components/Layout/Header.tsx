@@ -1,4 +1,4 @@
-import { Flex, Header } from "@mantine/core";
+import { Anchor, Flex, Header } from "@mantine/core";
 import Link from "next/link";
 import { Button } from "../Button";
 import { Logo } from "../Logo";
@@ -12,10 +12,18 @@ export function _Header() {
       <Flex className={classes.body}>
         <Logo />
         <Flex gap={8}>
-          <Button component={Link} href="/signin" color="cyan.7">
+          <Anchor
+            size="xs"
+            component={Link}
+            href="/dashboard"
+            sx={{ color: "var(--color)", display: "flex", alignItems: "center" }}
+          >
+            Dashboard
+          </Anchor>
+          <Button component={Link} size="xs" href="/signin" color="cyan.7">
             Sign in
           </Button>
-          <Button component={Link} href="/new">
+          <Button component={Link} size="xs" href="/new">
             New Xlug
           </Button>
         </Flex>

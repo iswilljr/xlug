@@ -12,7 +12,7 @@ export function Create({ action }: CreateProps) {
       <Input id="destination" label="Destination URL" placeholder="https://xlug.vercel.app" inputMode="url" />
       <Input id="id" label="Custom Id" placeholder="xlug" inputMode="url" />
       <Input textarea id="description" label="Description (optional)" />
-      <Button px="xl" py={6} w="fit-content" size={16}>
+      <Button px="xl" py={6} w="fit-content">
         {action ?? "Create Xlug"}
       </Button>
     </Box>
