@@ -5,24 +5,27 @@ export interface Database {
     Tables: {
       xlugs: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           description: string | null;
           destination: string;
-          id: number;
+          id: string;
+          user_id: string | null;
           xlug: string;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           description?: string | null;
           destination: string;
-          id?: number;
+          id?: string;
+          user_id?: string | null;
           xlug: string;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           description?: string | null;
           destination?: string;
-          id?: number;
+          id?: string;
+          user_id?: string | null;
           xlug?: string;
         };
       };
@@ -31,18 +34,10 @@ export interface Database {
       [_ in never]: never;
     };
     Functions: {
-      authorize: {
-        Args: {
-          requested_permission: Database["public"]["Enums"]["app_permission"];
-          user_id: string;
-        };
-        Returns: boolean;
-      };
+      [_ in never]: never;
     };
     Enums: {
-      app_permission: "channels.delete" | "messages.delete";
-      app_role: "admin" | "moderator";
-      user_status: "ONLINE" | "OFFLINE";
+      [_ in never]: never;
     };
     CompositeTypes: {
       [_ in never]: never;
