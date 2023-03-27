@@ -33,6 +33,7 @@ specifiers:
   prettier: 2.8.6
   react: 18.2.0
   react-dom: 18.2.0
+  redaxios: 0.5.1
   sonner: 0.3.0
   typescript: 5.0.2
   zod: 3.21.4
@@ -52,6 +53,7 @@ dependencies:
   next-seo: 5.15.0_ld2jel3hspngo3u5lti2kgl2sq
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  redaxios: 0.5.1
   sonner: 0.3.0_biqbaboplfbrettd7655fr4n2y
   zod: 3.21.4
 
@@ -3723,6 +3725,11 @@ packages:
       safe-buffer: 5.1.2
       string_decoder: 1.1.1
       util-deprecate: 1.0.2
+
+  /redaxios/0.5.1:
+    resolution:
+      { integrity: sha512-FSD2AmfdbkYwl7KDExYQlVvIrFz6Yd83pGfaGjBzM9F6rpq8g652Q4Yq5QD4c+nf4g2AgeElv1y+8ajUPiOYMg== }
+    dev: false
 
   /regenerator-runtime/0.13.11:
     resolution:
