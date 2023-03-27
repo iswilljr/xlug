@@ -1,5 +1,8 @@
 import dynamic from "next/dynamic";
+import { useRef } from "react";
 import { MantineProvider } from "@mantine/core";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { DefaultSeo } from "next-seo";
 import { defaultSeo } from "@/next-seo.config";
 import { theme } from "@/utils/theme";
@@ -12,16 +15,19 @@ const NavigationProgress = dynamic(async () => (await import("@/components/Navig
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const supabaseClient = useRef(createBrowserSupabaseClient()).current;
   const { layoutProps } = Component as any;
 
   return (
     <MantineProvider withNormalizeCSS withCSSVariables theme={theme}>
-      <Layout {...layoutProps}>
-        <DefaultSeo {...defaultSeo} />
-        <Component {...pageProps} />
-        <NavigationProgress />
-        <Toaster position="bottom-right" theme="dark" closeButton richColors />
-      </Layout>
+      <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.session}>
+        <Layout {...layoutProps}>
+          <DefaultSeo {...defaultSeo} />
+          <Component {...pageProps} />
+          <NavigationProgress />
+          <Toaster position="bottom-right" theme="dark" closeButton richColors />
+        </Layout>
+      </SessionContextProvider>
     </MantineProvider>
   );
 }
