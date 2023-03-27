@@ -36,9 +36,13 @@ const useStyles = createStyles((theme, { color = "blue.7" }: ButtonParams) => ({
     transitionTimingFunction: "cubic-bezier(0,0,.2,1)",
     backgroundColor: theme.fn.themeColor(color),
     boxShadow: theme.other.getBoxShadow(theme, theme.fn.lighten(theme.fn.themeColor(color), 0.2)),
-    ":not([data-disabled]):hover": {
+    ":not([data-disabled], :disabled):hover": {
       backgroundColor: theme.fn.lighten(theme.fn.themeColor(color), 0.1),
       boxShadow: theme.other.getBoxShadow(theme, theme.fn.lighten(theme.fn.themeColor(color), 0.4)),
+    },
+    ":disabled, [data-disabled]": {
+      color: "var(--color)",
+      backgroundColor: theme.fn.darken(theme.fn.themeColor(color), 0.1),
     },
   },
   leftIcon: { marginRight: 4 },
