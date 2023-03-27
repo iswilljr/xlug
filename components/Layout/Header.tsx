@@ -1,11 +1,17 @@
 import { Anchor, Flex, Header } from "@mantine/core";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "../Button";
 import { Logo } from "../Logo";
 import { useStyles } from "./common.styles";
 
 export function _Header() {
   const { classes, cx } = useStyles();
+  const [loading, setLoading] = useState(false);
+  const session = useSession();
+  const supabase = useSupabaseClient();
 
   return (
     <Header className={cx(classes.container, classes.header)} height={65}>
@@ -20,9 +26,28 @@ export function _Header() {
           >
             Dashboard
           </Anchor>
-          <Button component={Link} size="xs" href="/signin" color="cyan.7">
-            Sign in
-          </Button>
+          {session ? (
+            <Button
+              loading={loading}
+              color="cyan.7"
+              size="xs"
+              onClick={async () => {
+                if (loading) return;
+
+                setLoading(true);
+                const { error } = await supabase.auth.signOut();
+                if (error) toast.error(error.message);
+                else toast.success("Successfully signed out");
+                setLoading(false);
+              }}
+            >
+              Logout
+            </Button>
+          ) : (
+            <Button component={Link} size="xs" href="/signin" color="cyan.7">
+              Sign in
+            </Button>
+          )}
           <Button component={Link} size="xs" href="/new">
             New Xlug
           </Button>
