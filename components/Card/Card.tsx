@@ -29,7 +29,7 @@ export function Card({
 
   const { id, xlug, destination, description } = data;
 
-  const link = `https://xlug.vercel.app/x/${xlug}`;
+  const link = `${process.env.NEXT_PUBLIC_URL ?? ""}/x/${xlug}`;
 
   const actionNodes: Record<Action, React.FC> = {
     copy: () => <ActionCopy link={link} {...actionCopyProps} />,
