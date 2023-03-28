@@ -1,6 +1,7 @@
 import { Anchor, Flex, Header } from "@mantine/core";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../Button";
@@ -8,6 +9,7 @@ import { Logo } from "../Logo";
 import { useStyles } from "./common.styles";
 
 export function _Header() {
+  const router = useRouter();
   const { classes, cx } = useStyles();
   const [loading, setLoading] = useState(false);
   const session = useSession();
@@ -44,7 +46,12 @@ export function _Header() {
               Logout
             </Button>
           ) : (
-            <Button component={Link} size="xs" href="/signin" color="cyan.7">
+            <Button
+              component={Link}
+              size="xs"
+              href={{ pathname: "/signin", query: { redirectTo: router.pathname } }}
+              color="cyan.7"
+            >
               Sign in
             </Button>
           )}

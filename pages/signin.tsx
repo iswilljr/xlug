@@ -5,9 +5,13 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import type { GetServerSideProps } from "next";
 import type { Database } from "@/types/supabase";
+import { useRouter } from "next/router";
 
 export default function SignIn() {
   const supabase = useSupabaseClient<Database>();
+
+  const { query } = useRouter();
+  const redirectTo = typeof query.redirectTo === "string" ? query.redirectTo : "/";
 
   return (
     <Center w="100%" mih="100vh">
@@ -26,7 +30,14 @@ export default function SignIn() {
           mt="sm"
           mx="auto"
           color="gray.5"
-          onClick={() => supabase.auth.signInWithOAuth({ provider: "github" })}
+          onClick={() =>
+            supabase.auth.signInWithOAuth({
+              provider: "github",
+              options: {
+                redirectTo: new URL(redirectTo, window.location.href).toString(),
+              },
+            })
+          }
         >
           <Center mr={4}>
             <IconGithub fill="#fff" size={30} />
