@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import { Anchor, Text } from "@mantine/core";
+import { Anchor, Flex, Text } from "@mantine/core";
 import { useStyles } from "./Card.styles";
 import { ActionCopy, type ActionCopyProps } from "./Actions/Copy";
-import { ActionEdit, type ActionsEditProps } from "./Actions/Edit";
+import { ActionEdit, type ActionEditProps } from "./Actions/Edit";
 import { ActionDelete, type ActionDeleteProps } from "./Actions/Delete";
 import type { Database } from "@/types/supabase";
 
@@ -11,21 +11,14 @@ export type Action = "copy" | "delete" | "edit";
 export interface CardProps {
   actions: Action[];
   data: Database["public"]["Tables"]["xlugs"]["Row"];
-  withActions?: boolean;
+  layout: "list" | "grid";
   actionCopyProps?: Partial<ActionCopyProps>;
   actionDeleteProps?: Partial<ActionDeleteProps>;
-  actionEditProps?: Partial<ActionsEditProps>;
+  actionEditProps?: Partial<ActionEditProps>;
 }
 
-export function Card({
-  data,
-  withActions = true,
-  actions,
-  actionCopyProps,
-  actionDeleteProps,
-  actionEditProps,
-}: CardProps) {
-  const { classes, cx } = useStyles();
+export function Card({ data, actions, actionCopyProps, actionDeleteProps, actionEditProps }: CardProps) {
+  const { classes } = useStyles();
 
   const { id, xlug, destination, description } = data;
 
@@ -39,19 +32,23 @@ export function Card({
 
   return (
     <div className={classes.container}>
-      <Anchor className={cx(classes.link, classes.truncate)} target="_blank" rel="noreferrer" href={link}>
-        /x/{xlug}
-      </Anchor>
-      <Text className={classes.destination}>{destination}</Text>
-      <Text lineClamp={4} className={classes.description}>
+      <Flex align="center" justify="space-between" gap="xs">
+        <Anchor lineClamp={1} className={classes.link} target="_blank" rel="noreferrer" href={link}>
+          {`/x/${xlug}`}
+        </Anchor>
+        <div className={classes.actions}>
+          {actions.map((action) => {
+            const Component = actionNodes[action];
+            return <Component key={action} />;
+          })}
+        </div>
+      </Flex>
+      <Text lineClamp={1} className={classes.destination}>
+        {destination}
+      </Text>
+      <Text lineClamp={1} className={classes.description}>
         {description || "No description provided"}
       </Text>
-      <div className={classes.actions}>
-        {actions.map((action) => {
-          const Component = actionNodes[action];
-          return <Component key={action} />;
-        })}
-      </div>
     </div>
   );
 }

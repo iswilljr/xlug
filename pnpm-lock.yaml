@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   "@emotion/react": 11.10.6
   "@emotion/server": 11.10.0
+  "@formkit/auto-animate": 1.0.0-beta.6
   "@mantine/core": 6.0.4
   "@mantine/form": 6.0.4
   "@mantine/hooks": 6.0.4
@@ -18,6 +19,7 @@ specifiers:
   "@types/react-dom": 18.0.11
   "@typescript-eslint/eslint-plugin": 5.56.0
   "@typescript-eslint/parser": 5.56.0
+  cookies-next: 2.1.1
   eslint: 8.36.0
   eslint-config-next: 13.2.4
   eslint-config-prettier: 8.8.0
@@ -39,6 +41,7 @@ specifiers:
   zod: 3.21.4
 
 dependencies:
+  "@formkit/auto-animate": 1.0.0-beta.6
   "@mantine/core": 6.0.4_t7jtalnwvyidfaogp2b564lbfq
   "@mantine/form": 6.0.4_react@18.2.0
   "@mantine/hooks": 6.0.4_react@18.2.0
@@ -49,6 +52,7 @@ dependencies:
   "@supabase/auth-helpers-react": 0.3.1_pz5pnydt2nehkak4aetyy3l46i
   "@supabase/supabase-js": 2.12.1
   "@tabler/icons-react": 2.11.0_react@18.2.0
+  cookies-next: 2.1.1
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   next-seo: 5.15.0_ld2jel3hspngo3u5lti2kgl2sq
   react: 18.2.0
@@ -308,6 +312,11 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       tabbable: 6.1.1
+    dev: false
+
+  /@formkit/auto-animate/1.0.0-beta.6:
+    resolution:
+      { integrity: sha512-PVDhLAlr+B4Xb7e+1wozBUWmXa6BFU8xUPR/W/E+TsQhPS1qkAdAsJ25keEnFrcePSnXHrOsh3tiFbEToOzV9w== }
     dev: false
 
   /@humanwhocodes/config-array/0.11.8:
@@ -886,6 +895,11 @@ packages:
       { integrity: sha512-KPESQnvHoSpbAdgzDdrSmeZ9AE8fSU12fU3Cag79uXJCUkC8f741fcvPJPsFMDe0S96VSq3mMYF8JnA7a570uQ== }
     dev: false
 
+  /@types/cookie/0.4.1:
+    resolution:
+      { integrity: sha512-XW/Aa8APYr6jSVVA1y/DEIZX0/GMKLEVekNG727R8cs56ahETkRAy/3DR7+fJyh7oUgGwNQaRfXCun0+KbWY7Q== }
+    dev: false
+
   /@types/json-schema/7.0.11:
     resolution:
       { integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ== }
@@ -895,6 +909,11 @@ packages:
     resolution:
       { integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ== }
     dev: true
+
+  /@types/node/16.18.21:
+    resolution:
+      { integrity: sha512-TassPGd0AEZWA10qcNnXnSNwHlLfSth8XwUaWc3gTSDmBz/rKb613Qw5qRf6o2fdRBrLbsgeC9PMZshobkuUqg== }
+    dev: false
 
   /@types/node/18.15.6:
     resolution:
@@ -1444,6 +1463,21 @@ packages:
   /convert-source-map/1.9.0:
     resolution:
       { integrity: sha512-ASFBup0Mz1uyiIjANan1jzLQami9z1PoYSZCiiYW2FczPbenXc45FZdBZLzOT+r6+iciuEModtmCti+hjaAk0A== }
+
+  /cookie/0.4.2:
+    resolution:
+      { integrity: sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA== }
+    engines: { node: ">= 0.6" }
+    dev: false
+
+  /cookies-next/2.1.1:
+    resolution:
+      { integrity: sha512-AZGZPdL1hU3jCjN2UMJTGhLOYzNUN9Gm+v8BdptYIHUdwz397Et1p+sZRfvAl8pKnnmMdX2Pk9xDRKCGBum6GA== }
+    dependencies:
+      "@types/cookie": 0.4.1
+      "@types/node": 16.18.21
+      cookie: 0.4.2
+    dev: false
 
   /core-util-is/1.0.3:
     resolution:
