@@ -16,7 +16,7 @@ interface _ButtonProps
     ButtonProps,
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color"> {}
 
-const useStyles = createStyles((theme, { color = "blue.7" }: ButtonParams) => ({
+export const useStyles = createStyles((theme, { color = "blue.7" }: ButtonParams) => ({
   root: {
     color: "#ededed",
     textDecoration: "none",
