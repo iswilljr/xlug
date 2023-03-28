@@ -1,9 +1,9 @@
 import type { NextSeoProps } from "next-seo";
 
-const config: NextSeoProps = {
+export const defaultSeo: NextSeoProps = {
   title: "URL Shortener",
   titleTemplate: "%s - xlug",
-  description: "A URL shortener built with Nextjs",
+  description: "A URL shortener built with NextJs",
   defaultTitle: "xlug",
   additionalLinkTags: [
     {
@@ -31,27 +31,11 @@ const config: NextSeoProps = {
       sizes: "152x152",
     },
   ],
-  additionalMetaTags: [
-    {
-      name: "viewport",
-      content: "width=device-width, initial-scale=1.0",
-    },
-  ],
-  canonical: "https://xlug.vercel.app",
-  themeColor: "#00060d",
   openGraph: {
     site_name: "xlug",
     url: "https://xlug.vercel.app",
     type: "website",
     locale: "en_US",
-    images: [
-      {
-        url: "https://xlug.vercel.app/banner.jpg",
-        width: 1920,
-        height: 1080,
-        type: "image/jpg",
-      },
-    ],
   },
   twitter: {
     handle: "@iswilljr",
@@ -59,5 +43,3 @@ const config: NextSeoProps = {
     cardType: "summary_large_image",
   },
 };
-
-export default config;
