@@ -2,8 +2,9 @@ import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { editXlugSchema } from "@/utils/schemas";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { Database } from "@/types/supabase";
+import { apiHandler } from "@/utils/handler";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function editXlug(req: NextApiRequest, res: NextApiResponse) {
   const { id, xlug, destination, description } = editXlugSchema.parse(req.body);
 
   if (!id) return res.status(400).json({ message: "The id is required" });
@@ -21,7 +22,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     .select("*")
     .single();
 
-  if (error) return res.status(404).json(error.message);
+  if (error) throw new Error(error.message, { cause: error.code });
 
   return res.json(data);
 }
+
+export default apiHandler(editXlug);

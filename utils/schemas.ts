@@ -3,10 +3,6 @@ import { z } from "zod";
 const urlMessage = "Destination should be a valid url";
 const xlugMinMessage = "Xlug must contain at least 1 character";
 
-export const getUniqueXlugSchema = z.object({
-  xlug: z.string().min(1, { message: xlugMinMessage }),
-});
-
 export const deleteXlugSchema = z.object({
   id: z.string().uuid(),
 });

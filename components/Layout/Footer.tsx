@@ -11,7 +11,7 @@ export function _Footer() {
         <Text color="gray.9" size="xs">
           Made by{" "}
           <Anchor
-            color="blue.7"
+            color="blue.9"
             href="https://github.com/iswilljr"
             target="_blank"
             rel="noreferrer"

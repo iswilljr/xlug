@@ -8,16 +8,14 @@ import { type FormErrors, useForm, zodResolver } from "@mantine/form";
 import axios, { type Response } from "redaxios";
 import { toast } from "sonner";
 import type { ZodSchema } from "zod";
-import type { Database } from "@/types/supabase";
-
-type Values = Database["public"]["Tables"]["xlugs"]["Insert" | "Update"];
+import type { CreateXlug } from "@/types";
 
 interface CreateProps {
   actionLabel: string;
   action: string;
-  schema: ZodSchema<Values>;
+  schema: ZodSchema<CreateXlug>;
   successMessage: string;
-  initialValues: Values;
+  initialValues: CreateXlug;
   buttonPosition?: "left" | "right";
   onFinish?: (res: Response<any>) => void;
   onUpdate?: (res: Response<any>) => void;
@@ -56,10 +54,10 @@ export function Create({
         if (!session) onUpdate?.(res);
 
         toast.success(successMessage);
-        void router.push("/dashboard");
+        void router.push("/dashboard", undefined, { scroll: false });
         onFinish?.(res);
       } catch (error: any) {
-        const message = typeof error.data === "string" ? error.data : error.data?.message;
+        const message = typeof error?.data?.message === "string" ? error.data.message : null;
         toast.error(message ?? "Something went wrong, try again");
       } finally {
         setSubmitting(false);

@@ -5,6 +5,7 @@ import { useStyles } from "./action.styles";
 
 export interface ActionCopyProps {
   link: string;
+  buttonRef: React.ForwardedRef<HTMLButtonElement>;
 }
 
 const copyToClipboard = async (txt: string) => {
@@ -19,11 +20,16 @@ const copyToClipboard = async (txt: string) => {
   toast.success("Copied to clipboard!");
 };
 
-export function ActionCopy({ link }: ActionCopyProps) {
+export function ActionCopy({ link, buttonRef }: ActionCopyProps) {
   const { classes } = useStyles();
 
   return (
-    <UnstyledButton className={classes.action} onClick={() => copyToClipboard(link)}>
+    <UnstyledButton
+      ref={buttonRef}
+      aria-label="Copy the shortened link"
+      className={classes.action}
+      onClick={() => copyToClipboard(link)}
+    >
       <IconCopy size={18} />
     </UnstyledButton>
   );

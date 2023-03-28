@@ -10,18 +10,16 @@ export const useStyles = createStyles((theme) => ({
     border: `1px solid ${theme.fn.darken(theme.fn.themeColor("blue.2"), 0.1)}`,
     transition: "all .2s",
     padding: theme.spacing.md,
+    paddingTop: theme.spacing.xs,
     ":hover": {
       backgroundColor: theme.fn.rgba(theme.colors.cyan[7], 0.5),
     },
   },
   actions: {
-    position: "absolute",
     opacity: 0,
     display: "flex",
     alignItems: "center",
     transition: "all .2s",
-    top: theme.spacing.md,
-    right: theme.spacing.md,
     [`.${getStylesRef("container")}:hover &`]: {
       opacity: 1,
     },
@@ -29,10 +27,12 @@ export const useStyles = createStyles((theme) => ({
   link: {
     fontSize: theme.fontSizes.xl,
     color: "var(--color)",
+    lineBreak: "anywhere",
     fontWeight: "bold",
   },
   destination: {
     color: theme.fn.darken("#ededed", 0.15),
+    lineBreak: "anywhere",
   },
   description: {
     color: theme.colors.gray[9],
