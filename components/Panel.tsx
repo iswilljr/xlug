@@ -1,10 +1,11 @@
-import { Center, Flex, SimpleGrid, Title, UnstyledButton } from "@mantine/core";
+import { Center, Flex, SimpleGrid, Title, Tooltip, UnstyledButton, useMantineTheme } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { IconGridDots, IconList } from "@tabler/icons-react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { setCookie } from "cookies-next";
 import { useState } from "react";
 import { Card } from "./Card/Card";
+import { useMediaQuery } from "@mantine/hooks";
 import type { Xlug } from "@/types";
 
 interface PanelProps {
@@ -18,6 +19,8 @@ export default function Panel({ xlugs, localXlugs, layout: initialLayout, update
   const [layout, setLayout] = useState(initialLayout);
   const [accountGridRef] = useAutoAnimate();
   const [localGridRef] = useAutoAnimate();
+  const theme = useMantineTheme();
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
 
   const cols = layout === "grid" ? 4 : 1;
   const breakpoints =
@@ -36,16 +39,20 @@ export default function Panel({ xlugs, localXlugs, layout: initialLayout, update
 
   const list = (
     <Flex align="center" gap="xs">
-      <UnstyledButton c="gray.9" onClick={() => update("list")}>
-        <Center>
-          <IconList />
-        </Center>
-      </UnstyledButton>
-      <UnstyledButton c="gray.9" onClick={() => update("grid")}>
-        <Center>
-          <IconGridDots />
-        </Center>
-      </UnstyledButton>
+      <Tooltip disabled={isMobile} label="List style" sx={(theme) => ({ backgroundColor: theme.white })}>
+        <UnstyledButton aria-label="List style" c="gray.9" onClick={() => update("list")}>
+          <Center>
+            <IconList />
+          </Center>
+        </UnstyledButton>
+      </Tooltip>
+      <Tooltip disabled={isMobile} label="Grid style" sx={(theme) => ({ backgroundColor: theme.white })}>
+        <UnstyledButton aria-label="Grid style" c="gray.9" onClick={() => update("grid")}>
+          <Center>
+            <IconGridDots />
+          </Center>
+        </UnstyledButton>
+      </Tooltip>
     </Flex>
   );
 

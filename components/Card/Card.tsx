@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import { Anchor, Flex, Text, Tooltip } from "@mantine/core";
+import { Anchor, Flex, Text, Tooltip, useMantineTheme } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { useStyles } from "./Card.styles";
 import { ActionCopy, type ActionCopyProps } from "./Actions/Copy";
 import { ActionEdit, type ActionEditProps } from "./Actions/Edit";
@@ -19,6 +20,8 @@ export interface CardProps {
 
 export function Card({ data, actions, actionCopyProps, actionDeleteProps, actionEditProps }: CardProps) {
   const { classes } = useStyles();
+  const theme = useMantineTheme();
+  const isMobile = useMediaQuery(`(max-width: ${theme.breakpoints.xs})`);
 
   const { id, xlug, destination, description } = data;
 
@@ -52,8 +55,9 @@ export function Card({ data, actions, actionCopyProps, actionDeleteProps, action
 
             return (
               <Tooltip
-                label={label}
                 key={action}
+                disabled={isMobile}
+                label={label}
                 openDelay={300}
                 sx={(theme) => ({ backgroundColor: theme.white })}
                 refProp="buttonRef"
