@@ -56,7 +56,7 @@ export function Create({
         if (!session) onUpdate?.(res);
 
         toast.success(successMessage);
-        void router.push("/dashboard");
+        void router.push("/dashboard", undefined, { scroll: false });
         onFinish?.(res);
       } catch (error: any) {
         const message = typeof error.data === "string" ? error.data : error.data?.message;

@@ -1,4 +1,4 @@
-import { Title, UnstyledButton } from "@mantine/core";
+import { Text, UnstyledButton } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
 import { useStyles as useButtonStyles } from "@/components/Button";
 import axios from "redaxios";
@@ -23,7 +23,11 @@ export function ActionDelete({ id, onDelete }: ActionDeleteProps) {
       className={cx(classes.action, classes.dangerAction)}
       onClick={() =>
         openConfirmModal({
-          title: <Title size="xl">Confirm to delete</Title>,
+          title: (
+            <Text weight="bold" size="md">
+              Confirm to delete
+            </Text>
+          ),
           children:
             "Are you sure about deleting this xlug? This action cannot be reversed and you will not be able to restore all data.",
           labels: {
@@ -49,7 +53,7 @@ export function ActionDelete({ id, onDelete }: ActionDeleteProps) {
                 onDelete();
               } else {
                 await axios.post("/api/xlug/delete", { id });
-                void router.push("/dashboard");
+                void router.push("/dashboard", undefined, { scroll: false });
               }
 
               toast.success("Successfully deleted your xlug");
