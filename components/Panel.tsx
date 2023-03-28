@@ -14,7 +14,7 @@ interface PanelProps {
 export default function Panel({ xlugs, localXlugs, updateXlugs }: PanelProps) {
   return (
     <ModalsProvider>
-      {xlugs && (
+      {xlugs && xlugs.length > 0 && (
         <>
           <Title w="100%" size={24}>
             Your account xlugs
@@ -24,7 +24,7 @@ export default function Panel({ xlugs, localXlugs, updateXlugs }: PanelProps) {
           ))}
         </>
       )}
-      {localXlugs && (
+      {localXlugs && localXlugs.length > 0 && (
         <>
           <Title w="100%" size={24}>
             Your local xlugs
