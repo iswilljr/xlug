@@ -57,7 +57,7 @@ export function Create({
         void router.push("/dashboard", undefined, { scroll: false });
         onFinish?.(res);
       } catch (error: any) {
-        const message = typeof error.data === "string" ? error.data : error.data?.message;
+        const message = typeof error?.data?.message === "string" ? error.data.message : null;
         toast.error(message ?? "Something went wrong, try again");
       } finally {
         setSubmitting(false);

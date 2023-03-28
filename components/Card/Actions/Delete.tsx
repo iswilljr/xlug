@@ -58,7 +58,7 @@ export function ActionDelete({ id, onDelete }: ActionDeleteProps) {
 
               toast.success("Successfully deleted your xlug");
             } catch (error: any) {
-              const message = typeof error.data === "string" ? error.data : error.data?.message;
+              const message = typeof error?.data?.message === "string" ? error.data.message : null;
               toast.error(message ?? "Something went wrong, try again");
             }
           },

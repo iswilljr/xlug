@@ -2,15 +2,16 @@ import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { newXlugSchema } from "@/utils/schemas";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { Database } from "@/types/supabase";
+import { apiHandler } from "@/utils/handler";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function createNewXlug(req: NextApiRequest, res: NextApiResponse) {
   const { xlug, destination, description } = newXlugSchema.parse(req.body);
 
   const supabase = createServerSupabaseClient<Database>({ req, res });
   const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
   const { session } = sessionData;
 
-  if (sessionError) return res.status(404).json(sessionError.message);
+  if (sessionError) throw new Error(sessionError.message, { cause: sessionError.cause });
 
   const { data, error } = await supabase
     .from("xlugs")
@@ -23,7 +24,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     .select("*")
     .single();
 
-  if (error) return res.status(404).json(error.message);
+  if (error) throw new Error(error.message, { cause: error.code });
 
   return res.json(data);
 }
+
+export default apiHandler(createNewXlug);
