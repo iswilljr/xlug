@@ -10,18 +10,17 @@ import { toast } from "sonner";
 import type { ZodSchema } from "zod";
 import type { Database } from "@/types/supabase";
 
-const initialValues: Database["public"]["Tables"]["xlugs"]["Insert"] = {
-  xlug: "",
-  destination: "",
-  description: "",
-};
+type Values = Database["public"]["Tables"]["xlugs"]["Insert" | "Update"];
 
 interface CreateProps {
   actionLabel: string;
   action: string;
-  schema: ZodSchema<typeof initialValues>;
+  schema: ZodSchema<Values>;
   successMessage: string;
-  onUpdate: (res: Response<any>) => void;
+  initialValues: Values;
+  buttonPosition?: "left" | "right";
+  onFinish?: (res: Response<any>) => void;
+  onUpdate?: (res: Response<any>) => void;
 }
 
 const onError = (errors: FormErrors) => {
@@ -29,7 +28,16 @@ const onError = (errors: FormErrors) => {
   toast.error(errors[key]);
 };
 
-export function Create({ actionLabel, action, successMessage, schema, onUpdate }: CreateProps) {
+export function Create({
+  actionLabel,
+  action,
+  successMessage,
+  schema,
+  initialValues,
+  buttonPosition = "left",
+  onFinish,
+  onUpdate,
+}: CreateProps) {
   const router = useRouter();
   const session = useSession();
   const [submitting, setSubmitting] = useState(false);
@@ -45,10 +53,11 @@ export function Create({ actionLabel, action, successMessage, schema, onUpdate }
 
       try {
         const res = await axios.post(action, values);
-        if (!session) onUpdate(res);
+        if (!session) onUpdate?.(res);
 
         toast.success(successMessage);
         void router.push("/dashboard");
+        onFinish?.(res);
       } catch (error: any) {
         const message = typeof error.data === "string" ? error.data : error.data?.message;
         toast.error(message ?? "Something went wrong, try again");
@@ -56,7 +65,7 @@ export function Create({ actionLabel, action, successMessage, schema, onUpdate }
         setSubmitting(false);
       }
     },
-    [action, successMessage, onUpdate, router, session, submitting]
+    [action, successMessage, onUpdate, onFinish, router, session, submitting]
   );
 
   return (
@@ -64,7 +73,6 @@ export function Create({ actionLabel, action, successMessage, schema, onUpdate }
       aria-disabled={submitting}
       onSubmit={onSubmit(onValid, onError)}
       component="form"
-      py="md"
       sx={{ display: "grid", gap: 12 }}
     >
       <Input id="id" label="Custom Id" placeholder="xlug" {...getInputProps("xlug")} />
@@ -76,7 +84,16 @@ export function Create({ actionLabel, action, successMessage, schema, onUpdate }
         {...getInputProps("destination")}
       />
       <Input textarea id="description" label="Description (optional)" {...getInputProps("description")} />
-      <Button loading={submitting} disabled={submitting} h={32} type="submit" px="xl" py={6} w="fit-content">
+      <Button
+        loading={submitting}
+        disabled={submitting}
+        h={32}
+        type="submit"
+        px="xl"
+        py={6}
+        w="fit-content"
+        sx={{ justifySelf: buttonPosition === "left" ? "flex-start" : "flex-end" }}
+      >
         {actionLabel}
       </Button>
     </Box>
