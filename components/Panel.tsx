@@ -1,4 +1,3 @@
-import type { Database } from "@/types/supabase";
 import { Center, Flex, SimpleGrid, Title, UnstyledButton } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
 import { IconGridDots, IconList } from "@tabler/icons-react";
@@ -6,8 +5,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { setCookie } from "cookies-next";
 import { useState } from "react";
 import { Card } from "./Card/Card";
-
-type Xlug = Database["public"]["Tables"]["xlugs"]["Row"];
+import type { Xlug } from "@/types";
 
 interface PanelProps {
   xlugs?: Xlug[] | null;

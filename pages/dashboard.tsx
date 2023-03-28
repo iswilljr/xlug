@@ -8,9 +8,10 @@ import { useLocalStorage } from "@mantine/hooks";
 import Panel from "@/components/Panel";
 import type { GetServerSideProps } from "next";
 import type { Database } from "@/types/supabase";
+import type { Xlug } from "@/types";
 
 interface DashboardProps {
-  data?: Array<Database["public"]["Tables"]["xlugs"]["Row"]> | null;
+  data?: Xlug[] | null;
   layout: "list" | "grid";
 }
 

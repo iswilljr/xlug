@@ -4,13 +4,13 @@ import { useStyles } from "./Card.styles";
 import { ActionCopy, type ActionCopyProps } from "./Actions/Copy";
 import { ActionEdit, type ActionEditProps } from "./Actions/Edit";
 import { ActionDelete, type ActionDeleteProps } from "./Actions/Delete";
-import type { Database } from "@/types/supabase";
+import type { Xlug } from "@/types";
 
 export type Action = "copy" | "delete" | "edit";
 
 export interface CardProps {
   actions: Action[];
-  data: Database["public"]["Tables"]["xlugs"]["Row"];
+  data: Xlug;
   layout: "list" | "grid";
   actionCopyProps?: Partial<ActionCopyProps>;
   actionDeleteProps?: Partial<ActionDeleteProps>;

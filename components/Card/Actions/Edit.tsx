@@ -4,10 +4,10 @@ import { IconPencil } from "@tabler/icons-react";
 import { editXlugSchema } from "@/utils/schemas";
 import { Create } from "@/components/Create";
 import { useStyles } from "./action.styles";
-import type { Database } from "@/types/supabase";
+import type { Xlug } from "@/types";
 
 export interface ActionEditProps {
-  data: Database["public"]["Tables"]["xlugs"]["Row"];
+  data: Xlug;
 }
 
 export function ActionEdit({ data }: ActionEditProps) {
