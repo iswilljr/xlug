@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-import { Anchor, Flex, Text } from "@mantine/core";
+import { Anchor, Flex, Text, Tooltip } from "@mantine/core";
 import { useStyles } from "./Card.styles";
 import { ActionCopy, type ActionCopyProps } from "./Actions/Copy";
 import { ActionEdit, type ActionEditProps } from "./Actions/Edit";
@@ -24,10 +24,19 @@ export function Card({ data, actions, actionCopyProps, actionDeleteProps, action
 
   const link = `${process.env.NEXT_PUBLIC_URL ?? ""}/x/${xlug}`;
 
-  const actionNodes: Record<Action, React.FC> = {
-    copy: () => <ActionCopy link={link} {...actionCopyProps} />,
-    delete: () => <ActionDelete id={id} {...actionDeleteProps} />,
-    edit: () => <ActionEdit data={data} {...actionEditProps} />,
+  const actionProps: Omit<ActionCopyProps & ActionDeleteProps & ActionEditProps, "buttonRef"> = {
+    data,
+    id,
+    link,
+    ...actionCopyProps,
+    ...actionDeleteProps,
+    ...actionEditProps,
+  };
+
+  const actionNodes: Record<Action, React.FC<any>> = {
+    copy: ActionCopy,
+    delete: ActionDelete,
+    edit: ActionEdit,
   };
 
   return (
@@ -39,7 +48,19 @@ export function Card({ data, actions, actionCopyProps, actionDeleteProps, action
         <div className={classes.actions}>
           {actions.map((action) => {
             const Component = actionNodes[action];
-            return <Component key={action} />;
+            const label = `${action[0].toUpperCase()}${action.slice(1)}`;
+
+            return (
+              <Tooltip
+                label={label}
+                key={action}
+                openDelay={300}
+                sx={(theme) => ({ backgroundColor: theme.white })}
+                refProp="buttonRef"
+              >
+                <Component {...actionProps} />
+              </Tooltip>
+            );
           })}
         </div>
       </Flex>

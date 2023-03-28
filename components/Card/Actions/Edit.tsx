@@ -8,15 +8,18 @@ import type { Xlug } from "@/types";
 
 export interface ActionEditProps {
   data: Xlug;
+  buttonRef: React.ForwardedRef<HTMLButtonElement>;
 }
 
-export function ActionEdit({ data }: ActionEditProps) {
+export function ActionEdit({ data, buttonRef }: ActionEditProps) {
   const { classes } = useStyles();
 
   const { id, xlug, destination, description } = data;
 
   return (
     <UnstyledButton
+      ref={buttonRef}
+      aria-label="Edit the shortened link"
       className={classes.action}
       onClick={() => {
         openModal({

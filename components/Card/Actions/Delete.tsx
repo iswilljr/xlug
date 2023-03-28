@@ -9,10 +9,11 @@ import { IconTrash } from "@tabler/icons-react";
 
 export interface ActionDeleteProps {
   id: string;
+  buttonRef: React.ForwardedRef<HTMLButtonElement>;
   onDelete?: () => void;
 }
 
-export function ActionDelete({ id, onDelete }: ActionDeleteProps) {
+export function ActionDelete({ id, buttonRef, onDelete }: ActionDeleteProps) {
   const router = useRouter();
   const { classes, cx } = useStyles();
   const { classes: deleteButtonClasses } = useButtonStyles({ color: "red.7" });
@@ -20,6 +21,8 @@ export function ActionDelete({ id, onDelete }: ActionDeleteProps) {
 
   return (
     <UnstyledButton
+      ref={buttonRef}
+      aria-label="Delete the shortened link"
       className={cx(classes.action, classes.dangerAction)}
       onClick={() =>
         openConfirmModal({
