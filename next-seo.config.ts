@@ -36,14 +36,6 @@ export const defaultSeo: NextSeoProps = {
     url: "https://xlug.vercel.app",
     type: "website",
     locale: "en_US",
-    images: [
-      {
-        url: "https://xlug.vercel.app/banner.jpg",
-        width: 1920,
-        height: 1080,
-        type: "image/jpg",
-      },
-    ],
   },
   twitter: {
     handle: "@iswilljr",
