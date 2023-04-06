@@ -18,7 +18,7 @@ export const editXlugSchema = z.object({
 });
 
 export const newXlugSchema = z.object({
-  xlug: z.string().min(1, { message: xlugMinMessage }),
-  destination: z.string().regex(xlugRegex, { message: xlugMessage }).url({ message: urlMessage }),
+  xlug: z.string().regex(xlugRegex, { message: xlugMessage }).min(1, { message: xlugMinMessage }),
+  destination: z.string().url({ message: urlMessage }),
   description: z.string().optional(),
 });
