@@ -18,7 +18,7 @@ pnpm install
 2. Create a **.env.local** file in the root folder and paste your variables:
 
 ```bash
-cp -r .env.template .env.local
+cp -r .env.example .env.local
 ```
 
 ## How to setup local supabase
