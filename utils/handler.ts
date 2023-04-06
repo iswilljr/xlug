@@ -14,7 +14,7 @@ export function apiHandler(handler: NextApiHandler): NextApiHandler {
     try {
       await handler(req, res);
     } catch (error: any) {
-      const message = errors[error.cause] ?? typeof error.message === "string" ? error.message : errors.default;
+      const message = errors[error.cause] ?? errors.default;
       return res.status(400).json({ message });
     }
   };
