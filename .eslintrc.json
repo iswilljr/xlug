@@ -1,8 +1,8 @@
 {
-  "extends": ["next/core-web-vitals", "standard-with-typescript", "prettier"],
+  "extends": ["next/core-web-vitals", "standard-jsx", "standard-with-typescript", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": ["tsconfig.json"]
   },
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
@@ -12,5 +12,5 @@
     "@typescript-eslint/no-misused-promises": "off",
     "prettier/prettier": "error"
   },
-  "ignorePatterns": ["next-env.d.ts"]
+  "ignorePatterns": ["next.config.js", "next-env.d.ts"]
 }
