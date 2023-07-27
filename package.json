@@ -61,7 +61,7 @@
     "typescript": "5.1.6"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "yarn eslint --fix",
+    "*.{js,jsx,ts,tsx}": "pnpm eslint --fix",
     "*": "prettier -wu"
   },
   "prettier": {
