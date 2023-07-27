@@ -1,36 +1,36 @@
-import { UnstyledButton } from "@mantine/core";
-import { IconCopy } from "@tabler/icons-react";
-import { toast } from "sonner";
-import { useStyles } from "./action.styles";
+import { UnstyledButton } from '@mantine/core'
+import { IconCopy } from '@tabler/icons-react'
+import { toast } from 'sonner'
+import { useStyles } from './action.styles'
 
 export interface ActionCopyProps {
-  link: string;
-  buttonRef: React.ForwardedRef<HTMLButtonElement>;
+  link: string
+  buttonRef: React.ForwardedRef<HTMLButtonElement>
 }
 
 const copyToClipboard = async (txt: string) => {
   try {
     const clipboardItem = new ClipboardItem({
-      "text/plain": new Blob([txt], { type: "text/plain" }),
-    });
-    await navigator.clipboard.write([clipboardItem]);
+      'text/plain': new Blob([txt], { type: 'text/plain' }),
+    })
+    await navigator.clipboard.write([clipboardItem])
   } catch (error) {
-    await navigator.clipboard.writeText(txt);
+    await navigator.clipboard.writeText(txt)
   }
-  toast.success("Copied to clipboard!");
-};
+  toast.success('Copied to clipboard!')
+}
 
 export function ActionCopy({ link, buttonRef }: ActionCopyProps) {
-  const { classes } = useStyles();
+  const { classes } = useStyles()
 
   return (
     <UnstyledButton
       ref={buttonRef}
-      aria-label="Copy the shortened link"
+      aria-label='Copy the shortened link'
       className={classes.action}
       onClick={() => copyToClipboard(link)}
     >
       <IconCopy size={18} />
     </UnstyledButton>
-  );
+  )
 }

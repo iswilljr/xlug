@@ -1,19 +1,19 @@
-import { AppShell, rem, type AppShellProps } from "@mantine/core";
-import { Footer } from "./Footer";
-import { Header } from "./Header";
+import { AppShell, rem, type AppShellProps } from '@mantine/core'
+import { Footer } from './Footer'
+import { Header } from './Header'
 
-export interface LayoutProps extends Omit<AppShellProps, "fixed" | "header" | "footer"> {}
+export interface LayoutProps extends Omit<AppShellProps, 'fixed' | 'header' | 'footer'> {}
 
 export function Layout(props: LayoutProps) {
   return (
     <AppShell
-      styles={(theme) => ({
+      styles={theme => ({
         main: {
-          minHeight: "calc(100vh - var(--mantine-header-height, 65px) - var(--mantine-footer-height, 65px))",
+          minHeight: 'calc(100vh - var(--mantine-header-height, 65px) - var(--mantine-footer-height, 65px))',
           maxWidth: theme.breakpoints.lg,
-          margin: "auto",
+          margin: 'auto',
           padding: `0 ${rem(24)}`,
-          [theme.fn.largerThan("sm")]: {
+          [theme.fn.largerThan('sm')]: {
             padding: `0 ${rem(64)}`,
           },
         },
@@ -23,5 +23,5 @@ export function Layout(props: LayoutProps) {
       footer={<Footer />}
       {...props}
     />
-  );
+  )
 }

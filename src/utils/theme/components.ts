@@ -1,9 +1,9 @@
-import type { ModalProps, DefaultProps } from "@mantine/core";
+import type { ModalProps, DefaultProps } from '@mantine/core'
 
 interface ThemeComponent<Props extends DefaultProps = any> {
-  defaultProps?: Partial<Props>;
-  classNames?: Props["classNames"];
-  styles?: Props["styles"];
+  defaultProps?: Partial<Props>
+  classNames?: Props['classNames']
+  styles?: Props['styles']
 }
 
 const Modal: ThemeComponent<ModalProps> = {
@@ -15,17 +15,17 @@ const Modal: ThemeComponent<ModalProps> = {
       blur: 5,
     },
   },
-  styles: (theme) => ({
+  styles: theme => ({
     content: {
-      backgroundColor: "var(--background)",
-      color: "var(--color)",
+      backgroundColor: 'var(--background)',
+      color: 'var(--color)',
     },
     header: {
-      backgroundColor: "var(--background)",
+      backgroundColor: 'var(--background)',
     },
   }),
-};
+}
 
 export const components: Record<string, ThemeComponent> = {
   Modal,
-};
+}

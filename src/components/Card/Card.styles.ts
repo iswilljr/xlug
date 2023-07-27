@@ -1,46 +1,46 @@
-import { createStyles, getStylesRef } from "@mantine/core";
+import { createStyles, getStylesRef } from '@mantine/core'
 
-export const useStyles = createStyles((theme) => ({
+export const useStyles = createStyles(theme => ({
   container: {
-    ref: getStylesRef("container"),
-    width: "100%",
-    position: "relative",
-    backgroundColor: "transparent",
+    ref: getStylesRef('container'),
+    width: '100%',
+    position: 'relative',
+    backgroundColor: 'transparent',
     borderRadius: theme.radius.md,
-    border: `1px solid ${theme.fn.darken(theme.fn.themeColor("blue.2"), 0.1)}`,
-    transition: "all .2s",
+    border: `1px solid ${theme.fn.darken(theme.fn.themeColor('blue.2'), 0.1)}`,
+    transition: 'all .2s',
     padding: theme.spacing.md,
     paddingTop: theme.spacing.xs,
-    ":hover": {
+    ':hover': {
       backgroundColor: theme.fn.rgba(theme.colors.cyan[7], 0.5),
     },
   },
   actions: {
     opacity: 0,
-    display: "flex",
-    alignItems: "center",
-    transition: "all .2s",
-    [`.${getStylesRef("container")}:hover &`]: {
+    display: 'flex',
+    alignItems: 'center',
+    transition: 'all .2s',
+    [`.${getStylesRef('container')}:hover &`]: {
       opacity: 1,
     },
   },
   link: {
     fontSize: theme.fontSizes.xl,
-    color: "var(--color)",
-    lineBreak: "anywhere",
-    fontWeight: "bold",
+    color: 'var(--color)',
+    lineBreak: 'anywhere',
+    fontWeight: 'bold',
   },
   destination: {
-    color: theme.fn.darken("#ededed", 0.15),
-    lineBreak: "anywhere",
+    color: theme.fn.darken('#ededed', 0.15),
+    lineBreak: 'anywhere',
   },
   description: {
     color: theme.colors.gray[9],
-    lineBreak: "anywhere",
+    lineBreak: 'anywhere',
   },
   truncate: {
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
   },
-}));
+}))

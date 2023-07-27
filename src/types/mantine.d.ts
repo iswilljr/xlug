@@ -1,9 +1,9 @@
-import type { MantineTheme } from "@mantine/core";
+import type { MantineTheme } from '@mantine/core'
 
-declare module "@mantine/core" {
+declare module '@mantine/core' {
   interface MantineThemeOther {
-    getBoxShadow: (theme: MantineTheme, color: string) => string;
+    getBoxShadow: (theme: MantineTheme, color: string) => string
   }
 }
 
-export {};
+export {}

@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { Anchor, Flex, Header } from "@mantine/core";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { toast } from "sonner";
-import { Button } from "../Button";
-import { Logo } from "../Logo";
-import { useStyles } from "./common.styles";
+import { Anchor, Flex, Header } from '@mantine/core'
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { toast } from 'sonner'
+import { Button } from '../Button'
+import { Logo } from '../Logo'
+import { useStyles } from './common.styles'
 
 export function _Header() {
-  const router = useRouter();
-  const { classes, cx } = useStyles();
-  const [loading, setLoading] = useState(false);
-  const session = useSession();
-  const supabase = useSupabaseClient();
+  const router = useRouter()
+  const { classes, cx } = useStyles()
+  const [loading, setLoading] = useState(false)
+  const session = useSession()
+  const supabase = useSupabaseClient()
 
   return (
     <Header className={cx(classes.container, classes.header)} height={65}>
@@ -22,26 +22,26 @@ export function _Header() {
         <Logo />
         <Flex gap={8}>
           <Anchor
-            size="xs"
+            size='xs'
             component={Link}
-            href="/dashboard"
-            sx={{ color: "var(--color)", display: "flex", alignItems: "center" }}
+            href='/dashboard'
+            sx={{ color: 'var(--color)', display: 'flex', alignItems: 'center' }}
           >
             Dashboard
           </Anchor>
           {session ? (
             <Button
               loading={loading}
-              color="cyan.7"
-              size="xs"
+              color='cyan.7'
+              size='xs'
               onClick={async () => {
-                if (loading) return;
+                if (loading) return
 
-                setLoading(true);
-                const { error } = await supabase.auth.signOut();
-                if (error) toast.error(error.message);
-                else toast.success("Successfully signed out");
-                setLoading(false);
+                setLoading(true)
+                const { error } = await supabase.auth.signOut()
+                if (error) toast.error(error.message)
+                else toast.success('Successfully signed out')
+                setLoading(false)
               }}
             >
               Logout
@@ -49,20 +49,20 @@ export function _Header() {
           ) : (
             <Button
               component={Link}
-              size="xs"
-              href={{ pathname: "/signin", query: { redirectTo: router.pathname } }}
-              color="cyan.7"
+              size='xs'
+              href={{ pathname: '/signin', query: { redirectTo: router.pathname } }}
+              color='cyan.7'
             >
               Sign in
             </Button>
           )}
-          <Button component={Link} size="xs" href="/new">
+          <Button component={Link} size='xs' href='/new'>
             New Xlug
           </Button>
         </Flex>
       </Flex>
     </Header>
-  );
+  )
 }
 
-export { _Header as Header };
+export { _Header as Header }
