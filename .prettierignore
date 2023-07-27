@@ -36,4 +36,5 @@ yarn-error.log*
 next-env.d.ts
 
 # Others
+/supabase
 pnpm-lock.yaml

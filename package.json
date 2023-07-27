@@ -63,8 +63,5 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "pnpm eslint --fix",
     "*": "prettier -wu"
-  },
-  "prettier": {
-    "printWidth": 120
   }
 }
