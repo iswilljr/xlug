@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { Flex, Text } from "@mantine/core";
 import { Button } from "@/components/Button";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
 import { getCookie } from "cookies-next";
 import { useLocalStorage } from "@mantine/hooks";
@@ -40,7 +40,7 @@ export const getServerSideProps: GetServerSideProps<DashboardProps> = async (ctx
   const layoutCookie = getCookie("data_layout", ctx);
   const layout = layoutCookie === "grid" ? "grid" : "list";
 
-  const supabase = createServerSupabaseClient<Database>(ctx);
+  const supabase = createPagesServerClient<Database>(ctx);
   const {
     data: { session },
   } = await supabase.auth.getSession();

@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import { editXlugSchema } from "@/utils/schemas";
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { Database } from "@/types/supabase";
@@ -9,7 +9,7 @@ async function editXlug(req: NextApiRequest, res: NextApiResponse) {
 
   if (!id) return res.status(400).json({ message: "The id is required" });
 
-  const supabase = createServerSupabaseClient<Database>({ req, res });
+  const supabase = createPagesServerClient<Database>({ req, res });
 
   const { data, error } = await supabase
     .from("xlugs")

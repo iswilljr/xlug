@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { MantineProvider } from "@mantine/core";
-import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createPagesBrowserClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { DefaultSeo } from "next-seo";
 import { defaultSeo } from "@/next-seo.config";
@@ -15,7 +15,7 @@ const NavigationProgress = dynamic(async () => (await import("@/components/Navig
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const supabaseClient = useRef(createBrowserSupabaseClient()).current;
+  const supabaseClient = useRef(createPagesBrowserClient()).current;
   const { layoutProps } = Component as any;
 
   return (

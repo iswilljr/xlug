@@ -1,4 +1,4 @@
-import { createMiddlewareSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { type NextRequest, NextResponse } from "next/server";
 import type { Database } from "./types/supabase";
 
@@ -8,7 +8,7 @@ export async function middleware(req: NextRequest) {
   try {
     const xlug = req.nextUrl.pathname.split("/").pop();
 
-    const supabase = createMiddlewareSupabaseClient<Database>({ req, res });
+    const supabase = createMiddlewareClient<Database>({ req, res });
     const { data, error } = await supabase.from("xlugs").select("*").eq("xlug", xlug).single();
 
     if (error) return res;

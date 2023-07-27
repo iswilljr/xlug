@@ -2,7 +2,7 @@ import { Button } from "@/components/Button";
 import { IconGithub } from "@/components/icons";
 import { Box, Center } from "@mantine/core";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
 import type { GetServerSideProps } from "next";
 import type { Database } from "@/types/supabase";
 import { useRouter } from "next/router";
@@ -54,7 +54,7 @@ SignIn.layoutProps = {
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const supabase = createServerSupabaseClient(ctx);
+  const supabase = createPagesServerClient(ctx);
 
   const {
     data: { session },
