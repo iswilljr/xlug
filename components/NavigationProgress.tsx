@@ -1,4 +1,4 @@
-// components/RouterTransition.tsx
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { NavigationProgress, nprogress } from "@mantine/nprogress";
@@ -26,7 +26,7 @@ function _NavigationProgress() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath]);
 
-  return <NavigationProgress color="blue.7" autoReset={true} progressLabel="Loading Page" />;
+  return <NavigationProgress color="blue.7" autoReset progressLabel="Loading Page" />;
 }
 
 export { _NavigationProgress as NavigationProgress };

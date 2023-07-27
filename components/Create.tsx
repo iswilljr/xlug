@@ -63,7 +63,7 @@ export function Create({
         setSubmitting(false);
       }
     },
-    [action, successMessage, onUpdate, onFinish, router, session, submitting]
+    [action, successMessage, onUpdate, onFinish, router, session, submitting],
   );
 
   return (

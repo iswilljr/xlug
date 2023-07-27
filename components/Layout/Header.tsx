@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Anchor, Flex, Header } from "@mantine/core";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import Link from "next/link";

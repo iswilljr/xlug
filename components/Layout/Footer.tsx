@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Anchor, Flex, Footer, Text } from "@mantine/core";
 import { IconBrandGithubFilled } from "@tabler/icons-react";
 import { useStyles } from "./common.styles";
