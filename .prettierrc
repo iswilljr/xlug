@@ -9,5 +9,8 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "es5",
-  "useTabs": false
+  "useTabs": false,
+  "tailwindAttributes": ["classNames"],
+  "tailwindFunctions": ["cn", "cva"],
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

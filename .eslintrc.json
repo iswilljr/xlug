@@ -10,5 +10,5 @@
     "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/no-misused-promises": "off"
   },
-  "ignorePatterns": ["next.config.js", "next-env.d.ts"]
+  "ignorePatterns": ["next.config.js", "next-env.d.ts", "postcss.config.js", "tailwind.config.js"]
 }
