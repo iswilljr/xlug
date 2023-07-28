@@ -8,26 +8,26 @@ export const defaultSeo: NextSeoProps = {
   additionalLinkTags: [
     {
       rel: 'icon',
-      href: '/logo.png',
+      href: '/favicon.png',
     },
     {
       rel: 'apple-touch-icon',
-      href: '/apple-touch-icon-60x60.png',
+      href: '/icons/apple-touch-icon-60x60.png',
       sizes: '60x60',
     },
     {
       rel: 'apple-touch-icon',
-      href: '/apple-touch-icon-76x76.png',
+      href: '/icons/apple-touch-icon-76x76.png',
       sizes: '76x76',
     },
     {
       rel: 'apple-touch-icon',
-      href: '/apple-touch-icon-120x120.png',
+      href: '/icons/apple-touch-icon-120x120.png',
       sizes: '120x120',
     },
     {
       rel: 'apple-touch-icon',
-      href: '/apple-touch-icon-152x152.png',
+      href: '/icons/apple-touch-icon-152x152.png',
       sizes: '152x152',
     },
   ],
