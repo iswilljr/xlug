@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { DefaultSeo } from 'next-seo'
-import { defaultSeo } from '@/next-seo.config'
+import { defaultSeo } from '@/config/next-seo'
 import { HomeLayout } from '@/layout/home/layout'
 import type { AppProps } from 'next/app'
 
