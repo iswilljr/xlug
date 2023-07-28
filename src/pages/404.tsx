@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { NextSeo } from 'next-seo'
 import { Anchor, createStyles, Text, Title } from '@mantine/core'
-import { Button } from '@/components/Button'
+import { buttonVariants } from '@/ui/button'
 
 const useStyles = createStyles(theme => ({
   container: {
@@ -80,9 +80,9 @@ export default function NotFound() {
             .
           </Text>
         </div>
-        <Button component={Link} href='/'>
+        <Link className={buttonVariants()} href='/'>
           Go Home
-        </Button>
+        </Link>
       </div>
     </div>
   )

@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
-import { Box } from '@mantine/core'
 import { useSession } from '@supabase/auth-helpers-react'
-import { Button } from '@/components/Button'
-import { Input } from '@/components/Input'
 import { type FormErrors, useForm, zodResolver } from '@mantine/form'
 import axios, { type Response } from 'redaxios'
 import { toast } from 'sonner'
+import { Input } from '@/ui/input'
+import { Textarea } from '@/ui/textarea'
+import { Button } from '@/ui/button'
 import type { ZodSchema } from 'zod'
 import type { CreateXlug } from '@/types'
 
@@ -67,33 +67,13 @@ export function Create({
   )
 
   return (
-    <Box
-      aria-disabled={submitting}
-      onSubmit={onSubmit(onValid, onError)}
-      component='form'
-      sx={{ display: 'grid', gap: 12 }}
-    >
-      <Input id='id' label='Custom Id' placeholder='xlug' {...getInputProps('xlug')} />
-      <Input
-        id='destination'
-        label='Destination URL'
-        placeholder='https://xlug.vercel.app'
-        inputMode='url'
-        {...getInputProps('destination')}
-      />
-      <Input textarea id='description' label='Description (optional)' {...getInputProps('description')} />
-      <Button
-        loading={submitting}
-        disabled={submitting}
-        h={32}
-        type='submit'
-        px='xl'
-        py={6}
-        w='fit-content'
-        sx={{ justifySelf: buttonPosition === 'left' ? 'flex-start' : 'flex-end' }}
-      >
+    <form onSubmit={onSubmit(onValid, onError)} className='grid gap-3'>
+      <Input id='id' placeholder='xlug' {...getInputProps('xlug')} />
+      <Input id='destination' placeholder='https://xlug.vercel.app' inputMode='url' {...getInputProps('destination')} />
+      <Textarea id='description' {...getInputProps('description')} />
+      <Button loading={submitting} disabled={submitting} type='submit'>
         {actionLabel}
       </Button>
-    </Box>
+    </form>
   )
 }

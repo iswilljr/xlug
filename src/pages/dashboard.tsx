@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { Flex, Text } from '@mantine/core'
-import { Button } from '@/components/Button'
 import { createPagesServerClient } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'
 import { getCookie } from 'cookies-next'
 import { useLocalStorage } from '@mantine/hooks'
 import Panel from '@/components/Panel'
+import { buttonVariants } from '@/ui/button'
 import type { GetServerSideProps } from 'next'
 import type { Database } from '@/types/supabase'
 import type { Xlug } from '@/types'
@@ -27,9 +27,9 @@ export default function Dashboard({ data, layout }: DashboardProps) {
           <Text ta='center' sx={theme => ({ color: theme.fn.lighten(theme.colors.gray[9], 0.1) })}>
             Nothing to see here
           </Text>
-          <Button component={Link} href='/new' px='md' py={8}>
+          <Link className={buttonVariants()} href='/new'>
             Get Started
-          </Button>
+          </Link>
         </>
       )}
     </Flex>

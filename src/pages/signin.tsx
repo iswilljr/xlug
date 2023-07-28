@@ -1,8 +1,8 @@
-import { Button } from '@/components/Button'
 import { IconGithub } from '@/components/icons'
 import { Box, Center } from '@mantine/core'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { createPagesServerClient } from '@supabase/auth-helpers-nextjs'
+import { Button } from '@/ui/button'
 import type { GetServerSideProps } from 'next'
 import type { Database } from '@/types/supabase'
 import { useRouter } from 'next/router'
@@ -17,19 +17,6 @@ export default function SignIn() {
     <Center w='100%' mih='100vh'>
       <Box ta='center'>
         <Button
-          sx={theme => ({
-            display: 'flex',
-            alignItems: 'center',
-            backgroundColor: 'transparent',
-            paddingLeft: `calc(${theme.spacing.xl} * 2)`,
-            paddingRight: `calc(${theme.spacing.xl} * 2)`,
-            ':hover': {
-              backgroundColor: 'transparent',
-            },
-          })}
-          mt='sm'
-          mx='auto'
-          color='gray.5'
           onClick={() =>
             supabase.auth.signInWithOAuth({
               provider: 'github',

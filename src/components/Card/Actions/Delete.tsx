@@ -1,6 +1,5 @@
 import { Text, UnstyledButton } from '@mantine/core'
 import { openConfirmModal } from '@mantine/modals'
-import { useStyles as useButtonStyles } from '@/components/Button'
 import axios from 'redaxios'
 import { useStyles } from './action.styles'
 import { toast } from 'sonner'
@@ -16,8 +15,6 @@ export interface ActionDeleteProps {
 export function ActionDelete({ id, buttonRef, onDelete }: ActionDeleteProps) {
   const router = useRouter()
   const { classes, cx } = useStyles()
-  const { classes: deleteButtonClasses } = useButtonStyles({ color: 'red.7' })
-  const { classes: cancelButtonClasses } = useButtonStyles({ color: 'cyan.7' })
 
   return (
     <UnstyledButton
@@ -39,13 +36,11 @@ export function ActionDelete({ id, buttonRef, onDelete }: ActionDeleteProps) {
           },
 
           cancelProps: {
-            classNames: cancelButtonClasses,
             px: 'xl',
             py: 'xs',
             size: 'xs',
           },
           confirmProps: {
-            classNames: deleteButtonClasses,
             px: 'xl',
             py: 'xs',
             size: 'xs',
