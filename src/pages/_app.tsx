@@ -9,9 +9,6 @@ import { HomeLayout } from '@/layout/home/layout'
 import type { AppProps } from 'next/app'
 
 const Toaster = dynamic(async () => (await import('sonner')).Toaster, { ssr: false })
-const NavigationProgress = dynamic(async () => (await import('@/components/NavigationProgress')).NavigationProgress, {
-  ssr: false,
-})
 
 export default function App({ Component, pageProps }: AppProps) {
   const supabaseClient = useRef(createPagesBrowserClient()).current
@@ -22,7 +19,6 @@ export default function App({ Component, pageProps }: AppProps) {
       <HomeLayout {...layoutProps}>
         <DefaultSeo {...defaultSeo} />
         <Component {...pageProps} />
-        <NavigationProgress />
         <Toaster position='bottom-right' theme='dark' closeButton richColors />
       </HomeLayout>
     </SessionContextProvider>
