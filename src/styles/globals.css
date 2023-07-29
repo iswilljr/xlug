@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.min-h-small-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+}

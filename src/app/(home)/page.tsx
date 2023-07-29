@@ -1,6 +1,8 @@
+import { AuthButton } from '@/components/auth-button'
 import { IconGithub } from '@/components/icons'
 import { siteConfig } from '@/config/site'
 import { buttonVariants } from '@/ui/button'
+import { cn } from '@/utils/cn'
 import Link from 'next/link'
 
 export default function Page() {
@@ -17,11 +19,14 @@ export default function Page() {
           A link shortener tool that allows you to create shorter and more manageable versions of long URLs.
         </p>
         <div className='mt-10 flex items-center justify-center space-x-4'>
-          <Link className={buttonVariants({ className: 'rounded-full px-5 shadow-lg' })} href='/'>
-            Get Started
-          </Link>
+          <AuthButton
+            href='/'
+            className='rounded-full px-5 shadow-lg'
+            authLabel='Get Started'
+            signInLabel='Get Started'
+          />
           <Link
-            className={buttonVariants({ className: 'rounded-full px-5 shadow-lg', variant: 'outline' })}
+            className={cn(buttonVariants({ variant: 'outline' }), 'rounded-full px-5 shadow-lg')}
             href={siteConfig.links.github}
             target='_blank'
             rel='noreferrer'

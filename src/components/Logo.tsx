@@ -1,24 +1,12 @@
-import { Anchor, Center, createStyles, Text } from '@mantine/core'
 import Link from 'next/link'
+import { cn } from '@/utils/cn'
 
-const useStyles = createStyles(theme => ({
-  icon: {
-    display: 'flex',
-    width: 25,
-    height: 25,
-    zIndex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
-    backgroundColor: theme.colors.blue[7],
-  },
-}))
-
-export function IconLogo() {
-  const { classes } = useStyles()
-
+export function IconLogo({ className, ...props }: React.DetailsHTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={classes.icon}>
+    <div
+      className={cn('z-10 flex h-8 w-8 items-center justify-center rounded-md bg-neutral-900', className)}
+      {...props}
+    >
       <svg fill='#fff' width='55%' viewBox='0 0 80 80.005'>
         <g transform='matrix(.88894 0 0 .88894 -4.451 -4.434)'>
           <path
@@ -37,13 +25,9 @@ export function IconLogo() {
 
 export function Logo() {
   return (
-    <Anchor component={Link} href='/' unstyled>
-      <Center>
-        <IconLogo />
-        <Text lh={1} ml={8} mb={4} weight='bold' size='xl'>
-          xlug
-        </Text>
-      </Center>
-    </Anchor>
+    <Link className='flex items-center justify-center' href='/'>
+      <IconLogo />
+      <p className='ml-2 text-2xl font-bold'>xlug</p>
+    </Link>
   )
 }
