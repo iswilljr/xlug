@@ -3,8 +3,6 @@ import dynamic from 'next/dynamic'
 import { useRef } from 'react'
 import { createPagesBrowserClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
-import { DefaultSeo } from 'next-seo'
-import { defaultSeo } from '@/config/next-seo'
 import { HomeLayout } from '@/layout/home/layout'
 import type { AppProps } from 'next/app'
 
@@ -17,7 +15,6 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.session}>
       <HomeLayout {...layoutProps}>
-        <DefaultSeo {...defaultSeo} />
         <Component {...pageProps} />
         <Toaster position='bottom-right' theme='dark' closeButton richColors />
       </HomeLayout>
