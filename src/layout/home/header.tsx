@@ -1,4 +1,4 @@
-import { Logo } from '../../components/Logo'
+import { Logo } from '@/components/logo'
 import { AuthButton } from '@/components/auth-button'
 
 export function HomeHeader() {

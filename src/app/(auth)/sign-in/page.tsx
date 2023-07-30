@@ -5,7 +5,7 @@ import { useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { IconGithub } from '@/components/icons'
-import { IconLogo } from '@/components/Logo'
+import { IconLogo } from '@/components/logo'
 import { Button } from '@/ui/button'
 import { Separator } from '@/ui/separator'
 
