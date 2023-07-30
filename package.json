@@ -17,24 +17,14 @@
     "postinstall": "husky install"
   },
   "dependencies": {
-    "@formkit/auto-animate": "0.7.0",
-    "@mantine/core": "6.0.17",
-    "@mantine/form": "6.0.17",
-    "@mantine/hooks": "6.0.17",
-    "@mantine/modals": "6.0.17",
-    "@mantine/next": "6.0.17",
-    "@mantine/nprogress": "6.0.17",
     "@radix-ui/react-icons": "1.3.0",
     "@radix-ui/react-slot": "1.0.2",
     "@supabase/auth-helpers-nextjs": "0.7.3",
     "@supabase/auth-helpers-react": "0.4.1",
     "@supabase/supabase-js": "2.31.0",
-    "@tabler/icons-react": "2.29.0",
     "class-variance-authority": "0.7.0",
     "clsx": "2.0.0",
-    "cookies-next": "2.1.2",
     "next": "13.4.12",
-    "next-seo": "6.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "redaxios": "0.5.1",
@@ -43,8 +33,6 @@
     "zod": "3.21.4"
   },
   "devDependencies": {
-    "@emotion/react": "11.11.1",
-    "@emotion/server": "11.11.0",
     "@types/node": "20.4.5",
     "@types/react": "18.2.17",
     "@types/react-dom": "18.2.7",
