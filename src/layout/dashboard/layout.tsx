@@ -1,12 +1,16 @@
 import { DashboardHeader } from './header'
+import { DashboardSubmenu } from './submenu'
 
 export interface DashboardLayoutProps extends React.PropsWithChildren {}
 
 export function DashboardLayout(props: DashboardLayoutProps) {
   return (
-    <div className='background min-h-small-screen flex flex-col justify-between'>
-      <DashboardHeader />
-      <main className='mx-auto max-w-screen-xl flex-1 px-6 pb-10 pt-12 md:px-20'>{props.children}</main>
+    <div className='background'>
+      <div className='sticky inset-x-0 top-0 z-30 w-full border-b border-neutral-200 bg-white/75 backdrop-blur-lg'>
+        <DashboardHeader />
+        <DashboardSubmenu />
+      </div>
+      {props.children}
     </div>
   )
 }

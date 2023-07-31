@@ -23,7 +23,7 @@ export default function Page() {
             href='/dashboard'
             className='rounded-full px-5 shadow-lg'
             authLabel='Get Started'
-            signInLabel='Get Started'
+            loginLabel='Get Started'
           />
           <Link
             className={cn(buttonVariants({ variant: 'outline' }), 'rounded-full px-5 shadow-lg')}

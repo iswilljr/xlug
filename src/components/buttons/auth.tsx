@@ -9,7 +9,7 @@ import { cn } from '@/utils/cn'
 import type { VariantProps } from 'class-variance-authority'
 
 interface AuthButtonProps extends React.ComponentProps<typeof Link>, VariantProps<typeof buttonVariants> {
-  signInLabel?: string
+  loginLabel?: string
   authLabel?: string
   withLoading?: boolean
 }
@@ -19,7 +19,7 @@ export function AuthButton({
   children,
   className,
   href,
-  signInLabel = 'Sign In',
+  loginLabel = 'Sign In',
   size,
   variant,
   withLoading,
@@ -32,7 +32,7 @@ export function AuthButton({
     if (session) return href
 
     return {
-      pathname: '/sign-in',
+      pathname: '/login',
       query: pathname !== '/' ? { redirectTo: pathname } : null,
     }
   }, [href, pathname, session])
@@ -50,7 +50,7 @@ export function AuthButton({
       )}
       {...props}
     >
-      {session ? authLabel : signInLabel}
+      {session ? authLabel : loginLabel}
     </Link>
   )
 }

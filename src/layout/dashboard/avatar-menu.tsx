@@ -1,26 +1,19 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
-import { useSession } from '@supabase/auth-helpers-react'
-import { AppWindow, HomeSimple, LogOut } from 'iconoir-react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
+import { LogOut } from 'iconoir-react'
+import { Avatar } from '@/components/avatar'
 import { Button } from '@/ui/button'
 import { Popover } from '@/ui/popover'
-import { Skeleton } from '@/ui/skeleton'
-
-const supabase = createClientComponentClient()
-
-const links = [
-  { label: 'Home', href: '/', icon: HomeSimple },
-  { label: 'Dashboard', href: '/dashboard', icon: AppWindow },
-]
+import { avatarMenu } from './links'
 
 export function AvatarMenu() {
   const router = useRouter()
   const session = useSession()
+  const supabase = useSupabaseClient()
   const [isMenuOpen, setMenuOpen] = useState(false)
 
   const signOut = useCallback(async () => {
@@ -28,11 +21,11 @@ export function AvatarMenu() {
     try {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
-      router.replace('/sign-in?redirectTo=/dashboard')
+      router.replace('/login?redirectTo=/dashboard')
     } catch (error) {
       console.error(error)
     }
-  }, [router])
+  }, [router, supabase.auth])
 
   return (
     <Popover
@@ -42,28 +35,18 @@ export function AvatarMenu() {
       className='rounded-xl px-0 sm:w-60 sm:max-w-xs'
       trigger={
         <Button className='rounded-full' size='icon' variant='ghost'>
-          {!session ? (
-            <Skeleton className='h-8 w-8 rounded-full' />
-          ) : (
-            <Image
-              width={32}
-              height={32}
-              className='h-8 w-8 rounded-full'
-              src={session.user.user_metadata.avatar_url}
-              alt='Profile'
-            />
-          )}
+          <Avatar />
         </Button>
       }
     >
       {session && (
         <div className='px-5 pb-2 text-sm'>
-          <h2 className='font-medium'>{session.user.user_metadata?.full_name ?? 'Default'}</h2>
-          <p className='text-neutral-500'>{session.user.email}</p>
+          <h2 className='truncate font-medium'>{session.user.user_metadata?.full_name ?? 'Default'}</h2>
+          <p className='truncate text-neutral-500'>{session.user.email}</p>
         </div>
       )}
       <div className='text-sm text-neutral-500'>
-        {links.map(link => (
+        {avatarMenu.map(link => (
           <Link
             key={link.href}
             className='flex items-center gap-2 px-5 py-2 hover:bg-neutral-200/50'
