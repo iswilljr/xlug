@@ -1,34 +1,33 @@
-create table
-  xlugs (
-    id uuid not null default uuid_generate_v4 (),
-    created_at timestamp with time zone not null default now(),
-    xlug character varying not null,
-    destination character varying not null,
-    description text null,
-    user_id uuid null,
-    constraint xlugs_pkey primary key (id),
-    constraint xlugs_xlug_key unique (xlug),
-    constraint xlugs_user_id_fkey foreign key (user_id) references auth.users (id)
-  ) tablespace pg_default;
+create table "links" (
+  "id" uuid not null default uuid_generate_v4 (),
+  "key" text not null,
+  "createdAt" timestamp with time zone not null default now(),
+  "description" text null,
+  "destination" text not null,
+  "userId" uuid null,
+  constraint "links_pkey" primary key ("id"),
+  constraint "links_xlug_key" unique ("key"),
+  constraint "links_userId_fkey" foreign key ("userId") references auth.users ("id")
+);
 
-alter table xlugs enable row level security;
+alter table "links" enable row level security;
 
-create policy "Enable read access for all users" on xlugs
+create policy "Enable read access for all users" on "links"
 as permissive for select
 to public
 using (true);
 
-create policy "Enable insert access for all users" on xlugs
+create policy "Enable insert access for all users" on "links"
 as permissive for insert
 to public
 with check (true);
 
-create policy "Enable update for users based on user_id" on xlugs
+create policy "Enable update for users based on userId" on "links"
 as permissive for update
 to authenticated
-using (auth.uid() = user_id);
+using (auth.uid() = "userId");
 
-create policy "Enable delete for users based on user_id" on xlugs
+create policy "Enable delete for users based on userId" on "links"
 as permissive for delete
 to authenticated
-using (auth.uid() = user_id);
+using (auth.uid() = "userId");
