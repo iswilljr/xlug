@@ -1,4 +1,4 @@
-import { AuthButton } from '@/components/auth-button'
+import { AuthButton } from '@/components/buttons/auth'
 import { IconGithub } from '@/components/icons'
 import { siteConfig } from '@/config/site'
 import { buttonVariants } from '@/ui/button'
@@ -20,7 +20,7 @@ export default function Page() {
         </p>
         <div className='mt-10 flex items-center justify-center space-x-4'>
           <AuthButton
-            href='/'
+            href='/dashboard'
             className='rounded-full px-5 shadow-lg'
             authLabel='Get Started'
             signInLabel='Get Started'
