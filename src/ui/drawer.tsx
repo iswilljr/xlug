@@ -5,6 +5,7 @@ import { Cancel } from 'iconoir-react'
 import { Drawer as DrawerPrimitive } from 'vaul'
 import { useClasses } from '@/hooks/use-classes'
 import { cn } from '@/utils/cn'
+import { Button } from './button'
 import { ScrollArea } from './scroll-area'
 import type { ClassNamesProps } from '@/types/classnames'
 
@@ -42,9 +43,15 @@ const DrawerContent = forwardRef<React.ElementRef<typeof DrawerPrimitive.Content
       >
         {children}
         {withCloseButton && (
-          <DrawerPrimitive.Close className='absolute right-4 top-4 rounded-sm bg-neutral-100 text-neutral-500 opacity-70 ring-offset-white transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:ring-offset-2 disabled:pointer-events-none dark:bg-neutral-800 dark:text-neutral-400 dark:ring-offset-neutral-950 dark:focus:ring-neutral-800'>
-            <Cancel className='h-4 w-4' />
-            <span className='sr-only'>Close</span>
+          <DrawerPrimitive.Close asChild>
+            <Button
+              variant='ghost'
+              className='absolute right-2 top-2 z-20 min-h-fit rounded-full p-1 hover:bg-neutral-200 focus:ring-2 focus:ring-offset-2'
+              size='icon'
+            >
+              <Cancel className='h-5 w-5' />
+              <span className='sr-only'>Close</span>
+            </Button>
           </DrawerPrimitive.Close>
         )}
       </DrawerPrimitive.Content>
@@ -113,7 +120,7 @@ function Drawer({
   trigger,
   ...props
 }: DrawerRootProps) {
-  const classes = useClasses({ root: className, content: 'max-h-[60vh]' }, classNames)
+  const classes = useClasses({ root: ['drawer', className], content: 'content' }, classNames)
   const hasHeader = useMemo(() => Boolean(description ?? title), [description, title])
 
   return (
