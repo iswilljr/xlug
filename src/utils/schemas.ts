@@ -1,24 +1,35 @@
 import { z } from 'zod'
+import { customAlphabet } from 'nanoid'
 
-const xlugRegex = /^[a-zA-Z0-9_.-]+$/
+export type Link = z.infer<typeof LinkSchema>
+export type EditLink = z.infer<typeof EditLinkSchema>
 
-const urlMessage = 'Destination should be a valid url'
-const xlugMessage = 'The xlug must contain only letters, numbers, dots, dashes and underscores'
-const xlugMinMessage = 'Xlug must contain at least 1 character'
+export const KeyRegExp = /^[a-z0-9](?!.*?[-_.]{2,})[a-z0-9-_.]*[a-z0-9]$/i
 
-export const deleteXlugSchema = z.object({
-  id: z.string().uuid(),
+export const LinkSchema = z.object({
+  key: z
+    .string({
+      required_error: 'Key is required',
+      invalid_type_error: 'Key must be a string',
+    })
+    .min(2, 'Must have at least 2 characters')
+    .regex(KeyRegExp, 'Only letters, numbers, ".", "-" and "_" are allowed.'),
+  destination: z
+    .string({
+      required_error: 'Destination URL is required',
+      invalid_type_error: 'Destination URL must be a string',
+    })
+    .url('Invalid Url'),
+  description: z
+    .string({
+      required_error: 'Description is required',
+      invalid_type_error: 'Description must be a string',
+    })
+    .nullish()
+    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+    .transform(v => v || null),
 })
 
-export const editXlugSchema = z.object({
-  id: z.string().uuid().optional(),
-  xlug: z.string().regex(xlugRegex, { message: xlugMessage }).min(1, { message: xlugMinMessage }).optional(),
-  destination: z.string().url({ message: urlMessage }).optional(),
-  description: z.string().optional(),
-})
+export const EditLinkSchema = LinkSchema.partial()
 
-export const newXlugSchema = z.object({
-  xlug: z.string().regex(xlugRegex, { message: xlugMessage }).min(1, { message: xlugMinMessage }),
-  destination: z.string().url({ message: urlMessage }),
-  description: z.string().optional(),
-})
+export const RandomKey = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 7)
