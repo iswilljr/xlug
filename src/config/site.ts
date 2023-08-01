@@ -8,4 +8,9 @@ export const siteConfig = {
     github: 'https://github.com/iswilljr/xlug',
     issues: 'https://github.com/iswilljr/xlug/issues/new',
   },
+  examples: {
+    key: 'github',
+    link: 'https://github.com/iswilljr/xlug',
+    description: 'Short and Manage your Long URLs',
+  },
 }
