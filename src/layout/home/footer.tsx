@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import { IconGithub } from '@/components/icons'
+import { siteConfig } from '@/config/site'
 
 export function HomeFooter() {
   return (
@@ -9,7 +9,7 @@ export function HomeFooter() {
           Made by{' '}
           <a
             className='font-bold text-black'
-            href='https://github.com/iswilljr'
+            href={siteConfig.links.profile}
             target='_blank'
             rel='noreferrer'
             aria-label='My github profile'
@@ -19,7 +19,7 @@ export function HomeFooter() {
         </p>
         <a
           className='flex items-end text-neutral-900'
-          href='https://github.com/iswilljr/xlug'
+          href={siteConfig.links.github}
           target='_blank'
           rel='noreferrer'
           aria-label='Source code of the project'
