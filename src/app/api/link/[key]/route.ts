@@ -5,6 +5,8 @@ import { CustomError, NotFoundError, UnauthorizedError, routeHandler } from '@/u
 import { EditLinkSchema, LinkSchema } from '@/utils/schemas'
 import type { Database } from '@/types/supabase'
 
+export const dynamic = 'force-dynamic'
+
 export const GET = routeHandler(async (_req, ctx) => {
   const supabase = createRouteHandlerClient<Database>({ cookies })
 
