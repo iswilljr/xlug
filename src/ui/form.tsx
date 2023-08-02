@@ -32,7 +32,7 @@ interface FormInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends PartialFields<React.ComponentProps<typeof FormField<TFieldValues, TName>>, 'render'>,
-    Omit<React.InputHTMLAttributes<HTMLInputElement>, 'defaultValue' | 'name'>,
+    Omit<React.ComponentProps<typeof Input>, 'defaultValue' | 'name'>,
     ClassNamesProps<FormInputClasses> {
   description?: React.ReactNode
   label?: React.ReactNode

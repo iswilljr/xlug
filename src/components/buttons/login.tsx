@@ -1,15 +1,16 @@
 'use client'
 
 import { useCallback } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Button } from '@/ui/button'
 import { IconGithub } from '../icons'
 
-export function LoginButtons() {
+interface LoginButtonsProps {
+  redirectTo: string
+}
+
+export function LoginButtons({ redirectTo }: LoginButtonsProps) {
   const supabase = useSupabaseClient()
-  const searchParams = useSearchParams()
-  const redirectTo = searchParams?.get('redirectTo') ?? '/dashboard'
 
   const loginWithGithub = useCallback(async () => {
     try {

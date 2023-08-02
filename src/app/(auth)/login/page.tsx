@@ -1,8 +1,13 @@
 import Link from 'next/link'
 import { IconLogo } from '@/components/logo'
 import { LoginButtons } from '@/components/buttons/login'
+import type { DefaultPageProps } from '@/types/params'
 
-export default function Login() {
+export default function Login({ searchParams }: DefaultPageProps) {
+  const redirectTo: string | null = Array.isArray(searchParams.redirectTo)
+    ? searchParams.redirectTo[0]
+    : searchParams.redirectTo
+
   return (
     <section className='w-full max-w-md overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg'>
       <div className='flex flex-col items-center justify-center space-y-1 bg-white px-6 py-8 text-center sm:px-16'>
@@ -12,7 +17,7 @@ export default function Login() {
         <h3 className='text-xl font-bold'>Sign in to Xlug</h3>
         <p className='text-sm text-neutral-500'>Start shorting and managing long URLs.</p>
       </div>
-      <LoginButtons />
+      <LoginButtons redirectTo={redirectTo ?? '/dashboard'} />
     </section>
   )
 }
