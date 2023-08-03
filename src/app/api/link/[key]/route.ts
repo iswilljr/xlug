@@ -41,7 +41,7 @@ export const POST = routeHandler(async (req, ctx) => {
       key,
       description,
       destination,
-      userId: session?.user.id ?? null,
+      userId: session?.user.id,
     })
     .select('*')
     .maybeSingle()
