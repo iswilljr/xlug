@@ -15,14 +15,11 @@ export const GET = routeHandler(async req => {
     throw new UnauthorizedError()
   }
 
-  const searchParams = new URL(req.url).searchParams
-  const orderAscending = searchParams.get('ascending') === 'true'
-
   const { data } = await supabase
     .from('links')
     .select('*')
     .eq('userId', session.user.id)
-    .order('createdAt', { ascending: orderAscending })
+    .order('createdAt', { ascending: false })
     .throwOnError()
 
   if (!data) throw new Error('Unexpected error')
