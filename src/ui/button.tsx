@@ -12,14 +12,14 @@ export interface ButtonProps extends ButtonVariants, React.ButtonHTMLAttributes<
 }
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:select-none disabled:opacity-50 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-800',
+  'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:select-none disabled:bg-neutral-200 disabled:text-neutral-500 disabled:opacity-50 disabled:ring-1 disabled:ring-neutral-300 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-800',
   {
     variants: {
       variant: {
         default:
           'bg-neutral-900 text-neutral-50 shadow hover:bg-neutral-900/90 focus-visible:ring-neutral-900 dark:bg-neutral-50 dark:text-neutral-900 dark:hover:bg-neutral-50/90 dark:focus-visible:ring-neutral-50',
         destructive:
-          'bg-red-500 text-neutral-50 shadow-sm hover:bg-red-600/90 focus-visible:ring-red-500 dark:bg-red-600 dark:text-red-50  dark:hover:bg-red-600/90 dark:focus-visible:ring-red-600',
+          'bg-red-500 text-neutral-50 shadow-sm hover:bg-red-500/90 focus-visible:ring-red-500 dark:bg-red-600 dark:text-red-50  dark:hover:bg-red-600/90 dark:focus-visible:ring-red-600',
         outline:
           'border border-neutral-300 bg-white shadow-sm hover:bg-neutral-100 hover:text-neutral-900 dark:border-neutral-800 dark:bg-neutral-950 dark:hover:bg-neutral-800 dark:hover:text-neutral-50',
         secondary:

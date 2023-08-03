@@ -15,7 +15,6 @@ const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(
     const { copied: _copied, copy } = useClipboard({ copiedTimeout, onError, onSuccess, selectOnCopy, selectOnError })
 
     const onCopy = useCallback(() => {
-      console.log('copy')
       copy(value)
     }, [copy, value])
 

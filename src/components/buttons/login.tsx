@@ -27,9 +27,12 @@ export function LoginButtons({ redirectTo }: LoginButtonsProps) {
 
   return (
     <div className='flex flex-col items-center justify-center space-y-2 border-t border-neutral-300 bg-neutral-50 px-6 py-8 sm:px-16'>
-      <Button className='w-full' onClick={loginWithGithub}>
-        <IconGithub className='mr-2 h-5 w-5 flex-shrink-0 fill-white' />
-        <span>Continue with Github</span>
+      <Button
+        className='w-full'
+        onClick={loginWithGithub}
+        icon={<IconGithub className='h-5 w-5 flex-shrink-0 fill-white' />}
+      >
+        Continue with Github
       </Button>
     </div>
   )
