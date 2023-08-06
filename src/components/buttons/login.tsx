@@ -1,5 +1,6 @@
 'use client'
 
+import { toast } from 'sonner'
 import { useCallback } from 'react'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { Button } from '@/ui/button'
@@ -21,7 +22,7 @@ export function LoginButtons({ redirectTo }: LoginButtonsProps) {
         },
       })
     } catch (error) {
-      console.error(error)
+      toast.error('Error while loading, try again later.')
     }
   }, [redirectTo, supabase.auth])
 
