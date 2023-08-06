@@ -1,7 +1,13 @@
 import Link from 'next/link'
 import { IconLogo } from '@/components/logo'
 import { LoginButtons } from '@/components/buttons/login'
+import { generateBaseMetadata } from '@/utils/metadata'
 import type { DefaultPageProps } from '@/types/params'
+
+export const metadata = generateBaseMetadata({
+  title: 'Sign in to Xlug',
+  description: 'Start shorting and managing long URLs.',
+})
 
 export default function Login({ searchParams }: DefaultPageProps) {
   const redirectTo: string | null = Array.isArray(searchParams.redirectTo)
