@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { customAlphabet } from 'nanoid'
+import { PROD_BASE_URL } from '@/config/constants'
 
 export type Link = z.infer<typeof LinkSchema>
 export type EditLink = z.infer<typeof EditLinkSchema>
@@ -12,6 +13,7 @@ export const LinkSchema = z.object({
       required_error: 'Key is required',
       invalid_type_error: 'Key must be a string',
     })
+    .trim()
     .min(2, 'Must have at least 2 characters')
     .regex(KeyRegExp, 'Only letters, numbers, ".", "-" and "_" are allowed.'),
   destination: z
@@ -19,12 +21,21 @@ export const LinkSchema = z.object({
       required_error: 'Destination URL is required',
       invalid_type_error: 'Destination URL must be a string',
     })
-    .url('Invalid Url'),
+    .trim()
+    .url('Invalid Url')
+    .refine(v => {
+      try {
+        return new URL(v).host !== new URL(PROD_BASE_URL).host
+      } catch (error) {
+        return false
+      }
+    }, 'Invalid url'),
   description: z
     .string({
       required_error: 'Description is required',
       invalid_type_error: 'Description must be a string',
     })
+    .trim()
     .nullish()
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
     .transform(v => v || null),
