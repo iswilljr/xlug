@@ -226,6 +226,7 @@ FormInput.displayName = 'FormInput'
 
 Form.Control = FormControl
 Form.Description = FormDescription
+Form.Field = FormField
 Form.Input = FormInput
 Form.Item = FormItem
 Form.Label = FormLabel

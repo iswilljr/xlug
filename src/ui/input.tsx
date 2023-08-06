@@ -2,12 +2,13 @@ import { forwardRef } from 'react'
 import { cn } from '@/utils/cn'
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  rootClassName?: string
   icon?: React.FC<any>
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ className, icon: Icon, ...props }, ref) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(({ className, icon: Icon, rootClassName, ...props }, ref) => {
   return (
-    <div className='relative flex items-center'>
+    <div className={cn('relative flex items-center', rootClassName)}>
       {Icon && (
         <span className='pointer-events-none absolute left-3 h-4 w-4'>
           <Icon className='h-4 w-4 text-neutral-400' />

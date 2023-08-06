@@ -134,7 +134,7 @@ function Dialog({
         open={modalOpen}
         title={title}
         trigger={trigger}
-        {...props}
+        {...(props as any)}
       >
         {children}
       </Drawer>

@@ -9,7 +9,7 @@ export interface UseWithinDrawerOptions {
 
 export function useWithinDrawer({ defaultOpen, onOpenChange, open }: UseWithinDrawerOptions = {}) {
   const isMobile = useIsMobile()
-  const [modalOpen, setModalOpen] = useState(defaultOpen ?? open)
+  const [modalOpen, setModalOpen] = useState(defaultOpen ?? open ?? false)
 
   const onModalOpenChange = useCallback(
     (value: boolean) => {
@@ -20,7 +20,7 @@ export function useWithinDrawer({ defaultOpen, onOpenChange, open }: UseWithinDr
   )
 
   useEffect(() => {
-    if (modalOpen !== open) {
+    if (typeof open === 'boolean' && modalOpen !== open) {
       setModalOpen(open)
     }
   }, [modalOpen, open])

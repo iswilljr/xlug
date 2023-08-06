@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
@@ -23,7 +24,7 @@ export function AvatarMenu() {
       if (error) throw error
       router.replace('/login?redirectTo=/dashboard')
     } catch (error) {
-      console.error(error)
+      toast.error('Error while logging out, try again later.')
     }
   }, [router, supabase.auth])
 

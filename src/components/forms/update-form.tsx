@@ -11,34 +11,36 @@ import { CreateLinkDialog } from '../dialogs/create-link'
 import type { Link } from '@/utils/schemas'
 
 interface CreateLinkFormProps {
-  initialValues?: Link
+  initialValues: Link
   open?: boolean
   trigger?: React.ReactNode
   onOpenChange?: (value: boolean) => void
 }
 
-export function CreateLinkForm({ initialValues, open, trigger, onOpenChange }: CreateLinkFormProps) {
+export function UpdateLinkForm({ initialValues, open, trigger, onOpenChange }: CreateLinkFormProps) {
   const { modalOpen, onModalOpenChange } = useWithinDrawer({ open, onOpenChange })
-  const { trigger: create } = useSWRMutate('create-link', (_key, { arg }: { arg: Link }) =>
-    axios.post(`/api/link/${arg.key}`, arg)
+  const { trigger: update } = useSWRMutate('update-link', (_key, { arg }: { arg: Link }) =>
+    axios.patch(`/api/link/${initialValues.key}`, arg)
   )
 
-  const createLink = useCallback(
+  const updateLink = useCallback(
     async (data: Link) => {
-      await create(data)
+      await update(data)
       await mutate(LINKS_DATA_KEY)
-      toast.success('Link created successfully.')
+      toast.success('Link updated successfully.')
     },
-    [create]
+    [update]
   )
 
   return (
     <CreateLinkDialog
       trigger={trigger}
       open={modalOpen}
-      onSubmit={createLink}
-      onOpenChange={onModalOpenChange}
+      onSubmit={updateLink}
+      actionLabel='Save Changes'
       initialValues={initialValues}
+      title='Update your short link'
+      onOpenChange={onModalOpenChange}
     />
   )
 }

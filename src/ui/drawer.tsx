@@ -13,7 +13,7 @@ type DrawerClasses = 'root' | 'trigger' | 'header' | 'title' | 'description' | '
 
 interface DrawerRootProps
   extends React.ComponentProps<typeof DrawerPrimitive.Root>,
-    Omit<DrawerContentProps, 'title'>,
+    Omit<DrawerContentProps, 'onDrag' | 'title'>,
     ClassNamesProps<DrawerClasses> {
   description?: React.ReactNode
   footer?: React.ReactNode
@@ -108,12 +108,14 @@ function Drawer({
   children,
   className,
   classNames,
+  closeTreshold = 0.5,
   defaultOpen,
   description,
   dismissible,
-  fixedHeight,
   footer,
+  onDrag,
   onOpenChange,
+  onRelease,
   open,
   shouldScaleBackground,
   title,
@@ -124,7 +126,9 @@ function Drawer({
   const hasHeader = useMemo(() => Boolean(description ?? title), [description, title])
 
   return (
-    <DrawerRoot {...{ defaultOpen, dismissible, fixedHeight, onOpenChange, open, shouldScaleBackground }}>
+    <DrawerRoot
+      {...{ closeTreshold, defaultOpen, dismissible, onDrag, onOpenChange, onRelease, open, shouldScaleBackground }}
+    >
       {trigger && (
         <DrawerTrigger className={classes.trigger} asChild>
           {trigger}
