@@ -1,3 +1,4 @@
+import { BASE_URL } from '@/config/constants'
 import { siteConfig } from '@/config/site'
 import type { Metadata } from 'next'
 
@@ -7,8 +8,6 @@ interface GenerateBaseMetadataOptions {
   title?: string
 }
 
-export const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://xlug.vercel.app' : 'http://localhost:3000'
-
 export function generateBaseMetadata(options: GenerateBaseMetadataOptions = {}): Metadata {
   const { description = siteConfig.description, image = '/favicon.png', title = siteConfig.title } = options
 
@@ -16,7 +15,8 @@ export function generateBaseMetadata(options: GenerateBaseMetadataOptions = {}):
     title,
     description,
     icons: {
-      icon: '/favicon.png',
+      icon: [{ sizes: '512x512', type: 'image/png', url: '/favicon.png' }],
+      shortcut: { sizes: '512x512', type: 'image/svg+xml', url: '/favicon.svg' },
       apple: [
         { url: '/icons/apple-touch-icon-60x60.png', sizes: '60x60' },
         { url: '/icons/apple-touch-icon-76x76.png', sizes: '76x76' },
