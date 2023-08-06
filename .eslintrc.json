@@ -8,7 +8,8 @@
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/no-confusing-void-expression": "off",
     "@typescript-eslint/promise-function-async": "off",
-    "@typescript-eslint/no-misused-promises": "off"
+    "@typescript-eslint/no-misused-promises": "off",
+    "react/jsx-handler-names": "off"
   },
   "ignorePatterns": ["next.config.js", "next-env.d.ts", "postcss.config.js", "tailwind.config.js"]
 }
