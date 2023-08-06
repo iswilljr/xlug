@@ -6,7 +6,7 @@ create table "links" (
   "destination" text not null,
   "userId" uuid null,
   constraint "links_pkey" primary key ("id"),
-  constraint "links_xlug_key" unique ("key"),
+  constraint "links_key_key" unique ("key"),
   constraint "links_userId_fkey" foreign key ("userId") references auth.users ("id")
 );
 
