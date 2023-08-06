@@ -16,7 +16,7 @@ export function DashboardHomeLink() {
   }, [pathname])
 
   return (
-    <Link className='flex items-center justify-center gap-2' href='/'>
+    <Link className='flex items-center justify-center gap-2' href='/dashboard'>
       <IconLogo />
       <p className='py-[6px] text-sm font-semibold'>{label}</p>
     </Link>
