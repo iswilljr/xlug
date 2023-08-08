@@ -7,7 +7,7 @@ import { DropdownMenu } from '@/ui/dropdown-menu'
 import { CreateLinkForm } from '../forms/create-link'
 import { DeleteLinkDialog } from '../dialogs/delete-link'
 import { QRCodeDialog } from '../dialogs/qr-code'
-import { UpdateLinkForm } from '../forms/update-form'
+import { UpdateLinkForm } from '../forms/update-link'
 import type { Link } from '@/utils/schemas'
 
 interface LinkMoreOptionsButtonProps {
