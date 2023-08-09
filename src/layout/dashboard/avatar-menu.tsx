@@ -33,7 +33,7 @@ export function AvatarMenu() {
       align='end'
       open={isMenuOpen}
       onOpenChange={setMenuOpen}
-      className='px-0 sm:w-60 sm:max-w-xs'
+      className='px-0 sm:w-60 sm:max-w-[12rem]'
       trigger={
         <Button className='rounded-full' size='icon' variant='ghost'>
           <Avatar />
