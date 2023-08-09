@@ -1,13 +1,18 @@
 'use client'
 
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 import useLocalStorage from 'use-local-storage-state'
 import { useMemo } from 'react'
 import { siteConfig } from '@/config/site'
 import { LINKS_DATA_KEY, MAX_PUBLIC_LINKS } from '@/config/constants'
 import { LinkSchema, type Link as LinkType } from '@/utils/schemas'
-import { DemoLinkCard } from '../cards/demo-link'
 import { LinkSkeletonCard } from '../cards/link-skeleton'
+
+const DemoLinkCard = dynamic(() => import('../cards/demo-link').then(m => m.DemoLinkCard), {
+  ssr: false,
+  loading: () => <LinkSkeletonCard animate={false} withOptions={false} />,
+})
 
 const HomeLinksSchema = LinkSchema.array()
 
@@ -57,10 +62,10 @@ export function HomeLinks() {
       })}
       {skeletons.map((_, i) => (
         <li key={i}>
-          <LinkSkeletonCard animate={false} withOptions={false} />
+          <LinkSkeletonCard className='shadow-lg' animate={false} withOptions={false} />
         </li>
       ))}
-      <li className='rounded-md border border-neutral-200 p-4 text-sm text-neutral-600 shadow-lg'>
+      <li className='rounded-md border border-neutral-200 bg-white p-4 text-sm text-neutral-600 shadow-lg'>
         Note: You can only create 3 public links, delete one of the links or{' '}
         <Link href='/login' className='font-semibold text-neutral-900 hover:underline'>
           login

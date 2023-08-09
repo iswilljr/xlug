@@ -93,7 +93,7 @@ export function DemoLinkCard({ description, destination, shortLink, withRemove =
           ]}
           trigger={
             <Button size='icon' variant='ghost' aria-label='Open more options menu' className='w-auto px-1'>
-              <MoreVert className='h-5 w-5' />
+              <MoreVert className='h-5 w-5 stroke-2' />
             </Button>
           }
         />

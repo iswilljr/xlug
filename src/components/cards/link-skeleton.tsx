@@ -1,13 +1,20 @@
 import { Skeleton } from '@/ui/skeleton'
+import { cn } from '@/utils/cn'
 
-export interface LinkSkeletonCardProps {
+export interface LinkSkeletonCardProps extends React.HTMLAttributes<HTMLDivElement> {
   animate?: boolean
   withOptions?: boolean
 }
 
-export function LinkSkeletonCard({ animate = true, withOptions = true }: LinkSkeletonCardProps) {
+export function LinkSkeletonCard({ animate = true, className, withOptions = true, ...props }: LinkSkeletonCardProps) {
   return (
-    <div className='flex h-[4.75rem] w-full items-center gap-2 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm'>
+    <div
+      className={cn(
+        'flex h-[4.75rem] w-full items-center gap-2 rounded-lg border border-neutral-200 bg-white p-4 shadow-sm',
+        className
+      )}
+      {...props}
+    >
       <Skeleton animate={animate} className='h-10 w-10 flex-shrink-0 rounded-full' />
       <div className='flex-1 space-y-2'>
         <div className='flex items-center gap-1'>
