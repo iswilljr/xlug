@@ -1,26 +1,19 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { type NextRequest, NextResponse } from 'next/server'
-import type { Database } from './types/supabase'
+import { AppMiddleware, LinksMiddleware } from './utils/middleware'
+import { APP_PAGES } from './config/constants'
+import { NextResponse, type NextRequest } from 'next/server'
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next()
-
-  try {
-    const xlug = req.nextUrl.pathname.split('/').pop()
-
-    const supabase = createMiddlewareClient<Database>({ req, res })
-    const { data, error } = await supabase.from('xlugs').select('*').eq('xlug', xlug).single()
-
-    if (error) return res
-
-    const redirectTo = new URL(data.destination)
-
-    return NextResponse.redirect(redirectTo)
-  } catch (error) {
-    return res
+export function middleware(req: NextRequest) {
+  if (APP_PAGES.includes(req.nextUrl.pathname)) {
+    return AppMiddleware(req)
   }
+
+  const key = req.nextUrl.pathname.slice(1)
+
+  if (!key.includes('/')) return LinksMiddleware(req)
+
+  return NextResponse.next()
 }
 
 export const config = {
-  matcher: '/x/:xlug*',
+  matcher: ['/((?!api|_next/static|_next/image|assets|icons|favicon).*)'],
 }
