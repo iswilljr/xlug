@@ -1,15 +1,9 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { useMemo } from 'react'
 import { useLinksState } from '@/store/links'
-import { LinkSkeletonCard } from '../cards/link-skeleton'
+import { LinkCard } from '../cards/link'
 import { LinksEmpty } from './links-empty'
-
-const LinkCard = dynamic(() => import('../cards/link').then(m => m.LinkCard), {
-  ssr: false,
-  loading: () => <LinkSkeletonCard />,
-})
 
 export function Links() {
   const links = useLinksState(state => state.links)
@@ -19,14 +13,13 @@ export function Links() {
     <>
       {isEmpty && <LinksEmpty />}
       {!isEmpty && (
-        <ul className='grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3'>
+        <ul className='grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2'>
           {links.map(link => (
             <li key={link.id}>
               <LinkCard
-                id={link.id}
                 shortLink={link.key}
                 createdAt={link.createdAt}
-                description={link.description}
+                description={link.description ?? 'No description provided.'}
                 destination={link.destination}
               />
             </li>

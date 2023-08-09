@@ -61,7 +61,7 @@ export function HomeCreateLink() {
         ref={inputRef}
         icon={IconLink}
         name='destination'
-        className='shadow-lg'
+        className='shadow-md'
         placeholder='Shorten your link'
         disabled={hasReachedMaxPublicLinks}
         rightSection={

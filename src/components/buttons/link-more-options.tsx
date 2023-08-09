@@ -1,26 +1,38 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import dynamic from 'next/dynamic'
+import { useCallback, useMemo, useState } from 'react'
 import { Edit, MoreVert, MultiMacOsWindow, QrCode, Trash } from 'iconoir-react'
 import { Button } from '@/ui/button'
 import { DropdownMenu } from '@/ui/dropdown-menu'
-import { CreateLinkForm } from '../forms/create-link'
-import { DeleteLinkDialog } from '../dialogs/delete-link'
-import { QRCodeDialog } from '../dialogs/qr-code'
-import { UpdateLinkForm } from '../forms/update-link'
 import type { Link } from '@/utils/schemas'
 
-interface LinkMoreOptionsButtonProps {
+const CreateLinkForm = dynamic(() => import('../forms/create-link').then(m => m.CreateLinkForm))
+const DeleteLinkDialog = dynamic(() => import('../dialogs/delete-link').then(m => m.DeleteLinkDialog))
+const QRCodeDialog = dynamic(() => import('../dialogs/qr-code').then(m => m.QRCodeDialog))
+const UpdateLinkForm = dynamic(() => import('../forms/update-link').then(m => m.UpdateLinkForm))
+
+export interface LinkMoreOptionsButtonProps {
   initialValues: Link
+  isPublicLink?: boolean
+  onDelete?: () => void
 }
 
-export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonProps) {
+export function LinkMoreOptionsButton({ initialValues, isPublicLink, onDelete }: LinkMoreOptionsButtonProps) {
   const [isUpdateDialogOpen, setUpdateDialogOpen] = useState(false)
   const [isNewDialogOpen, setNewDialogOpen] = useState(false)
   const [isQRCodeDialogOpen, setQRCodeDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   const newLinkValues = useMemo(() => ({ ...initialValues, key: `new-${initialValues.key}` }), [initialValues])
+
+  const deleteAction = useCallback(() => {
+    if (isPublicLink) {
+      return onDelete?.()
+    }
+
+    setDeleteDialogOpen(true)
+  }, [isPublicLink, onDelete])
 
   return (
     <>
@@ -30,11 +42,13 @@ export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonPr
         items={[
           {
             label: 'Edit',
+            disabled: isPublicLink,
             icon: <Edit className='h-4 w-4' />,
             onClick: () => setUpdateDialogOpen(true),
           },
           {
             label: 'Duplicate',
+            disabled: isPublicLink,
             icon: <MultiMacOsWindow className='h-4 w-4' />,
             onClick: () => setNewDialogOpen(true),
           },
@@ -43,12 +57,16 @@ export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonPr
             icon: <QrCode className='h-4 w-4' />,
             onClick: () => setQRCodeDialogOpen(true),
           },
-          {
-            label: 'Delete',
-            icon: <Trash className='h-4 w-4' />,
-            className: 'text-red-500 focus:text-red-500',
-            onClick: () => setDeleteDialogOpen(true),
-          },
+          ...(isPublicLink && !onDelete
+            ? []
+            : [
+                {
+                  label: 'Delete',
+                  icon: <Trash className='h-4 w-4' />,
+                  className: 'text-red-500 focus:text-red-500',
+                  onClick: deleteAction,
+                },
+              ]),
         ]}
         trigger={
           <Button size='icon' variant='ghost' aria-label='Open more options menu' className='w-auto px-1'>

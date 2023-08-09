@@ -1,18 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
 import useLocalStorage from 'use-local-storage-state'
 import { useMemo } from 'react'
 import { siteConfig } from '@/config/site'
 import { LINKS_DATA_KEY, MAX_PUBLIC_LINKS } from '@/config/constants'
 import { LinkSchema, type Link as LinkType } from '@/utils/schemas'
 import { LinkSkeletonCard } from '../cards/link-skeleton'
-
-const DemoLinkCard = dynamic(() => import('../cards/demo-link').then(m => m.DemoLinkCard), {
-  ssr: false,
-  loading: () => <LinkSkeletonCard animate={false} withOptions={false} />,
-})
+import { LinkCard } from '../cards/link'
 
 const HomeLinksSchema = LinkSchema.array()
 
@@ -39,20 +34,23 @@ export function HomeLinks() {
   return (
     <ul className='space-y-2'>
       <li>
-        <DemoLinkCard
+        <LinkCard
+          isPublicLink
+          createdAt={new Date().toISOString()}
           shortLink={siteConfig.examples.key}
-          description={siteConfig.examples.description}
+          description={null}
           destination={siteConfig.examples.link}
         />
       </li>
       {links.map((link, linkIndex) => {
         return (
           <li key={link.key}>
-            <DemoLinkCard
-              withRemove
+            <LinkCard
+              isPublicLink
               shortLink={link.key}
-              description={link.description}
+              description={null}
               destination={link.destination}
+              createdAt={new Date().toDateString()}
               onDelete={() => {
                 setLinks(prev => prev.filter((_, index) => linkIndex !== index))
               }}
@@ -62,10 +60,10 @@ export function HomeLinks() {
       })}
       {skeletons.map((_, i) => (
         <li key={i}>
-          <LinkSkeletonCard className='shadow-lg' animate={false} withOptions={false} />
+          <LinkSkeletonCard isPublicLink />
         </li>
       ))}
-      <li className='rounded-md border border-neutral-200 bg-white p-4 text-sm text-neutral-600 shadow-lg'>
+      <li className='rounded-md border border-neutral-200 bg-white p-4 text-sm text-neutral-600 shadow-md'>
         Note: You can only create 3 public links, delete one of the links or{' '}
         <Link href='/login' className='font-semibold text-neutral-900 hover:underline'>
           login
