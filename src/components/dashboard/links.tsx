@@ -8,7 +8,7 @@ import { LinksEmpty } from './links-empty'
 
 const LinkCard = dynamic(() => import('../cards/link').then(m => m.LinkCard), {
   ssr: false,
-  loading: LinkSkeletonCard,
+  loading: () => <LinkSkeletonCard />,
 })
 
 export function Links() {

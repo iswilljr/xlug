@@ -32,8 +32,9 @@ export const POST = routeHandler(async (req, ctx) => {
     ...ctx.params, // overwrite key value
   })
 
+  const isPublicLink = req.nextUrl.searchParams.get('public') === 'true'
   const supabase = createRouteHandlerClient<Database>({ cookies })
-  const session = (await supabase.auth.getSession()).data.session
+  const session = isPublicLink ? null : (await supabase.auth.getSession()).data.session
 
   const { data } = await supabase
     .from('links')

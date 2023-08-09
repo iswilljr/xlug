@@ -1,3 +1,5 @@
+import { HomeLinks } from '@/components/home/links'
+import { HomeCreateLink } from '@/components/home/create-link'
 import { AuthButton } from '@/components/buttons/auth'
 import { IconGithub } from '@/components/icons'
 import { siteConfig } from '@/config/site'
@@ -26,15 +28,19 @@ export default function Page() {
             loginLabel='Get Started'
           />
           <Link
-            className={cn(buttonVariants({ variant: 'outline' }), 'rounded-full px-5 shadow-lg')}
+            className={cn(buttonVariants({ variant: 'outline' }), 'gap-1 rounded-full px-5 shadow-lg')}
             href={siteConfig.links.github}
             target='_blank'
             rel='noreferrer'
           >
-            <IconGithub className='mr-1' size={20} />
+            <IconGithub size={20} />
             Star on Github
           </Link>
         </div>
+      </section>
+      <section className='mx-auto mt-10 max-w-sm space-y-2 text-center md:max-w-md'>
+        <HomeCreateLink />
+        <HomeLinks />
       </section>
     </>
   )
