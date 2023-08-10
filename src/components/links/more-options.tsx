@@ -1,10 +1,12 @@
 'use client'
 
-import { useCallback, useMemo, useState } from 'react'
-import { Edit, MoreVert, MultiMacOsWindow, QrCode, Trash } from 'iconoir-react'
+import { toast } from 'sonner'
+import { useCallback, useState } from 'react'
+import { useClipboard } from 'use-clipboard-copy'
+import { Copy, Edit, MoreVert, QrCode, Trash } from 'iconoir-react'
+import { generateShortLink } from '@/utils/links'
 import { Button } from '@/ui/button'
 import { DropdownMenu } from '@/ui/dropdown-menu'
-import { CreateLinkDialog } from '../dialogs/create-link-dialog'
 import { UpdateLinkDialog } from '../dialogs/update-link-dialog'
 import { QRCodeDialog } from '../dialogs/qr-code-dialog'
 import { DeleteLinkDialog } from '../dialogs/delete-link-dialog'
@@ -18,11 +20,20 @@ export interface LinkMoreOptionsButtonProps {
 
 export function LinkMoreOptionsButton({ initialValues, isPublicLink, onDelete }: LinkMoreOptionsButtonProps) {
   const [isUpdateDialogOpen, setUpdateDialogOpen] = useState(false)
-  const [isNewDialogOpen, setNewDialogOpen] = useState(false)
   const [isQRCodeDialogOpen, setQRCodeDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const clipboard = useClipboard()
 
-  const newLinkValues = useMemo(() => ({ ...initialValues, key: `new-${initialValues.key}` }), [initialValues])
+  const copyAction = useCallback(() => {
+    try {
+      if (!clipboard.isSupported()) throw Error('Clipboard not supported')
+
+      clipboard.copy(generateShortLink(initialValues.key))
+      toast.success('Short Link Copied')
+    } catch (error) {
+      toast.error('Your browser does not support copying values')
+    }
+  }, [clipboard, initialValues.key])
 
   const deleteAction = useCallback(() => {
     if (isPublicLink) {
@@ -45,10 +56,9 @@ export function LinkMoreOptionsButton({ initialValues, isPublicLink, onDelete }:
             onClick: () => setUpdateDialogOpen(true),
           },
           {
-            label: 'Duplicate',
-            disabled: isPublicLink,
-            icon: <MultiMacOsWindow className='h-4 w-4' />,
-            onClick: () => setNewDialogOpen(true),
+            label: 'Copy Link',
+            icon: <Copy className='h-4 w-4' />,
+            onClick: copyAction,
           },
           {
             label: 'Qr Code',
@@ -72,9 +82,6 @@ export function LinkMoreOptionsButton({ initialValues, isPublicLink, onDelete }:
           </Button>
         }
       />
-      {isNewDialogOpen && (
-        <CreateLinkDialog open={isNewDialogOpen} onOpenChange={setNewDialogOpen} initialValues={newLinkValues} />
-      )}
       {isUpdateDialogOpen && (
         <UpdateLinkDialog open={isUpdateDialogOpen} onOpenChange={setUpdateDialogOpen} initialValues={initialValues} />
       )}
