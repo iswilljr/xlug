@@ -1,16 +1,14 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { useCallback, useMemo, useState } from 'react'
 import { Edit, MoreVert, MultiMacOsWindow, QrCode, Trash } from 'iconoir-react'
 import { Button } from '@/ui/button'
 import { DropdownMenu } from '@/ui/dropdown-menu'
+import { CreateLinkForm } from '../forms/create-link'
+import { UpdateLinkForm } from '../forms/update-link'
+import { QRCodeDialog } from '../dialogs/qr-code'
+import { DeleteLinkDialog } from '../dialogs/delete-link'
 import type { Link } from '@/utils/schemas'
-
-const CreateLinkForm = dynamic(() => import('../forms/create-link').then(m => m.CreateLinkForm))
-const DeleteLinkDialog = dynamic(() => import('../dialogs/delete-link').then(m => m.DeleteLinkDialog))
-const QRCodeDialog = dynamic(() => import('../dialogs/qr-code').then(m => m.QRCodeDialog))
-const UpdateLinkForm = dynamic(() => import('../forms/update-link').then(m => m.UpdateLinkForm))
 
 export interface LinkMoreOptionsButtonProps {
   initialValues: Link
