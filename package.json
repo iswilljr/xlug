@@ -1,6 +1,6 @@
 {
   "name": "xlug",
-  "description": "A URL shortener built with NextJs",
+  "description": "Link shortener tool that allows you to create shorter and more manageable versions of long URLs.",
   "version": "2.0.0",
   "main": "index.js",
   "keywords": [],

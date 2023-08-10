@@ -18,7 +18,7 @@ export default function Page() {
           </span>
         </h1>
         <p className='mt-4 text-neutral-600 md:text-xl'>
-          A link shortener tool that allows you to create shorter and more manageable versions of long URLs.
+          Link shortener tool that allows you to create shorter and more manageable versions of long URLs.
         </p>
         <div className='mt-10 flex items-center justify-center space-x-4'>
           <AuthButton
