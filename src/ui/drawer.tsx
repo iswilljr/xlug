@@ -108,7 +108,7 @@ function Drawer({
   children,
   className,
   classNames,
-  closeTreshold = 0.5,
+  closeThreshold = 0.5,
   defaultOpen,
   description,
   dismissible,
@@ -127,7 +127,7 @@ function Drawer({
 
   return (
     <DrawerRoot
-      {...{ closeTreshold, defaultOpen, dismissible, onDrag, onOpenChange, onRelease, open, shouldScaleBackground }}
+      {...{ closeThreshold, defaultOpen, dismissible, onDrag, onOpenChange, onRelease, open, shouldScaleBackground }}
     >
       {trigger && (
         <DrawerTrigger className={classes.trigger} asChild>
