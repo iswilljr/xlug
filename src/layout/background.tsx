@@ -1,4 +1,4 @@
-export function HomeBackground() {
+export function Background() {
   return (
     <div className='fixed left-0 top-0 -z-50 h-screen w-screen overflow-hidden'>
       <div className='absolute inset-0 z-[-1] bg-neutral-950/10' />
