@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Filters } from '@/components/dashboard/filters'
-import { Links } from '@/components/dashboard/links'
+import { LinkFilters } from '@/components/links/link-filters'
+import { LinksContainer } from '@/components/links/links-container'
 import { FilterQueryParams } from '@/config/constants'
 import { LinksProvider } from '@/providers/links'
 import type { Database } from '@/types/supabase'
@@ -26,10 +26,10 @@ export default async function Page({ searchParams }: DefaultPageProps) {
     <LinksProvider initialLinks={links?.data ?? []} query={query ?? ''}>
       <main className='mx-auto w-full max-w-screen-xl space-y-6 p-6'>
         <section>
-          <Filters />
+          <LinkFilters />
         </section>
         <section>
-          <Links />
+          <LinksContainer />
         </section>
       </main>
     </LinksProvider>

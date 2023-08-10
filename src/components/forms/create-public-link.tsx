@@ -12,12 +12,12 @@ import { LINKS_DATA_KEY, MAX_PUBLIC_LINKS } from '@/config/constants'
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
 
-export function HomeCreateLink() {
+export function CreatePublicLinkForm() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [isSubmitting, setSubmitting] = useState(false)
   const [links, setLinks] = useLocalStorage<Link[]>(LINKS_DATA_KEY, { defaultValue: [] })
   const hasReachedMaxPublicLinks = useMemo(() => links.length >= MAX_PUBLIC_LINKS, [links])
-  const { trigger: create } = useSWRMutate('home-create-link', (_key, { arg }: { arg: Link }) =>
+  const { trigger: create } = useSWRMutate('create-public-link', (_key, { arg }: { arg: Link }) =>
     axios.post(`/api/link/${arg.key}?public=true`, arg)
   )
 

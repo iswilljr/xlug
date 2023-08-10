@@ -1,5 +1,5 @@
 import { Logo } from '@/components/logo'
-import { AuthButton } from '@/components/buttons/auth'
+import { AuthButton } from '@/components/auth/auth-button'
 
 export function HomeHeader() {
   return (

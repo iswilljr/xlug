@@ -14,9 +14,9 @@ import { siteConfig } from '@/config/site'
 import { validateLinkKey } from '@/utils/links'
 import { type Link, LinkSchema, RandomKey } from '@/utils/schemas'
 import { useDebounce } from '@/hooks/use-debounce'
-import { IconLogo } from '../logo'
+import { IconLogo } from '../../logo'
 
-export interface CreateLinkDialogProps {
+export interface CreateLinkDialogBaseProps {
   actionLabel?: string
   initialValues?: Link
   open: boolean
@@ -28,7 +28,7 @@ export interface CreateLinkDialogProps {
 
 const resolver = zodResolver(LinkSchema)
 
-export function CreateLinkDialog({
+export function CreateLinkDialogBase({
   actionLabel = 'Create link',
   initialValues,
   open,
@@ -36,7 +36,7 @@ export function CreateLinkDialog({
   trigger,
   onOpenChange,
   onSubmit,
-}: CreateLinkDialogProps) {
+}: CreateLinkDialogBaseProps) {
   const isSubmittingRef = useRef(false)
   const [key, setKey] = useDebounce('')
   const [isSubmitting, setSubmitting] = useState(false)

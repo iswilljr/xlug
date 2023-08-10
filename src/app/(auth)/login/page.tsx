@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { IconLogo } from '@/components/logo'
-import { LoginButtons } from '@/components/buttons/login'
+import { LoginButtons } from '@/components/auth/login-buttons'
 import { generateBaseMetadata } from '@/utils/metadata'
 import type { DefaultPageProps } from '@/types/params'
 

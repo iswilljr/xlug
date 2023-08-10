@@ -6,7 +6,7 @@ import { useMemo } from 'react'
 import { Separator } from '@/ui/separator'
 import { formatDateToNow } from '@/utils/dates'
 import { generateHostIconFromUrl, generateShortLink, prettyUrl } from '@/utils/links'
-import { LinkMoreOptionsButton, type LinkMoreOptionsButtonProps } from '../buttons/link-more-options'
+import { LinkMoreOptionsButton, type LinkMoreOptionsButtonProps } from './more-options'
 import type { LinkRow } from '@/types/tables'
 
 interface LinkCardProps

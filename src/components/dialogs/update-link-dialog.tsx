@@ -7,17 +7,17 @@ import { toast } from 'sonner'
 import { useCallback } from 'react'
 import { LINKS_DATA_KEY } from '@/config/constants'
 import { useWithinDrawer } from '@/hooks/use-within-drawer'
-import { CreateLinkDialog } from '../dialogs/create-link'
+import { CreateLinkDialogBase } from './_base/create-link-dialog-base'
 import type { Link } from '@/utils/schemas'
 
-interface CreateLinkFormProps {
+export interface UpdateLinkDialogProps {
   initialValues: Link
   open?: boolean
   trigger?: React.ReactNode
   onOpenChange?: (value: boolean) => void
 }
 
-export function UpdateLinkForm({ initialValues, open, trigger, onOpenChange }: CreateLinkFormProps) {
+export function UpdateLinkDialog({ initialValues, open, trigger, onOpenChange }: UpdateLinkDialogProps) {
   const { modalOpen, onModalOpenChange } = useWithinDrawer({ open, onOpenChange })
   const { trigger: update } = useSWRMutate('update-link', (_key, { arg }: { arg: Link }) =>
     axios.patch(`/api/link/${initialValues.key}`, arg)
@@ -33,7 +33,7 @@ export function UpdateLinkForm({ initialValues, open, trigger, onOpenChange }: C
   )
 
   return (
-    <CreateLinkDialog
+    <CreateLinkDialogBase
       trigger={trigger}
       open={modalOpen}
       onSubmit={updateLink}

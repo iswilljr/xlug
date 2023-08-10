@@ -2,10 +2,10 @@
 
 import { useMemo } from 'react'
 import { useLinksState } from '@/store/links'
-import { LinkCard } from '../cards/link'
+import { LinkCard } from './link-card'
 import { LinksEmpty } from './links-empty'
 
-export function Links() {
+export function LinksContainer() {
   const links = useLinksState(state => state.links)
   const isEmpty = useMemo(() => links.length <= 0, [links])
 

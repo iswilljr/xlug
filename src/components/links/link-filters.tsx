@@ -9,9 +9,9 @@ import { Input } from '@/ui/input'
 import { handleOnChangeFilters } from '@/utils/filters'
 import { useDebounce } from '@/hooks/use-debounce'
 import { useLinksState } from '@/store/links'
-import { CreateLinkForm } from '../forms/create-link'
+import { CreateLinkDialog } from '../dialogs/create-link-dialog'
 
-export function Filters() {
+export function LinkFilters() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -33,7 +33,7 @@ export function Filters() {
         icon={Search}
         onChange={e => setDebouncedQuery(e.target.value)}
       />
-      <CreateLinkForm
+      <CreateLinkDialog
         trigger={
           <Button className='h-9 w-9 px-2 sm:min-w-[7rem]'>
             <Plus className='sm:hidden' />

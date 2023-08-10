@@ -6,13 +6,13 @@ import { useMemo } from 'react'
 import { siteConfig } from '@/config/site'
 import { LINKS_DATA_KEY, MAX_PUBLIC_LINKS } from '@/config/constants'
 import { LinkSchema, type Link as LinkType } from '@/utils/schemas'
-import { LinkSkeletonCard } from '../cards/link-skeleton'
-import { LinkCard } from '../cards/link'
+import { LinkSkeletonCard } from '../links/link-skeleton'
+import { LinkCard } from './link-card'
 
-const HomeLinksSchema = LinkSchema.array()
+const PublicLinksSchema = LinkSchema.array()
 
 function parser(value: string): LinkType[] {
-  const links = HomeLinksSchema.safeParse(JSON.parse(value))
+  const links = PublicLinksSchema.safeParse(JSON.parse(value))
   return links.success ? links.data : []
 }
 
@@ -21,7 +21,7 @@ const serializer = {
   stringify: JSON.stringify,
 }
 
-export function HomeLinks() {
+export function PublicLinksContainer() {
   const [links, setLinks] = useLocalStorage<LinkType[]>(LINKS_DATA_KEY, {
     defaultValue: [],
     serializer,

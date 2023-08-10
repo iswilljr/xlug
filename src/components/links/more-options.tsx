@@ -4,10 +4,10 @@ import { useCallback, useMemo, useState } from 'react'
 import { Edit, MoreVert, MultiMacOsWindow, QrCode, Trash } from 'iconoir-react'
 import { Button } from '@/ui/button'
 import { DropdownMenu } from '@/ui/dropdown-menu'
-import { CreateLinkForm } from '../forms/create-link'
-import { UpdateLinkForm } from '../forms/update-link'
-import { QRCodeDialog } from '../dialogs/qr-code'
-import { DeleteLinkDialog } from '../dialogs/delete-link'
+import { CreateLinkDialog } from '../dialogs/create-link-dialog'
+import { UpdateLinkDialog } from '../dialogs/update-link-dialog'
+import { QRCodeDialog } from '../dialogs/qr-code-dialog'
+import { DeleteLinkDialog } from '../dialogs/delete-link-dialog'
 import type { Link } from '@/utils/schemas'
 
 export interface LinkMoreOptionsButtonProps {
@@ -73,10 +73,10 @@ export function LinkMoreOptionsButton({ initialValues, isPublicLink, onDelete }:
         }
       />
       {isNewDialogOpen && (
-        <CreateLinkForm open={isNewDialogOpen} onOpenChange={setNewDialogOpen} initialValues={newLinkValues} />
+        <CreateLinkDialog open={isNewDialogOpen} onOpenChange={setNewDialogOpen} initialValues={newLinkValues} />
       )}
       {isUpdateDialogOpen && (
-        <UpdateLinkForm open={isUpdateDialogOpen} onOpenChange={setUpdateDialogOpen} initialValues={initialValues} />
+        <UpdateLinkDialog open={isUpdateDialogOpen} onOpenChange={setUpdateDialogOpen} initialValues={initialValues} />
       )}
       {isQRCodeDialogOpen && (
         <QRCodeDialog open={isQRCodeDialogOpen} onOpenChange={setQRCodeDialogOpen} link={initialValues} />

@@ -1,6 +1,6 @@
-import { HomeLinks } from '@/components/home/links'
-import { HomeCreateLink } from '@/components/home/create-link'
-import { AuthButton } from '@/components/buttons/auth'
+import { PublicLinksContainer } from '@/components/links/public-links-container'
+import { CreatePublicLinkForm } from '@/components/forms/create-public-link'
+import { AuthButton } from '@/components/auth/auth-button'
 import { IconGithub } from '@/components/icons'
 import { siteConfig } from '@/config/site'
 import { buttonVariants } from '@/ui/button'
@@ -39,8 +39,8 @@ export default function Page() {
         </div>
       </section>
       <section className='mx-auto mt-10 max-w-sm space-y-2 text-center md:max-w-md'>
-        <HomeCreateLink />
-        <HomeLinks />
+        <CreatePublicLinkForm />
+        <PublicLinksContainer />
       </section>
     </>
   )
