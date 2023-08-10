@@ -10,7 +10,7 @@ export function generateShortLink(key: string) {
 }
 
 export function prettyUrl(url: string) {
-  return url.replace(/^https?:\/\/(www\.)?/, '')
+  return url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 }
 
 export function generateHostIconFromUrl(url: string | URL) {
