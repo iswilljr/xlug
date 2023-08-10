@@ -7,7 +7,7 @@ import { siteConfig } from '@/config/site'
 import { LINKS_DATA_KEY, MAX_PUBLIC_LINKS } from '@/config/constants'
 import { LinkSchema, type Link as LinkType } from '@/utils/schemas'
 import { LinkSkeletonCard } from '../links/link-skeleton'
-import { LinkCard } from './link-card'
+import { PublicLinkCard } from './public-link-card'
 
 const PublicLinksSchema = LinkSchema.array()
 
@@ -22,7 +22,7 @@ const serializer = {
 }
 
 export function PublicLinksContainer() {
-  const [links, setLinks] = useLocalStorage<LinkType[]>(LINKS_DATA_KEY, {
+  const [links] = useLocalStorage<LinkType[]>(LINKS_DATA_KEY, {
     defaultValue: [],
     serializer,
   })
@@ -34,27 +34,17 @@ export function PublicLinksContainer() {
   return (
     <ul className='space-y-2'>
       <li>
-        <LinkCard
-          isPublicLink
-          createdAt={new Date().toISOString()}
+        <PublicLinkCard
+          withDeleteOption={false}
           shortLink={siteConfig.examples.key}
-          description={null}
+          description={siteConfig.examples.description}
           destination={siteConfig.examples.link}
         />
       </li>
-      {links.map((link, linkIndex) => {
+      {links.map(link => {
         return (
           <li key={link.key}>
-            <LinkCard
-              isPublicLink
-              shortLink={link.key}
-              description={null}
-              destination={link.destination}
-              createdAt={new Date().toDateString()}
-              onDelete={() => {
-                setLinks(prev => prev.filter((_, index) => linkIndex !== index))
-              }}
-            />
+            <PublicLinkCard shortLink={link.key} description={link.description} destination={link.destination} />
           </li>
         )
       })}

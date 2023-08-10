@@ -1,25 +1,31 @@
 'use client'
 
+import useLocalStorage from 'use-local-storage-state'
 import { toast } from 'sonner'
 import { useCallback, useState } from 'react'
 import { useClipboard } from 'use-clipboard-copy'
-import { Copy, Edit, MoreVert, QrCode, Trash } from 'iconoir-react'
+import { Copy, MoreVert, QrCode, Trash } from 'iconoir-react'
+import { LINKS_DATA_KEY } from '@/config/constants'
 import { generateShortLink } from '@/utils/links'
 import { Button } from '@/ui/button'
 import { DropdownMenu } from '@/ui/dropdown-menu'
-import { UpdateLinkDialog } from '../dialogs/update-link-dialog'
 import { QRCodeDialog } from '../dialogs/qr-code-dialog'
-import { DeleteLinkDialog } from '../dialogs/delete-link-dialog'
 import type { Link } from '@/utils/schemas'
 
-export interface LinkMoreOptionsButtonProps {
+export interface PublicLinkMoreOptionsButtonProps {
   initialValues: Link
+  withDeleteOption?: boolean
 }
 
-export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonProps) {
-  const [isUpdateDialogOpen, setUpdateDialogOpen] = useState(false)
+export function PublicLinkMoreOptionsButton({
+  initialValues,
+  withDeleteOption = true,
+}: PublicLinkMoreOptionsButtonProps) {
+  const [, setLinks] = useLocalStorage<Link[]>(LINKS_DATA_KEY, {
+    defaultValue: [],
+    storageSync: false,
+  })
   const [isQRCodeDialogOpen, setQRCodeDialogOpen] = useState(false)
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const clipboard = useClipboard()
 
   const copyAction = useCallback(() => {
@@ -33,16 +39,16 @@ export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonPr
     }
   }, [clipboard, initialValues.key])
 
+  const deleteAction = useCallback(() => {
+    setLinks(prev => prev.filter(link => link.key !== initialValues.key))
+  }, [initialValues.key, setLinks])
+
   return (
     <>
       <DropdownMenu
         align='end'
+        classNames={{ item: 'text-neutral-500 focus:text-neutral-700' }}
         items={[
-          {
-            label: 'Edit',
-            icon: <Edit className='h-4 w-4' />,
-            onClick: () => setUpdateDialogOpen(true),
-          },
           {
             label: 'Copy Link',
             icon: <Copy className='h-4 w-4' />,
@@ -53,12 +59,16 @@ export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonPr
             icon: <QrCode className='h-4 w-4' />,
             onClick: () => setQRCodeDialogOpen(true),
           },
-          {
-            label: 'Delete',
-            icon: <Trash className='h-4 w-4' />,
-            className: 'text-red-500 focus:text-red-500',
-            onClick: () => setDeleteDialogOpen(true),
-          },
+          ...(withDeleteOption
+            ? [
+                {
+                  label: 'Delete',
+                  icon: <Trash className='h-4 w-4' />,
+                  className: 'text-red-500 focus:text-red-500',
+                  onClick: deleteAction,
+                },
+              ]
+            : []),
         ]}
         trigger={
           <Button size='icon' variant='ghost' aria-label='Open more options menu' className='w-auto px-1'>
@@ -66,15 +76,7 @@ export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonPr
           </Button>
         }
       />
-      {isUpdateDialogOpen && (
-        <UpdateLinkDialog open={isUpdateDialogOpen} onOpenChange={setUpdateDialogOpen} initialValues={initialValues} />
-      )}
-      {isQRCodeDialogOpen && (
-        <QRCodeDialog open={isQRCodeDialogOpen} onOpenChange={setQRCodeDialogOpen} link={initialValues} />
-      )}
-      {isDeleteDialogOpen && (
-        <DeleteLinkDialog open={isDeleteDialogOpen} onOpenChange={setDeleteDialogOpen} link={initialValues} />
-      )}
+      <QRCodeDialog open={isQRCodeDialogOpen} onOpenChange={setQRCodeDialogOpen} link={initialValues} />
     </>
   )
 }
