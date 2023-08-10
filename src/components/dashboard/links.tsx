@@ -13,13 +13,13 @@ export function Links() {
     <>
       {isEmpty && <LinksEmpty />}
       {!isEmpty && (
-        <ul className='grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-2'>
+        <ul className='grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4'>
           {links.map(link => (
             <li key={link.id}>
               <LinkCard
                 shortLink={link.key}
                 createdAt={link.createdAt}
-                description={link.description ?? 'No description provided.'}
+                description={link.description}
                 destination={link.destination}
               />
             </li>
