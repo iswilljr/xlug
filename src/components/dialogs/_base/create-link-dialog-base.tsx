@@ -1,5 +1,6 @@
 'use client'
 
+import axios from 'redaxios'
 import { toast } from 'sonner'
 import { Shuffle } from 'iconoir-react'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -40,6 +41,7 @@ export function CreateLinkDialogBase({
   const isSubmittingRef = useRef(false)
   const [key, setKey] = useDebounce('')
   const [isSubmitting, setSubmitting] = useState(false)
+  const [destination, setDestination] = useDebounce(initialValues?.destination ?? '')
 
   const form = useForm({
     defaultValues: {
@@ -94,6 +96,22 @@ export function CreateLinkDialogBase({
     }
   }, [form, key, validateKey])
 
+  useEffect(() => {
+    async function getMetadata() {
+      const url = new URL(destination)
+      const res = await axios.get(`/api/metadata?url=${url.toString()}`)
+      const metadata = res.data
+      if (metadata.description) form.setValue('description', metadata.description)
+    }
+
+    if (
+      (destination && destination !== initialValues?.destination) ||
+      form.getValues('description') !== initialValues?.description
+    ) {
+      getMetadata().catch(() => {})
+    }
+  }, [destination, form, initialValues])
+
   return (
     <Dialog
       open={open}
@@ -113,6 +131,7 @@ export function CreateLinkDialogBase({
             control={form.control}
             label='Destination URL'
             placeholder={siteConfig.examples.link}
+            onChange={e => setDestination(e.target.value)}
           />
           <Form.Input
             name='key'
