@@ -58,7 +58,7 @@ export function LinkCard({ createdAt, description, destination, shortLink, ...pr
           </div>
         </div>
         <div className='flex flex-shrink-0 items-center justify-center'>
-          <LinkMoreOptionsButton initialValues={{ description, destination, key: shortLink }} {...props} />
+          <LinkMoreOptionsButton initialValues={{ createdAt, description, destination, key: shortLink }} {...props} />
         </div>
       </div>
       <div className='flex min-w-0 items-start'>
