@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { AUTH_PAGES, REDIRECT_ON_AUTH_PAGES } from '@/config/constants'
-import { LinkSchema } from './schemas'
+import { KeySchema } from './schemas'
 import type { Database } from '@/types/supabase'
 
 export async function AppMiddleware(req: NextRequest) {
@@ -54,7 +54,7 @@ export async function LinksMiddleware(req: NextRequest) {
 
   try {
     const supabase = createMiddlewareClient<Database>({ req, res })
-    const key = LinkSchema.shape.key.parse(req.nextUrl.pathname.slice(1))
+    const key = KeySchema.parse(req.nextUrl.pathname.slice(1))
 
     const { data } = await supabase
       .from('links')
