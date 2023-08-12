@@ -20,11 +20,13 @@ export interface LinksState extends LinksInitProps {
 
 export const { LinksProvider, useLinksState, useLinksStore } = createStoreWithInitProps({
   create(initProps: LinksInitProps) {
+    const initialFilteredLinks = filterLinks({ links: initProps.initialLinks, query: initProps.query })
+
     return createWithEqualityFn<LinksState>(
       set => ({
         initialLinks: initProps.initialLinks,
         data: initProps.initialLinks,
-        links: initProps.initialLinks,
+        links: initialFilteredLinks,
         query: initProps.query,
         setLinks(links) {
           set(state => {

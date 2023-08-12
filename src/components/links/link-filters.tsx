@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Plus, Search } from 'iconoir-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { FilterQueryParams } from '@/config/constants'
@@ -14,9 +14,10 @@ import { CreateLinkDialog } from '../dialogs/create-link-dialog'
 export function LinkFilters() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const initialQueryValue = useRef(searchParams.get(FilterQueryParams.query))
 
   const setFilters = useLinksState(state => state.setFilters)
-  const [query, setDebouncedQuery] = useDebounce(searchParams.get(FilterQueryParams.query) ?? '')
+  const [query, setDebouncedQuery] = useDebounce(initialQueryValue.current ?? '')
 
   useEffect(() => {
     const search = handleOnChangeFilters({ query })
@@ -31,6 +32,7 @@ export function LinkFilters() {
         rootClassName='w-full'
         placeholder='Search...'
         icon={Search}
+        defaultValue={initialQueryValue.current ?? ''}
         onChange={e => setDebouncedQuery(e.target.value)}
       />
       <CreateLinkDialog
