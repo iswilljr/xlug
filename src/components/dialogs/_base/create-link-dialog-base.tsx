@@ -117,7 +117,7 @@ export function CreateLinkDialogBase({
       open={open}
       trigger={trigger}
       onOpenChange={onOpenChange}
-      className="gap-0 overflow-hidden bg-white p-0 pt-2 dark:bg-darker sm:pt-0 sm:[&_[data-orientation='vertical']]:!hidden"
+      className="gap-0 overflow-hidden bg-white p-0 pt-2 dark:bg-neutral-900 sm:pt-0 sm:[&_[data-orientation='vertical']]:!hidden"
     >
       <div className='z-10 flex flex-col items-center justify-center space-y-3 border-b border-neutral-200 bg-white p-6 transition-all dark:border-neutral-800 dark:bg-neutral-900 sm:sticky sm:top-0 sm:px-16'>
         <IconLogo className='h-10 w-10' />
