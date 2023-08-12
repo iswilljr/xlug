@@ -70,6 +70,7 @@ export function CreatePublicLinkForm() {
             disabled={hasReachedMaxPublicLinks}
             size='icon'
             variant='outline'
+            aria-label='Create public link'
             className='h-7 w-7 dark:bg-neutral-800 dark:hover:bg-neutral-700/90'
             icon={<Send className='h-4 w-4' />}
           />

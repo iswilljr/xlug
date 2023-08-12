@@ -12,7 +12,7 @@ export function ThemeSwitcher() {
     <DropdownMenu
       align='end'
       trigger={
-        <Button size='icon' variant='ghost' className='h-8 w-8'>
+        <Button aria-label='Switch between dark and light theme' size='icon' variant='ghost' className='h-8 w-8'>
           <Sparks className='h-5 w-5 stroke-2' />
         </Button>
       }

@@ -10,7 +10,10 @@ export const metadata = generateBaseMetadata()
 
 export default function Layout({ children }: React.PropsWithChildren) {
   return (
-    <html lang='en'>
+    <html
+      lang='en'
+      suppressHydrationWarning // next-themes package adds extra attributes to the html element in dark mode
+    >
       <body className={cn(inter.className, 'bg-white dark:bg-neutral-950')}>
         <SessionProvider>
           <ThemeProvider>
