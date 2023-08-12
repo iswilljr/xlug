@@ -21,19 +21,18 @@ export function LinksProvider({ children, ...props }: LinksStateProviderProps) {
   )
 }
 
-function LinksDataProvider({ children, initialLinks }: LinksStateProviderProps) {
-  const setLinks = useLinksState(state => state.setLinks)
+function LinksDataProvider({ children }: LinksStateProviderProps) {
+  const [setLinks, setLoading] = useLinksState(state => [state.setLinks, state.setLoading] as const)
 
-  const { data } = useSWR(LINKS_DATA_KEY, key => axios.get<LinksData>(`/api/${key}`).then(res => res.data), {
-    fallbackData: { links: initialLinks },
-    revalidateOnMount: false,
-  })
+  const { data, isLoading } = useSWR(LINKS_DATA_KEY, key => axios.get<LinksData>(`/api/${key}`).then(res => res.data))
 
   useEffect(() => {
-    if (data.links === initialLinks) return
+    setLoading(isLoading)
+
+    if (!data) return
 
     setLinks(data.links)
-  }, [data.links, initialLinks, setLinks])
+  }, [data, isLoading, setLinks, setLoading])
 
   return children
 }

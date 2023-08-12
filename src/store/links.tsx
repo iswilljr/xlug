@@ -7,27 +7,29 @@ import { createStoreWithInitProps } from './create-store'
 import type { LinkRow } from '@/types/tables'
 
 export interface LinksInitProps {
-  initialLinks: LinkRow[]
   query: string
 }
 
 export interface LinksState extends LinksInitProps {
   links: LinkRow[]
   data: LinkRow[]
+  isLoading: boolean
+  setLoading: (loading: boolean) => void
   setLinks: (links: LinkRow[]) => void
   setFilters: (options: FilterOptions) => void
 }
 
 export const { LinksProvider, useLinksState, useLinksStore } = createStoreWithInitProps({
   create(initProps: LinksInitProps) {
-    const initialFilteredLinks = filterLinks({ links: initProps.initialLinks, query: initProps.query })
-
     return createWithEqualityFn<LinksState>(
       set => ({
-        initialLinks: initProps.initialLinks,
-        data: initProps.initialLinks,
-        links: initialFilteredLinks,
+        data: [],
+        links: [],
+        isLoading: true,
         query: initProps.query,
+        setLoading(isLoading) {
+          set({ isLoading })
+        },
         setLinks(links) {
           set(state => {
             return {
