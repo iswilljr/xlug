@@ -40,7 +40,13 @@ export function LinkCard({ createdAt, description, destination, shortLink, ...pr
         </div>
         <div className='flex w-full min-w-0 flex-col'>
           <div className='flex items-center gap-2'>
-            <Link href={data.link} target='_blank' className='truncate font-medium hover:underline' rel='noreferrer'>
+            <Link
+              target='_blank'
+              rel='noreferrer'
+              href={data.link}
+              prefetch={false}
+              className='truncate font-medium hover:underline'
+            >
               {shortLink}
             </Link>
           </div>
