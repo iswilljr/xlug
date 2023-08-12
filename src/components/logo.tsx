@@ -4,7 +4,10 @@ import { cn } from '@/utils/cn'
 export function IconLogo({ className, ...props }: React.DetailsHTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn('z-10 flex h-8 w-8 items-center justify-center rounded-md bg-neutral-900', className)}
+      className={cn(
+        'z-10 flex h-8 w-8 items-center justify-center rounded-md bg-neutral-900 dark:bg-neutral-800',
+        className
+      )}
       {...props}
     >
       <svg width='55%' fill='#fff' viewBox='0 0 80 80.005'>

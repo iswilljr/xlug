@@ -63,7 +63,8 @@ export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonPr
           {
             label: 'Delete',
             icon: <Trash className='h-4 w-4' />,
-            className: 'text-red-500 focus:text-red-500',
+            className:
+              'text-red-500 focus:text-red-500 dark:text-red-400 dark:focus:text-red-300 dark:focus:bg-red-800',
             onClick: () => setDeleteDialogOpen(true),
           },
         ]}

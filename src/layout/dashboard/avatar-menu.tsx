@@ -43,14 +43,14 @@ export function AvatarMenu() {
       {session && (
         <div className='px-5 pb-2 text-sm'>
           <h2 className='truncate font-medium'>{session.user.user_metadata?.full_name ?? 'Default'}</h2>
-          <p className='truncate text-neutral-500'>{session.user.email}</p>
+          <p className='truncate text-neutral-500 dark:text-neutral-400'>{session.user.email}</p>
         </div>
       )}
-      <div className='text-sm text-neutral-500'>
+      <div className='text-sm text-neutral-500 dark:text-neutral-400'>
         {avatarMenu.map(link => (
           <Link
             key={link.href}
-            className='flex items-center gap-2 px-5 py-2 hover:bg-neutral-200/50'
+            className='flex items-center gap-2 px-5 py-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-900'
             href={link.href}
             onClick={() => setMenuOpen(false)}
           >
@@ -60,7 +60,7 @@ export function AvatarMenu() {
         ))}
         <button
           onClick={signOut}
-          className='flex w-full items-center gap-2 px-5 py-2 text-left hover:bg-neutral-200/50'
+          className='flex w-full items-center gap-2 px-5 py-2 text-left hover:bg-neutral-200/50 dark:hover:bg-neutral-900'
         >
           <LogOut className='h-5 w-5' />
           <span>Log out</span>

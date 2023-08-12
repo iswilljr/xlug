@@ -24,7 +24,7 @@ export function PublicLinkCard({ description, destination, shortLink, ...props }
   )
 
   return (
-    <div className='flex w-full items-center gap-2 rounded-lg border border-neutral-200 bg-white p-4 shadow-md'>
+    <div className='flex w-full items-center gap-2 rounded-lg border border-neutral-200 bg-white p-4 shadow-md transition-colors dark:border-neutral-800 dark:bg-neutral-900'>
       <Image
         width={40}
         height={40}
@@ -43,7 +43,7 @@ export function PublicLinkCard({ description, destination, shortLink, ...props }
           <Link
             href={destination}
             target='_blank'
-            className='truncate text-sm text-neutral-700 hover:underline'
+            className='truncate text-sm text-neutral-700 hover:underline dark:text-neutral-400'
             rel='noreferrer'
           >
             {data.destination}

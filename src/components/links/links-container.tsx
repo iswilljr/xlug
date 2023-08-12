@@ -13,7 +13,7 @@ export function LinksContainer() {
     <>
       {isEmpty && <LinksEmpty />}
       {!isEmpty && (
-        <ul className='grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-4'>
+        <ul className='grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4'>
           {links.map(link => (
             <li key={link.id}>
               <LinkCard

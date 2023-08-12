@@ -26,7 +26,7 @@ export function LinkCard({ createdAt, description, destination, shortLink, ...pr
   )
 
   return (
-    <div className='grid max-w-full items-start gap-2 rounded-lg border border-neutral-200 bg-white p-4 shadow-md'>
+    <div className='grid max-w-full items-start gap-2 rounded-lg border border-neutral-200 bg-white p-4 shadow-md transition-colors dark:border-neutral-800 dark:bg-neutral-900'>
       <div className='flex w-full min-w-0 items-center gap-2'>
         <div className='flex flex-shrink-0 items-center'>
           <Image
@@ -45,12 +45,12 @@ export function LinkCard({ createdAt, description, destination, shortLink, ...pr
             </Link>
           </div>
           <div className='flex items-center gap-2'>
-            <p className='whitespace-nowrap text-sm text-neutral-600'>{data.timeAgo}</p>
+            <p className='whitespace-nowrap text-sm text-neutral-700 dark:text-neutral-400/80'>{data.timeAgo}</p>
             <Separator orientation='vertical' className='h-1 w-1 rounded-full bg-neutral-700' />
             <Link
               href={destination}
               target='_blank'
-              className='truncate text-sm text-neutral-700 hover:underline'
+              className='truncate text-sm text-neutral-700 hover:underline dark:text-neutral-400/80'
               rel='noreferrer'
             >
               {data.destination}
@@ -62,7 +62,9 @@ export function LinkCard({ createdAt, description, destination, shortLink, ...pr
         </div>
       </div>
       <div className='flex min-w-0 items-start'>
-        <p className='truncate text-sm text-neutral-500'>{description ?? 'No description provided.'}</p>
+        <p className='truncate text-sm text-neutral-500 dark:text-neutral-400'>
+          {description ?? 'No description provided.'}
+        </p>
       </div>
     </div>
   )

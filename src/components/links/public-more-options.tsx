@@ -47,7 +47,6 @@ export function PublicLinkMoreOptionsButton({
     <>
       <DropdownMenu
         align='end'
-        classNames={{ item: 'text-neutral-500 focus:text-neutral-700' }}
         items={[
           {
             label: 'Copy Link',
@@ -59,16 +58,14 @@ export function PublicLinkMoreOptionsButton({
             icon: <QrCode className='h-4 w-4' />,
             onClick: () => setQRCodeDialogOpen(true),
           },
-          ...(withDeleteOption
-            ? [
-                {
-                  label: 'Delete',
-                  icon: <Trash className='h-4 w-4' />,
-                  className: 'text-red-500 focus:text-red-500',
-                  onClick: deleteAction,
-                },
-              ]
-            : []),
+          {
+            label: 'Delete',
+            disabled: !withDeleteOption,
+            icon: <Trash className='h-4 w-4' />,
+            className:
+              'text-red-500 focus:text-red-500 dark:text-red-400 dark:focus:text-red-300 dark:focus:bg-red-800',
+            onClick: deleteAction,
+          },
         ]}
         trigger={
           <Button size='icon' variant='ghost' aria-label='Open more options menu' className='w-auto px-1'>

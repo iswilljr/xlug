@@ -27,7 +27,7 @@ export function LoginButtons({ redirectTo }: LoginButtonsProps) {
   }, [redirectTo, supabase.auth])
 
   return (
-    <div className='flex flex-col items-center justify-center space-y-2 border-t border-neutral-300 bg-neutral-50 px-6 py-8 sm:px-16'>
+    <div className='flex flex-col items-center justify-center space-y-2 border-t border-neutral-200 bg-neutral-50 px-6 py-8 dark:border-neutral-800 dark:bg-darker sm:px-16'>
       <Button
         className='w-full'
         onClick={loginWithGithub}

@@ -31,19 +31,21 @@ export function ExpandedLinkDialog({ open, link, trigger, onOpenChange }: QRCode
       trigger={trigger}
       withCloseButton={false}
       onOpenChange={onOpenChange}
-      className='gap-0 overflow-hidden p-0 pt-2 sm:max-w-sm sm:pt-0'
+      className='gap-0 overflow-hidden p-0 pt-2 dark:bg-neutral-900 sm:max-w-sm sm:pt-0'
     >
       <div className='w-full min-w-0 items-center p-4 text-center'>
         <Image alt={link.key} src={data.logo} width={40} height={40} className='mx-auto h-10 w-10 rounded-full' />
         <h2 className='line-clamp-1 break-all text-lg font-semibold'>{link.key}</h2>
-        <p className='line-clamp-1 break-all text-sm text-neutral-600'>{link.destination}</p>
-        <p className='text-xs tracking-tight text-neutral-500'>
+        <p className='line-clamp-1 break-all text-sm text-neutral-600 dark:text-neutral-400'>{link.destination}</p>
+        <p className='text-xs tracking-tight text-neutral-500 dark:text-neutral-400/75'>
           <time dateTime={data.dateTime}>{data.timeAgo}</time>
         </p>
       </div>
       <Separator />
-      <div className='bg-neutral-50 p-4'>
-        <p className='text-sm text-neutral-600'>{link.description ?? 'No description provided.'}</p>
+      <div className='bg-neutral-50 p-4 dark:bg-darker'>
+        <p className='text-sm text-neutral-600 dark:text-neutral-400'>
+          {link.description ?? 'No description provided.'}
+        </p>
       </div>
     </Dialog>
   )

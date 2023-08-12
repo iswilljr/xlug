@@ -11,13 +11,13 @@ export default function Page() {
   return (
     <>
       <section className='max-w-md text-center md:max-w-lg'>
-        <h1 className='text-4xl font-extrabold text-black md:text-6xl'>
+        <h1 className='text-4xl font-extrabold md:text-6xl'>
           <span className='block'>Fast And Simple</span>
           <span className='block bg-gradient-to-r from-sky-500 via-blue-500 to-cyan-500 bg-clip-text text-transparent'>
             URL Shortener
           </span>
         </h1>
-        <p className='mt-4 text-neutral-600 md:text-xl'>
+        <p className='mt-4 text-neutral-600 dark:text-neutral-400 md:text-xl'>
           Link shortener tool that allows you to create shorter and more manageable versions of long URLs.
         </p>
         <div className='mt-10 flex items-center justify-center space-x-4'>

@@ -61,7 +61,7 @@ export function CreatePublicLinkForm() {
         ref={inputRef}
         icon={IconLink}
         name='destination'
-        className='shadow-md'
+        className='shadow-md dark:bg-neutral-900'
         placeholder='Shorten your link'
         disabled={hasReachedMaxPublicLinks}
         rightSection={
@@ -70,7 +70,7 @@ export function CreatePublicLinkForm() {
             disabled={hasReachedMaxPublicLinks}
             size='icon'
             variant='outline'
-            className='h-7 w-7'
+            className='h-7 w-7 dark:bg-neutral-800 dark:hover:bg-neutral-700/90'
             icon={<Send className='h-4 w-4' />}
           />
         }
