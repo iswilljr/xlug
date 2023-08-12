@@ -1,0 +1,27 @@
+{
+  "cSpell.words": [
+    "autosize",
+    "clsx",
+    "hookform",
+    "Hoverable",
+    "iconoir",
+    "mantine",
+    "redaxios",
+    "shadcn",
+    "signin",
+    "sonner",
+    "supabase",
+    "tabler",
+    "tailwindcss",
+    "typecheck",
+    "vaul",
+    "xlug",
+    "xlugs",
+    "zustand"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "tailwindCSS.classAttributes": ["class", "className", "classNames"],
+  "tailwindCSS.experimental.classRegex": [["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]]
+}

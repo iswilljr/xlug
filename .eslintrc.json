@@ -1,8 +1,7 @@
 {
-  "extends": ["next/core-web-vitals", "standard-with-typescript", "prettier"],
-  "plugins": ["prettier"],
+  "extends": ["next/core-web-vitals", "standard-jsx", "standard-with-typescript", "plugin:prettier/recommended"],
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": ["tsconfig.json"]
   },
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
@@ -10,7 +9,7 @@
     "@typescript-eslint/no-confusing-void-expression": "off",
     "@typescript-eslint/promise-function-async": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "prettier/prettier": "error"
+    "react/jsx-handler-names": "off"
   },
-  "ignorePatterns": ["next-env.d.ts"]
+  "ignorePatterns": ["next.config.js", "next-env.d.ts", "postcss.config.js", "tailwind.config.js"]
 }

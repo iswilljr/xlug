@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.min-h-small-screen {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+:is(.dialog, .drawer) {
+  max-height: calc(min(900px, 90vh) + 25px);
+  max-height: calc(min(900px, 90svh) + 25px);
+}
+
+:is(.alert-dialog, .alert-dialog .content, :is(.dialog, .drawer) .content) {
+  max-height: min(900px, 90vh);
+  max-height: min(900px, 90svh);
+}
