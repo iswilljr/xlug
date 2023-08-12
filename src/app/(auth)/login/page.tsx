@@ -21,7 +21,7 @@ export default function Login({ searchParams }: DefaultPageProps) {
           <IconLogo className='h-10 w-10' />
         </Link>
         <h3 className='text-xl font-bold'>Sign in to Xlug</h3>
-        <p className='text-sm text-neutral-500'>Start shorting and managing long URLs.</p>
+        <p className='text-sm text-neutral-500 dark:text-neutral-400'>Start shorting and managing long URLs.</p>
       </div>
       <LoginButtons redirectTo={redirectTo ?? '/dashboard'} />
     </section>

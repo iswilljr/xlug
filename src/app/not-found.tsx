@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { buttonVariants } from '@/ui/button'
 import { Error } from '@/components/error'
 import { siteConfig } from '@/config/site'
+import { cn } from '@/utils/cn'
 
 export default function NotFound() {
   return (
@@ -18,7 +19,13 @@ export default function NotFound() {
         </span>
       }
     >
-      <Link className={buttonVariants({ variant: 'outline', size: 'sm', className: 'text-black' })} href='/'>
+      <Link
+        className={cn(
+          buttonVariants({ variant: 'outline', size: 'sm' }),
+          'text-black dark:bg-neutral-700 dark:text-white'
+        )}
+        href='/'
+      >
         Go Home
       </Link>
     </Error>

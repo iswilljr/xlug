@@ -6,7 +6,7 @@ export function DashboardHeader() {
   return (
     <header className='flex h-14 w-full items-center justify-between px-6'>
       <DashboardHomeLink />
-      <div className='flex gap-2'>
+      <div className='flex items-center gap-2'>
         <ThemeSwitcher />
         <AvatarMenu />
       </div>

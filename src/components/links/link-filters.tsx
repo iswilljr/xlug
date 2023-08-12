@@ -37,7 +37,7 @@ export function LinkFilters() {
       />
       <CreateLinkDialog
         trigger={
-          <Button className='h-9 w-9 px-2 sm:min-w-[7rem]'>
+          <Button aria-label='Create Link' className='h-9 w-9 px-2 sm:min-w-[7rem]'>
             <Plus className='sm:hidden' />
             <span className='hidden sm:inline-block'>Create Link</span>
           </Button>

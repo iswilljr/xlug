@@ -12,7 +12,6 @@ export function HomeFooter() {
             href={siteConfig.links.profile}
             target='_blank'
             rel='noreferrer'
-            aria-label='My github profile'
           >
             Will
           </a>
