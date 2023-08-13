@@ -11,16 +11,16 @@ import { CreateLinkDialogBase } from './_base/create-link-dialog-base'
 import type { Link } from '@/utils/schemas'
 
 export interface UpdateLinkDialogProps {
-  initialValues: Link
+  link: Link
   open?: boolean
   trigger?: React.ReactNode
   onOpenChange?: (value: boolean) => void
 }
 
-export function UpdateLinkDialog({ initialValues, open, trigger, onOpenChange }: UpdateLinkDialogProps) {
+export function UpdateLinkDialog({ link, open, trigger, onOpenChange }: UpdateLinkDialogProps) {
   const { modalOpen, onModalOpenChange } = useWithinDrawer({ open, onOpenChange })
   const { trigger: update } = useSWRMutate('update-link', (_key, { arg }: { arg: Link }) =>
-    axios.patch(`/api/link/${initialValues.key}`, arg)
+    axios.patch(`/api/link/${link.key}`, arg)
   )
 
   const updateLink = useCallback(
@@ -38,7 +38,7 @@ export function UpdateLinkDialog({ initialValues, open, trigger, onOpenChange }:
       open={modalOpen}
       onSubmit={updateLink}
       actionLabel='Save Changes'
-      initialValues={initialValues}
+      initialValues={link}
       title='Update your short link'
       onOpenChange={onModalOpenChange}
     />

@@ -49,4 +49,17 @@ export const LinkSchema = z.object({
 
 export const EditLinkSchema = LinkSchema.partial()
 
+export const LinkRowSchema = LinkSchema.extend({
+  id: z.string(),
+  userId: z.union([z.string(), z.null()]),
+  createdAt: z.string().refine(v => {
+    try {
+      new Date(v).toISOString()
+      return true
+    } catch (error) {
+      return false
+    }
+  }),
+})
+
 export const RandomKey = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 7)

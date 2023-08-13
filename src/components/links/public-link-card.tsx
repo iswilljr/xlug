@@ -7,20 +7,18 @@ import { generateHostIconFromUrl, generateShortLink, prettyUrl } from '@/utils/l
 import { PublicLinkMoreOptionsButton, type PublicLinkMoreOptionsButtonProps } from './public-more-options'
 import type { LinkRow } from '@/types/tables'
 
-interface PublicLinkCardProps
-  extends Pick<LinkRow, 'description' | 'destination'>,
-    Pick<PublicLinkMoreOptionsButtonProps, 'withDeleteOption'> {
-  shortLink: string
+interface PublicLinkCardProps extends Pick<PublicLinkMoreOptionsButtonProps, 'withDeleteOption'> {
+  link: LinkRow
 }
 
-export function PublicLinkCard({ description, destination, shortLink, ...props }: PublicLinkCardProps) {
+export function PublicLinkCard({ link, ...props }: PublicLinkCardProps) {
   const data = useMemo(
     () => ({
-      link: generateShortLink(shortLink),
-      logo: generateHostIconFromUrl(destination),
-      destination: prettyUrl(destination),
+      link: generateShortLink(link.key),
+      logo: generateHostIconFromUrl(link.destination),
+      destination: prettyUrl(link.destination),
     }),
-    [destination, shortLink]
+    [link.destination, link.key]
   )
 
   return (
@@ -30,7 +28,7 @@ export function PublicLinkCard({ description, destination, shortLink, ...props }
         height={40}
         loading='lazy'
         src={data.logo}
-        alt={shortLink}
+        alt={link.key}
         className='h-10 w-10 flex-shrink-0 rounded-full object-cover'
       />
       <div className='flex w-full min-w-0 flex-col'>
@@ -42,12 +40,12 @@ export function PublicLinkCard({ description, destination, shortLink, ...props }
             prefetch={false}
             className='truncate font-medium hover:underline'
           >
-            {shortLink}
+            {link.key}
           </Link>
         </div>
         <div className='flex items-center gap-2'>
           <Link
-            href={destination}
+            href={link.destination}
             target='_blank'
             className='truncate text-sm text-neutral-700 hover:underline dark:text-neutral-400'
             rel='noreferrer'
@@ -56,7 +54,7 @@ export function PublicLinkCard({ description, destination, shortLink, ...props }
           </Link>
         </div>
       </div>
-      <PublicLinkMoreOptionsButton initialValues={{ description, destination, key: shortLink }} {...props} />
+      <PublicLinkMoreOptionsButton link={link} {...props} />
     </div>
   )
 }

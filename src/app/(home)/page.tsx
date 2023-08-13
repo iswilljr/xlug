@@ -10,7 +10,7 @@ import Link from 'next/link'
 export default function Page() {
   return (
     <>
-      <section className='max-w-md text-center md:max-w-lg'>
+      <section className='mx-auto max-w-md text-center md:max-w-lg'>
         <h1 className='text-4xl font-extrabold md:text-6xl'>
           <span className='block'>Fast And Simple</span>
           <span className='block bg-gradient-to-r from-sky-500 via-blue-500 to-cyan-500 bg-clip-text text-transparent'>
@@ -33,7 +33,7 @@ export default function Page() {
             target='_blank'
             rel='noreferrer'
           >
-            <IconGithub size={20} />
+            <IconGithub className='flex-shrink-0' size={20} />
             Star on Github
           </Link>
         </div>
