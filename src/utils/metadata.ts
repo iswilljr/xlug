@@ -86,7 +86,8 @@ function findTagTextContent(head: cheerio.Cheerio<cheerio.Element>, selectors: s
 }
 
 export async function extractMetadata(url: string): Promise<ExtractedMetadata> {
-  const res = await fetch(url)
+  const timeoutSignal = AbortSignal.timeout(5000)
+  const res = await fetch(url, { signal: timeoutSignal })
 
   if (!res.ok) throw Error('Invalid response')
 
