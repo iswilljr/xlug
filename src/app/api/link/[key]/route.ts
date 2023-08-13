@@ -7,24 +7,6 @@ import type { Database } from '@/types/supabase'
 
 export const dynamic = 'force-dynamic'
 
-export const GET = routeHandler(async (_req, ctx) => {
-  const supabase = createRouteHandlerClient<Database>({ cookies })
-
-  const key = KeySchema.safeParse(ctx.params.key)
-  if (!key.success) throw new CustomError('Invalid Key')
-
-  const { data } = await supabase
-    .from('links')
-    .select('id, key, destination')
-    .eq('key', key.data)
-    .maybeSingle()
-    .throwOnError()
-
-  if (!data) throw new NotFoundError(`Could not found a link with key "${key.data}"`)
-
-  return NextResponse.json(data)
-})
-
 export const POST = routeHandler(
   async (req, ctx) => {
     const body = await req.json()
@@ -33,9 +15,7 @@ export const POST = routeHandler(
       ...ctx.params, // overwrite key value
     })
 
-    const isPublicLink = req.nextUrl.searchParams.get('public') === 'true'
     const supabase = createRouteHandlerClient<Database>({ cookies })
-    const session = isPublicLink ? null : ctx.session
 
     const { data } = await supabase
       .from('links')
@@ -43,7 +23,7 @@ export const POST = routeHandler(
         key,
         description,
         destination,
-        userId: session?.user.id,
+        userId: ctx.session.user.id,
       })
       .select('*')
       .maybeSingle()
@@ -53,7 +33,7 @@ export const POST = routeHandler(
 
     return NextResponse.json(data)
   },
-  { passSession: true }
+  { protected: true }
 )
 
 export const PATCH = routeHandler(

@@ -8,7 +8,7 @@ export function HomeLayout(props: HomeLayoutProps) {
   return (
     <div className='background min-h-small-screen flex flex-col justify-between'>
       <HomeHeader />
-      <main className='mx-auto max-w-screen-xl px-6 pb-10 pt-12 md:px-20'>{props.children}</main>
+      <main className='mx-auto w-full max-w-screen-xl px-6 pb-10 pt-12 md:px-20'>{props.children}</main>
       <HomeFooter />
       <Background />
     </div>

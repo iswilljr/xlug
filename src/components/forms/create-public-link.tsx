@@ -7,18 +7,20 @@ import { ZodError } from 'zod'
 import { toast } from 'sonner'
 import { Link as IconLink, Send } from 'iconoir-react'
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { type Link, LinkSchema, RandomKey } from '@/utils/schemas'
+import { DestinationSchema } from '@/utils/schemas'
 import { LINKS_DATA_KEY, MAX_PUBLIC_LINKS } from '@/config/constants'
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
+import type { LinkRow } from '@/types/tables'
 
 export function CreatePublicLinkForm() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [isSubmitting, setSubmitting] = useState(false)
-  const [links, setLinks] = useLocalStorage<Link[]>(LINKS_DATA_KEY, { defaultValue: [] })
+  const [links, setLinks] = useLocalStorage<LinkRow[]>(LINKS_DATA_KEY, { defaultValue: [] })
   const hasReachedMaxPublicLinks = useMemo(() => links.length >= MAX_PUBLIC_LINKS, [links])
-  const { trigger: create } = useSWRMutate('create-public-link', (_key, { arg }: { arg: Link }) =>
-    axios.post(`/api/link/${arg.key}?public=true`, arg)
+  const { trigger: create } = useSWRMutate(
+    'create-public-link',
+    (_key, { arg }: { arg: Pick<LinkRow, 'destination'> }) => axios.post<LinkRow>(`/api/link`, arg)
   )
 
   const createLink = useCallback(
@@ -30,15 +32,11 @@ export function CreatePublicLinkForm() {
       setSubmitting(true)
 
       try {
-        const values = LinkSchema.parse({
-          description: '',
-          key: RandomKey(),
-          destination: inputRef.current.value,
-        })
+        const destination = DestinationSchema.parse(inputRef.current.value)
 
-        await create(values)
+        const link = await create({ destination })
 
-        setLinks(prev => [...(prev ?? []), values])
+        setLinks(prev => [...(prev ?? []), link.data])
 
         inputRef.current.value = ''
 

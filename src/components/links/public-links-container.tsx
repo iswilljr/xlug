@@ -5,13 +5,14 @@ import useLocalStorage from 'use-local-storage-state'
 import { useMemo } from 'react'
 import { siteConfig } from '@/config/site'
 import { LINKS_DATA_KEY, MAX_PUBLIC_LINKS } from '@/config/constants'
-import { LinkSchema, type Link as LinkType } from '@/utils/schemas'
+import { LinkRowSchema } from '@/utils/schemas'
 import { LinkSkeletonCard } from '../links/link-skeleton'
 import { PublicLinkCard } from './public-link-card'
+import type { LinkRow } from '@/types/tables'
 
-const PublicLinksSchema = LinkSchema.array()
+const PublicLinksSchema = LinkRowSchema.array()
 
-function parser(value: string): LinkType[] {
+function parser(value: string): LinkRow[] {
   const links = PublicLinksSchema.safeParse(JSON.parse(value))
   return links.success ? links.data : []
 }
@@ -22,7 +23,7 @@ const serializer = {
 }
 
 export function PublicLinksContainer() {
-  const [links] = useLocalStorage<LinkType[]>(LINKS_DATA_KEY, {
+  const [links] = useLocalStorage<LinkRow[]>(LINKS_DATA_KEY, {
     defaultValue: [],
     serializer,
   })
@@ -36,15 +37,20 @@ export function PublicLinksContainer() {
       <li>
         <PublicLinkCard
           withDeleteOption={false}
-          shortLink={siteConfig.examples.key}
-          description={siteConfig.examples.description}
-          destination={siteConfig.examples.link}
+          link={{
+            id: 'github',
+            userId: null,
+            key: 'github',
+            description: siteConfig.description,
+            createdAt: new Date().toISOString(),
+            destination: siteConfig.examples.link,
+          }}
         />
       </li>
       {links.map(link => {
         return (
           <li key={link.key}>
-            <PublicLinkCard shortLink={link.key} description={link.description} destination={link.destination} />
+            <PublicLinkCard link={link} />
           </li>
         )
       })}
@@ -58,7 +64,7 @@ export function PublicLinksContainer() {
         <Link href='/login' className='font-semibold text-neutral-900 hover:underline dark:text-neutral-200'>
           login
         </Link>{' '}
-        to create unlimited links.
+        for full customization and create unlimited links.
       </li>
     </ul>
   )

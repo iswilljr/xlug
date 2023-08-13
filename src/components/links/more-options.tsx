@@ -14,26 +14,26 @@ import { ExpandedLinkDialog } from '../dialogs/expanded-link-dialog'
 import type { LinkRow } from '@/types/tables'
 
 export interface LinkMoreOptionsButtonProps {
-  initialValues: Omit<LinkRow, 'id' | 'userId'>
+  link: LinkRow
 }
 
-export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonProps) {
-  const [isUpdateDialogOpen, setUpdateDialogOpen] = useState(false)
-  const [isExpandDialogOpen, setExpandDialogOpen] = useState(false)
-  const [isQRCodeDialogOpen, setQRCodeDialogOpen] = useState(false)
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false)
+export function LinkMoreOptionsButton({ link }: LinkMoreOptionsButtonProps) {
+  const [updateOpen, setUpdateOpen] = useState(false)
+  const [expandOpen, setExpandOpen] = useState(false)
+  const [qrCodeOpen, setQRCodeOpen] = useState(false)
+  const [deleteOpen, setDeleteOpen] = useState(false)
   const clipboard = useClipboard()
 
   const copyAction = useCallback(() => {
     try {
       if (!clipboard.isSupported()) throw Error('Clipboard not supported')
 
-      clipboard.copy(generateShortLink(initialValues.key))
+      clipboard.copy(generateShortLink(link.key))
       toast.success('Short Link Copied')
     } catch (error) {
       toast.error('Your browser does not support copying values')
     }
-  }, [clipboard, initialValues.key])
+  }, [clipboard, link.key])
 
   return (
     <>
@@ -43,12 +43,12 @@ export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonPr
           {
             label: 'Edit',
             icon: <Edit className='h-4 w-4' />,
-            onClick: () => setUpdateDialogOpen(true),
+            onClick: () => setUpdateOpen(true),
           },
           {
             label: 'Expand',
             icon: <Expand className='h-4 w-4' />,
-            onClick: () => setExpandDialogOpen(true),
+            onClick: () => setExpandOpen(true),
           },
           {
             label: 'Copy',
@@ -58,14 +58,14 @@ export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonPr
           {
             label: 'Qr Code',
             icon: <QrCode className='h-4 w-4' />,
-            onClick: () => setQRCodeDialogOpen(true),
+            onClick: () => setQRCodeOpen(true),
           },
           {
             label: 'Delete',
             icon: <Trash className='h-4 w-4' />,
             className:
               'text-red-500 focus:text-red-500 dark:text-red-400 dark:focus:text-red-300 dark:focus:bg-red-800',
-            onClick: () => setDeleteDialogOpen(true),
+            onClick: () => setDeleteOpen(true),
           },
         ]}
         trigger={
@@ -74,18 +74,10 @@ export function LinkMoreOptionsButton({ initialValues }: LinkMoreOptionsButtonPr
           </Button>
         }
       />
-      {isUpdateDialogOpen && (
-        <UpdateLinkDialog open={isUpdateDialogOpen} onOpenChange={setUpdateDialogOpen} initialValues={initialValues} />
-      )}
-      {isExpandDialogOpen && (
-        <ExpandedLinkDialog open={isExpandDialogOpen} onOpenChange={setExpandDialogOpen} link={initialValues} />
-      )}
-      {isQRCodeDialogOpen && (
-        <QRCodeDialog open={isQRCodeDialogOpen} onOpenChange={setQRCodeDialogOpen} link={initialValues} />
-      )}
-      {isDeleteDialogOpen && (
-        <DeleteLinkDialog open={isDeleteDialogOpen} onOpenChange={setDeleteDialogOpen} link={initialValues} />
-      )}
+      {updateOpen && <UpdateLinkDialog open={updateOpen} onOpenChange={setUpdateOpen} link={link} />}
+      {expandOpen && <ExpandedLinkDialog open={expandOpen} onOpenChange={setExpandOpen} link={link} />}
+      {qrCodeOpen && <QRCodeDialog open={qrCodeOpen} onOpenChange={setQRCodeOpen} link={link} />}
+      {deleteOpen && <DeleteLinkDialog open={deleteOpen} onOpenChange={setDeleteOpen} link={link} />}
     </>
   )
 }

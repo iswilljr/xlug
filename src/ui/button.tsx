@@ -12,7 +12,7 @@ export interface ButtonProps extends ButtonVariants, React.ButtonHTMLAttributes<
 }
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:select-none disabled:bg-neutral-200 disabled:text-neutral-500 disabled:opacity-50 disabled:ring-1 disabled:ring-neutral-300 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-800',
+  'inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-400 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:select-none disabled:bg-neutral-200 disabled:text-neutral-500 disabled:opacity-50 disabled:ring-1 disabled:ring-neutral-300 dark:ring-offset-neutral-950 dark:focus-visible:ring-neutral-800 dark:disabled:ring-neutral-800',
   {
     variants: {
       variant: {
