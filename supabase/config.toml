@@ -63,8 +63,8 @@ enable_confirmations = false
 # `twitter`, `slack`, `spotify`, `workos`, `zoom`.
 [auth.external.github]
 enabled = true
-client_id = ""
-secret = ""
+client_id = "env(GITHUB_CLIENT_ID)"
+secret = "env(GITHUB_CLIENT_SECRET)"
 # Overrides the default auth redirectUrl.
 redirect_uri = "http://localhost:54321/auth/v1/callback"
 # Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
