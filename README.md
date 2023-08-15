@@ -22,19 +22,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 pnpm install
 ```
 
-2. Create a **.env.local** file in the root folder and paste your variables:
+1. Create a **.env** file in the root folder and paste your variables:
 
 ```bash
-cp -r .env.example .env.local
+cp -r .env.example .env
 ```
 
 ## How to setup local supabase
-
-### Init supabase config
-
-```bash
-cp -r supabase/config.example.toml supabase/config.toml
-```
 
 ### Get Github OAuth Client ID and Client Secret
 
@@ -43,13 +37,12 @@ cp -r supabase/config.example.toml supabase/config.toml
 - Set the Homepage URL to `http://localhost:3000`
 - Set the Authorization callback URL to `http://localhost:54321/auth/v1/callback`
 - Go to "Client secrets" and generate new client secret
-- Copy the Client ID and Client Secret
-- Go to `supabase/config.toml` line `66-67` and paste the Client ID and Client Secret
+- Copy the Client ID and Client Secret, go to `.env` and paste them into `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`
 
 ### Run local development
 
 ```bash
-pnpm supabase start
+pnpm db:start
 
 # Started supabase local development setup.
 
@@ -62,7 +55,7 @@ pnpm supabase start
 # service_role key: <service-role-key>
 ```
 
-### Start developing
+## Start developing
 
 You are all set, now you can run:
 
