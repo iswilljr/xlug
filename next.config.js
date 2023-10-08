@@ -5,6 +5,9 @@ const nextConfig = {
   images: {
     domains: ['avatars.githubusercontent.com', 'unavatar.io'],
   },
+  experimental: {
+    typedRoutes: true,
+  },
   async redirects() {
     return [
       {

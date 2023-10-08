@@ -12,9 +12,9 @@ export default function NotFound() {
       description={
         <span>
           This page does not exists, if you've landed on this page from a link on the website, please{' '}
-          <Link href={siteConfig.links.issues} target='_blank' rel='noreferrer' className='font-semibold underline'>
+          <a href={siteConfig.links.issues} target='_blank' rel='noreferrer' className='font-semibold underline'>
             create an issue
-          </Link>
+          </a>
           .
         </span>
       }

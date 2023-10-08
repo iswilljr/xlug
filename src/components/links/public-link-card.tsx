@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { generateHostIconFromUrl, generateShortLink, prettyUrl } from '@/utils/links'
@@ -33,25 +32,19 @@ export function PublicLinkCard({ link, ...props }: PublicLinkCardProps) {
       />
       <div className='flex w-full min-w-0 flex-col'>
         <div className='flex items-center gap-2'>
-          <Link
-            target='_blank'
-            rel='noreferrer'
-            href={data.link}
-            prefetch={false}
-            className='truncate font-medium hover:underline'
-          >
+          <a target='_blank' rel='noreferrer' href={data.link} className='truncate font-medium hover:underline'>
             {link.key}
-          </Link>
+          </a>
         </div>
         <div className='flex items-center gap-2'>
-          <Link
+          <a
             href={link.destination}
             target='_blank'
             className='truncate text-sm text-neutral-700 hover:underline dark:text-neutral-400'
             rel='noreferrer'
           >
             {data.destination}
-          </Link>
+          </a>
         </div>
       </div>
       <PublicLinkMoreOptionsButton link={link} {...props} />
