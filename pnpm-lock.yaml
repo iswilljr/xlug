@@ -124,6 +124,8 @@ devDependencies:
   autoprefixer:
     specifier: 10.4.16
     version: 10.4.16(postcss@8.4.31)
+    specifier: 10.4.15
+    version: 10.4.15(postcss@8.4.31)
   encoding:
     specifier: 0.1.13
     version: 0.1.13
