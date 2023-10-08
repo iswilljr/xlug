@@ -57,7 +57,6 @@ function Popover({
       <Drawer
         className={className}
         classNames={classNames}
-        defaultOpen={defaultOpen}
         onOpenChange={onModalOpenChange}
         open={modalOpen}
         trigger={trigger}
