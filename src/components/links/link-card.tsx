@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { Separator } from '@/ui/separator'
@@ -40,27 +39,21 @@ export function LinkCard({ link }: LinkCardProps) {
         </div>
         <div className='flex w-full min-w-0 flex-col'>
           <div className='flex items-center gap-2'>
-            <Link
-              target='_blank'
-              rel='noreferrer'
-              href={data.link}
-              prefetch={false}
-              className='truncate font-medium hover:underline'
-            >
+            <a target='_blank' rel='noreferrer' href={data.link} className='truncate font-medium hover:underline'>
               {link.key}
-            </Link>
+            </a>
           </div>
           <div className='flex items-center gap-2'>
             <p className='whitespace-nowrap text-sm text-neutral-700 dark:text-neutral-400/80'>{data.timeAgo}</p>
             <Separator orientation='vertical' className='h-1 w-1 rounded-full bg-neutral-700' />
-            <Link
+            <a
               href={link.destination}
               target='_blank'
               className='truncate text-sm text-neutral-700 hover:underline dark:text-neutral-400/80'
               rel='noreferrer'
             >
               {data.destination}
-            </Link>
+            </a>
           </div>
         </div>
         <div className='flex flex-shrink-0 items-center justify-center'>

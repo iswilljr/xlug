@@ -5,7 +5,6 @@ import { IconGithub } from '@/components/icons'
 import { siteConfig } from '@/config/site'
 import { buttonVariants } from '@/ui/button'
 import { cn } from '@/utils/cn'
-import Link from 'next/link'
 
 export default function Page() {
   return (
@@ -27,7 +26,7 @@ export default function Page() {
             authLabel='Get Started'
             loginLabel='Get Started'
           />
-          <Link
+          <a
             className={cn(buttonVariants({ variant: 'outline' }), 'gap-1 rounded-full px-5 shadow-lg')}
             href={siteConfig.links.github}
             target='_blank'
@@ -35,7 +34,7 @@ export default function Page() {
           >
             <IconGithub className='flex-shrink-0' size={20} />
             Star on Github
-          </Link>
+          </a>
         </div>
       </section>
       <section className='mx-auto mt-10 max-w-sm space-y-2 text-center md:max-w-md'>
