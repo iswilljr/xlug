@@ -10,16 +10,16 @@ import { ScrollArea } from './scroll-area'
 import type { ClassNamesProps } from '@/types/classnames'
 
 type DrawerClasses = 'root' | 'trigger' | 'header' | 'title' | 'description' | 'content' | 'indicator' | 'footer'
+type DrawerPrimitiveRootProps = React.ComponentProps<typeof DrawerPrimitive.Root>
 
-interface DrawerRootProps
-  extends React.ComponentProps<typeof DrawerPrimitive.Root>,
-    Omit<DrawerContentProps, 'onDrag' | 'title'>,
-    ClassNamesProps<DrawerClasses> {
-  description?: React.ReactNode
-  footer?: React.ReactNode
-  title?: React.ReactNode
-  trigger?: React.ReactNode
-}
+type DrawerRootProps = DrawerPrimitiveRootProps &
+  Omit<DrawerContentProps, 'onDrag' | 'title'> &
+  ClassNamesProps<DrawerClasses> & {
+    description?: React.ReactNode
+    footer?: React.ReactNode
+    title?: React.ReactNode
+    trigger?: React.ReactNode
+  }
 
 interface DrawerContentProps extends React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> {
   withCloseButton?: boolean
@@ -109,7 +109,6 @@ function Drawer({
   className,
   classNames,
   closeThreshold = 0.5,
-  defaultOpen,
   description,
   dismissible,
   footer,
@@ -126,9 +125,7 @@ function Drawer({
   const hasHeader = useMemo(() => Boolean(description ?? title), [description, title])
 
   return (
-    <DrawerRoot
-      {...{ closeThreshold, defaultOpen, dismissible, onDrag, onOpenChange, onRelease, open, shouldScaleBackground }}
-    >
+    <DrawerRoot {...{ closeThreshold, dismissible, onDrag, onOpenChange, onRelease, open, shouldScaleBackground }}>
       {trigger && (
         <DrawerTrigger className={classes.trigger} asChild>
           {trigger}
