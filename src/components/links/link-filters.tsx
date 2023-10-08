@@ -21,7 +21,7 @@ export function LinkFilters() {
 
   useEffect(() => {
     const search = handleOnChangeFilters({ query })
-    router.push(search ? `/dashboard?${search}` : `/dashboard?${search}`, { scroll: false })
+    router.push(search ? `/dashboard?${search}` : '/dashboard', { scroll: false })
     setFilters({ query })
   }, [query, router, setFilters])
 
