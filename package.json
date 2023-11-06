@@ -8,8 +8,12 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "db:_link": "supabase link --project-ref $SUPABASE_PROJECT_REF --password $SUPABASE_PASSWORD",
+    "db:_push": "supabase db push --password $SUPABASE_PASSWORD",
     "db:gen": "(supabase gen types typescript --local > src/types/supabase.d.ts) && eslint --fix src/types/supabase.d.ts",
+    "db:link": "pnpm with-env db:_link",
     "db:lint": "supabase db lint",
+    "db:push": "pnpm with-env db:_push",
     "db:reset": "supabase db reset || supabase start",
     "db:start": "supabase status || supabase start",
     "dev": "next dev",
@@ -18,7 +22,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "format": "prettier --ignore-unknown --write .",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "with-env": "dotenv -- pnpm run"
   },
   "dependencies": {
     "@hookform/resolvers": "3.3.1",
@@ -62,6 +67,7 @@
     "@types/react": "18.2.25",
     "@types/react-dom": "18.2.11",
     "autoprefixer": "10.4.16",
+    "dotenv-cli": "7.3.0",
     "encoding": "0.1.13",
     "eslint": "8.51.0",
     "eslint-config-next": "13.5.4",

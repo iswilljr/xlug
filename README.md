@@ -28,9 +28,7 @@ pnpm install
 cp -r .env.example .env
 ```
 
-## How to setup local supabase
-
-### Get Github OAuth Client ID and Client Secret
+## How to get Github OAuth Client ID and Client Secret
 
 - [Click here to create new Github OAuth app](https://github.com/settings/applications/new)
 - Set the Application name. Example: `Xlug development`
@@ -39,7 +37,7 @@ cp -r .env.example .env
 - Go to "Client secrets" and generate new client secret
 - Copy the Client ID and Client Secret, go to `.env` and paste them into `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`
 
-### Run local development
+## How to setup local supabase instance
 
 ```bash
 pnpm db:start
@@ -53,6 +51,41 @@ pnpm db:start
 #       JWT secret: <jwt-secret>
 #         anon key: <anon-key>
 # service_role key: <service-role-key>
+```
+
+## How to link to a supabase project
+
+### Setup supabase project
+
+- [Click here to create a new Supabase Project](https://supabase.com/dashboard/new/_)
+- Enter a password or generate one, copy the password and then go to `.env` file and paste it to `SUPABASE_PASSWORD`
+- Go to [project general settings](https://supabase.com/dashboard/project/_/settings/general), copy the project reference ID and then go to `.env` file and paste it to `SUPABASE_PROJECT_REF`
+- Go to [project api settings](https://supabase.com/dashboard/project/_/settings/api), copy and paste the api url and the anon public key into `.env` file
+- Go to [auth providers](https://supabase.com/dashboard/project/_/auth/providers), setup the github provider by inserting the Github Client ID and Client Secret that are into the `.env` file. ([How to get Client ID and Client Secret](#how-to-get-github-oauth-client-id-and-client-secret))
+
+### Setup database
+
+Finally, if you followed all the previous steps your `.env` file should look like this:
+
+```bash
+# The supabase api url and anon key
+NEXT_PUBLIC_SUPABASE_URL="<URL>"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="<ANON-KEY>"
+
+# Supabase project
+SUPABASE_PASSWORD="<PASSWORD>"
+SUPABASE_PROJECT_REF="<REF-ID>"
+
+# Github OAuth
+GITHUB_CLIENT_ID="<CLIENT-ID>"
+GITHUB_CLIENT_SECRET="<CLIENT-SECRET>"
+```
+
+then run the following command to setup the supabase project database:
+
+```bash
+# If not logged in run $ pnpm supabase login
+pnpm db:link && pnpm db:push
 ```
 
 ## Start developing
