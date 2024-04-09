@@ -1,7 +1,7 @@
 'use client'
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Cancel } from 'iconoir-react'
+import { Xmark } from 'iconoir-react'
 import { forwardRef, useMemo } from 'react'
 import { useClasses } from '@/hooks/use-classes'
 import { useWithinDrawer } from '@/hooks/use-within-drawer'
@@ -51,7 +51,7 @@ const DialogContent = forwardRef<React.ElementRef<typeof DialogPrimitive.Content
               className='absolute right-2 top-2 z-20 min-h-fit rounded-full p-1 hover:bg-neutral-200 focus:ring-2 focus:ring-offset-2'
               size='icon'
             >
-              <Cancel className='h-5 w-5' />
+              <Xmark className='h-5 w-5' />
               <span className='sr-only'>Close</span>
             </Button>
           </DialogPrimitive.Close>
@@ -155,9 +155,7 @@ function Dialog({
             {description && <DialogDescription className={classes.description}>{description}</DialogDescription>}
           </DialogHeader>
         )}
-        <ScrollArea scrollHideDelay={10000} className={classes.content}>
-          {children}
-        </ScrollArea>
+        <ScrollArea className={classes.content}>{children}</ScrollArea>
         {footer && <DialogFooter className={classes.footer}>{footer}</DialogFooter>}
       </DialogContent>
     </DialogRoot>

@@ -18,5 +18,5 @@ export const avatarMenu: AvatarMenuItem[] = [
 
 export const submenu: MenuItem[] = [
   { label: 'Links', href: '/dashboard' },
-  // { label: 'Settings', href: '/settings' },
+  // { label: 'Stats', href: '/dashboard/stats' },
 ]

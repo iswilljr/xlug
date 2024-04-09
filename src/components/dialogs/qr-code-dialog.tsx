@@ -61,14 +61,14 @@ export function QRCodeDialog({ open, link, trigger, onOpenChange }: QRCodeDialog
       trigger={trigger}
       withCloseButton={false}
       onOpenChange={onOpenChange}
-      className='overflow-hidden p-0 pt-2 dark:bg-neutral-900 sm:max-w-sm sm:pt-0'
+      className='gap-0 overflow-hidden p-0 pt-2 dark:bg-neutral-950 sm:max-w-sm sm:pt-0'
     >
-      <div className='space-y-2 p-8 text-center'>
+      <div className='space-y-2 p-8 text-center dark:bg-neutral-900/50'>
         <Image alt={data.alt} src={data.logo} width={40} height={40} className='mx-auto h-10 w-10 rounded-full' />
         <h3 className='text-lg font-semibold'>Download QR Code</h3>
       </div>
       <Separator />
-      <div className='space-y-8 bg-neutral-50 p-8 text-left dark:bg-darker'>
+      <div className='space-y-8 bg-neutral-50 p-8 text-left dark:bg-neutral-950'>
         <div className='mx-auto w-fit rounded-lg border-2 border-neutral-200 bg-white p-4'>
           <div className='m-0 h-32 w-32 p-0' ref={qrCodeRef}>
             <QRCode level={data.level} value={data.value} className='h-32 w-32' />

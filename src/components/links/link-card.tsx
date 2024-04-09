@@ -26,7 +26,7 @@ export function LinkCard({ link }: LinkCardProps) {
 
   return (
     <div className='grid max-w-full items-start gap-2 rounded-lg border border-neutral-200 bg-white p-4 shadow-md transition-colors dark:border-neutral-800 dark:bg-neutral-900'>
-      <div className='flex w-full min-w-0 items-center gap-2'>
+      <div className='flex w-full min-w-0 items-center gap-4'>
         <div className='flex flex-shrink-0 items-center'>
           <Image
             width={40}
@@ -59,11 +59,6 @@ export function LinkCard({ link }: LinkCardProps) {
         <div className='flex flex-shrink-0 items-center justify-center'>
           <LinkMoreOptionsButton link={link} />
         </div>
-      </div>
-      <div className='flex min-w-0 items-start'>
-        <p className='truncate text-sm text-neutral-500 dark:text-neutral-400'>
-          {link.description ?? 'No description provided.'}
-        </p>
       </div>
     </div>
   )

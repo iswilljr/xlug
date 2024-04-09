@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { AppWindow, GitHub, HomeSimple, InfoEmpty, KeyCommand, Twitter } from 'iconoir-react'
+import { AppWindow, Github, HomeSimple, InfoCircle, KeyCommand, Twitter } from 'iconoir-react'
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/ui/command'
 import { Button } from '@/ui/button'
 import { siteConfig } from '@/config/site'
@@ -34,7 +34,7 @@ export function CommandMenu() {
             <span>Dashboard</span>
           </CommandItem>
           <CommandItem onSelect={() => window.open(siteConfig.links.github, '_blank')}>
-            <GitHub className='h-4 w-4' />
+            <Github className='h-4 w-4' />
             <span>Github</span>
           </CommandItem>
           <CommandItem onSelect={() => window.open(siteConfig.links.twitter, '_blank')}>
@@ -42,7 +42,7 @@ export function CommandMenu() {
             <span>Twitter</span>
           </CommandItem>
           <CommandItem onSelect={() => window.open(siteConfig.links.issues, '_blank')}>
-            <InfoEmpty className='h-4 w-4' />
+            <InfoCircle className='h-4 w-4' />
             <span>Report an issue</span>
           </CommandItem>
         </CommandGroup>

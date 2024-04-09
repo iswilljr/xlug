@@ -102,9 +102,7 @@ const DropdownMenuSeparator = forwardRef<
 ))
 
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
-  return (
-    <span className={cn('ml-auto hidden text-xs tracking-widest opacity-60 sm:inline-flex', className)} {...props} />
-  )
+  return <span className={cn('ml-auto inline-flex text-xs tracking-widest', className)} {...props} />
 }
 
 const DropdownMenu = ({

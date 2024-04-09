@@ -53,7 +53,7 @@ export function PublicLinkMoreOptionsButton({ link, withDeleteOption = true }: P
             onClick: () => setExpandDialogOpen(true),
           },
           {
-            label: 'Copy Link',
+            label: 'Copy',
             icon: <Copy className='h-4 w-4' />,
             onClick: copyAction,
           },
