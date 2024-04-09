@@ -1,10 +1,11 @@
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse, type NextRequest, type NextFetchEvent } from 'next/server'
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { AUTH_PAGES, REDIRECT_ON_AUTH_PAGES } from '@/config/constants'
 import { KeySchema } from './schemas'
+import { recordLinkVisit } from './links'
 import type { Database } from '@/types/supabase'
 
-export async function AppMiddleware(req: NextRequest) {
+export async function AppMiddleware(req: NextRequest, ev: NextFetchEvent) {
   const res = NextResponse.next()
 
   try {
@@ -49,7 +50,7 @@ export async function AppMiddleware(req: NextRequest) {
   }
 }
 
-export async function LinksMiddleware(req: NextRequest) {
+export async function LinksMiddleware(req: NextRequest, ev: NextFetchEvent) {
   const res = NextResponse.next()
 
   try {
@@ -64,6 +65,8 @@ export async function LinksMiddleware(req: NextRequest) {
       .throwOnError()
 
     if (!data) throw Error('Link not found')
+
+    ev.waitUntil(recordLinkVisit(data, req, res))
 
     return NextResponse.redirect(data.destination)
   } catch (error) {

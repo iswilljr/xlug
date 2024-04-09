@@ -3,6 +3,56 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
+      link_visits: {
+        Row: {
+          browser: string
+          city: string
+          country: string
+          createdAt: string
+          device: string
+          id: string
+          key: string
+          linkId: string
+          os: string
+          referrer: string
+          region: string
+        }
+        Insert: {
+          browser?: string
+          city?: string
+          country?: string
+          createdAt?: string
+          device?: string
+          id?: string
+          key: string
+          linkId: string
+          os?: string
+          referrer?: string
+          region?: string
+        }
+        Update: {
+          browser?: string
+          city?: string
+          country?: string
+          createdAt?: string
+          device?: string
+          id?: string
+          key?: string
+          linkId?: string
+          os?: string
+          referrer?: string
+          region?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'link_visits_linkId_fkey'
+            columns: ['linkId']
+            isOneToOne: false
+            referencedRelation: 'links'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       links: {
         Row: {
           createdAt: string
@@ -32,6 +82,7 @@ export interface Database {
           {
             foreignKeyName: 'links_userId_fkey'
             columns: ['userId']
+            isOneToOne: false
             referencedRelation: 'users'
             referencedColumns: ['id']
           },
@@ -39,7 +90,63 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      stats_browser: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      stats_city: {
+        Row: {
+          country: string | null
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      stats_clicks: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      stats_country: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      stats_device: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      stats_os: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      stats_referrer: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
@@ -62,6 +169,7 @@ export interface Database {
           id: string
           name: string
           owner: string | null
+          owner_id: string | null
           public: boolean | null
           updated_at: string | null
         }
@@ -73,6 +181,7 @@ export interface Database {
           id: string
           name: string
           owner?: string | null
+          owner_id?: string | null
           public?: boolean | null
           updated_at?: string | null
         }
@@ -84,17 +193,11 @@ export interface Database {
           id?: string
           name?: string
           owner?: string | null
+          owner_id?: string | null
           public?: boolean | null
           updated_at?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: 'buckets_owner_fkey'
-            columns: ['owner']
-            referencedRelation: 'users'
-            referencedColumns: ['id']
-          },
-        ]
+        Relationships: []
       }
       migrations: {
         Row: {
@@ -126,6 +229,7 @@ export interface Database {
           metadata: Json | null
           name: string | null
           owner: string | null
+          owner_id: string | null
           path_tokens: string[] | null
           updated_at: string | null
           version: string | null
@@ -138,6 +242,7 @@ export interface Database {
           metadata?: Json | null
           name?: string | null
           owner?: string | null
+          owner_id?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
           version?: string | null
@@ -150,6 +255,7 @@ export interface Database {
           metadata?: Json | null
           name?: string | null
           owner?: string | null
+          owner_id?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
           version?: string | null
@@ -158,6 +264,7 @@ export interface Database {
           {
             foreignKeyName: 'objects_bucketId_fkey'
             columns: ['bucket_id']
+            isOneToOne: false
             referencedRelation: 'buckets'
             referencedColumns: ['id']
           },
@@ -193,7 +300,7 @@ export interface Database {
         Args: {
           name: string
         }
-        Returns: unknown
+        Returns: string[]
       }
       get_size_by_bucket: {
         Args: Record<PropertyKey, never>
@@ -231,3 +338,75 @@ export interface Database {
     }
   }
 }
+
+type PublicSchema = Database[Extract<keyof Database, 'public'>]
+
+export type Tables<
+  PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] & PublicSchema['Views']) | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+        Database[PublicTableNameOrOptions['schema']]['Views'])
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? (Database[PublicTableNameOrOptions['schema']]['Tables'] &
+      Database[PublicTableNameOrOptions['schema']]['Views'])[TableName] extends {
+      Row: infer R
+    }
+    ? R
+    : never
+  : PublicTableNameOrOptions extends keyof (PublicSchema['Tables'] & PublicSchema['Views'])
+    ? (PublicSchema['Tables'] & PublicSchema['Views'])[PublicTableNameOrOptions] extends {
+        Row: infer R
+      }
+      ? R
+      : never
+    : never
+
+export type TablesInsert<
+  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Insert: infer I
+    }
+    ? I
+    : never
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+        Insert: infer I
+      }
+      ? I
+      : never
+    : never
+
+export type TablesUpdate<
+  PublicTableNameOrOptions extends keyof PublicSchema['Tables'] | { schema: keyof Database },
+  TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = PublicTableNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Update: infer U
+    }
+    ? U
+    : never
+  : PublicTableNameOrOptions extends keyof PublicSchema['Tables']
+    ? PublicSchema['Tables'][PublicTableNameOrOptions] extends {
+        Update: infer U
+      }
+      ? U
+      : never
+    : never
+
+export type Enums<
+  PublicEnumNameOrOptions extends keyof PublicSchema['Enums'] | { schema: keyof Database },
+  EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
+    ? keyof Database[PublicEnumNameOrOptions['schema']]['Enums']
+    : never = never,
+> = PublicEnumNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : PublicEnumNameOrOptions extends keyof PublicSchema['Enums']
+    ? PublicSchema['Enums'][PublicEnumNameOrOptions]
+    : never

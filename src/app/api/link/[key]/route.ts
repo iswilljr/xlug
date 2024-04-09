@@ -46,7 +46,7 @@ export const PATCH = routeHandler(
 
     const supabase = createRouteHandlerClient<Database>({ cookies })
 
-    const { data } = await supabase
+    const { data: link } = await supabase
       .from('links')
       .update(body)
       .eq('key', key.data)
@@ -55,9 +55,13 @@ export const PATCH = routeHandler(
       .maybeSingle()
       .throwOnError()
 
-    if (!data) throw new NotFoundError(`Could not found a link with key "${key.data}"`)
+    if (!link) throw new NotFoundError(`Could not found a link with key "${key.data}"`)
 
-    return NextResponse.json(data)
+    if (key.data !== link.key) {
+      await supabase.from('link_visits').update({ key: link.key }).eq('key', key.data).throwOnError()
+    }
+
+    return NextResponse.json(link)
   },
   { protected: true }
 )
@@ -68,6 +72,8 @@ export const DELETE = routeHandler(
     if (!key.success) throw new CustomError('Invalid Key')
 
     const supabase = createRouteHandlerClient<Database>({ cookies })
+
+    await supabase.from('link_visits').delete().eq('key', key.data).throwOnError()
 
     const { data } = await supabase
       .from('links')

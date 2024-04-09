@@ -62,4 +62,6 @@ export const LinkRowSchema = LinkSchema.extend({
   }),
 })
 
+export const TabEnumSchema = z.enum(['clicks', 'browser', 'city', 'country', 'device', 'os', 'referrer'])
+
 export const RandomKey = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 7)
