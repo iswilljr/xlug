@@ -3,10 +3,24 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['avatars.githubusercontent.com', 'unavatar.io'],
+    remotePatterns: [
+      {
+        hostname: 'avatars.githubusercontent.com',
+      },
+      {
+        hostname: 'unavatar.io',
+      },
+      {
+        hostname: 'uaparser.js.org',
+      },
+      {
+        hostname: 'flag.vercel.app',
+      },
+    ],
   },
   experimental: {
     typedRoutes: true,
+    optimizePackageImports: ['iconoir-react'],
   },
   async redirects() {
     return [
