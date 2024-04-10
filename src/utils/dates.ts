@@ -1,4 +1,12 @@
-import { differenceInSeconds, format, formatDistanceToNowStrict } from 'date-fns'
+import {
+  addDays,
+  differenceInSeconds,
+  eachDayOfInterval,
+  format,
+  formatDistanceToNowStrict,
+  isSameYear,
+  subDays,
+} from 'date-fns'
 import { secondsInMinute, secondsInMonth } from 'date-fns/constants'
 
 export function formatDateToNow(date: number | string | Date) {
@@ -18,4 +26,20 @@ export function formatDateToNow(date: number | string | Date) {
   } catch (error) {
     return 'now'
   }
+}
+
+export function formatDay(date: number | string | Date) {
+  try {
+    const now = new Date()
+    const parsed = new Date(date)
+
+    return format(addDays(parsed, 1), isSameYear(now, parsed) ? 'LLL d' : 'PP')
+  } catch (error) {
+    return 'Today'
+  }
+}
+
+export function getRangeOfDays(days = 30) {
+  const now = new Date()
+  return eachDayOfInterval({ start: subDays(now, days), end: now })
 }

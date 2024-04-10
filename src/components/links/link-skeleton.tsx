@@ -19,11 +19,6 @@ export function LinkSkeletonCard({ isPublicLink = false }: LinkSkeletonCardProps
           <Skeleton animate={animate} className='h-5 w-1.5 rounded-xl' />
         </div>
       </div>
-      {!isPublicLink && (
-        <div className='h-5'>
-          <Skeleton className='h-4 w-full' />
-        </div>
-      )}
     </div>
   )
 }

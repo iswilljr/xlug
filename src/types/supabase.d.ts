@@ -90,6 +90,70 @@ export interface Database {
       }
     }
     Views: {
+      public_stats_browser: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      public_stats_city: {
+        Row: {
+          country: string | null
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      public_stats_clicks: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      public_stats_country: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      public_stats_device: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      public_stats_most_clicked: {
+        Row: {
+          key: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      public_stats_os: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      public_stats_referrer: {
+        Row: {
+          key: string | null
+          name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
       stats_browser: {
         Row: {
           key: string | null
@@ -127,6 +191,13 @@ export interface Database {
         Row: {
           key: string | null
           name: string | null
+          value: number | null
+        }
+        Relationships: []
+      }
+      stats_most_clicked: {
+        Row: {
+          key: string | null
           value: number | null
         }
         Relationships: []

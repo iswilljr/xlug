@@ -16,6 +16,8 @@ export const REDIRECT_ON_AUTH_PAGES = ['/login']
 
 export const MAX_PUBLIC_LINKS = 3
 
+export const PUBLIC_DEFAULT_LINK_KEY = 'github'
+
 export enum FilterQueryParams {
   query = 'query',
 }

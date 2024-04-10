@@ -1,10 +1,14 @@
 'use client'
 
 import Image from 'next/image'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { BarChartIcon } from 'lucide-react'
 import { Separator } from '@/ui/separator'
 import { formatDateToNow } from '@/utils/dates'
 import { generateHostIconFromUrl, generateShortLink, prettyUrl } from '@/utils/links'
+import { useLinksState } from '@/store/links'
+import { formatHumanReadable } from '@/utils/formatter'
+import { LinkStatsDialog } from '../dialogs/link-stats-dialog'
 import { LinkMoreOptionsButton } from './more-options'
 import type { LinkRow } from '@/types/tables'
 
@@ -13,6 +17,9 @@ interface LinkCardProps {
 }
 
 export function LinkCard({ link }: LinkCardProps) {
+  const totalOfClicks = useLinksState(s => s.totalOfClicks)
+
+  const [open, onOpenChange] = useState(false)
   const data = useMemo(
     () => ({
       dateTime: new Date(link.createdAt).toISOString(),
@@ -42,6 +49,17 @@ export function LinkCard({ link }: LinkCardProps) {
             <a target='_blank' rel='noreferrer' href={data.link} className='truncate font-medium hover:underline'>
               {link.key}
             </a>
+            <LinkStatsDialog
+              trigger={
+                <button className='inline-flex shrink-0 items-center gap-1 rounded-md bg-neutral-900/10 px-2 py-1 text-sm dark:bg-neutral-50/10'>
+                  <BarChartIcon className='size-4' />
+                  {`${formatHumanReadable(totalOfClicks[link.key]?.value ?? 0)} Clicks`}
+                </button>
+              }
+              open={open}
+              onOpenChange={onOpenChange}
+              link={link}
+            />
           </div>
           <div className='flex items-center gap-2'>
             <p className='whitespace-nowrap text-sm text-neutral-700 dark:text-neutral-400/80'>{data.timeAgo}</p>
