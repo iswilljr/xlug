@@ -31,7 +31,7 @@ export function PublicLinkCard({ link, ...props }: PublicLinkCardProps) {
   const [isStatsDialogOpen, setStatsDialogOpen] = useState(false)
   const isPublicDefaultLink = link.key === PUBLIC_DEFAULT_LINK_KEY
 
-  const { data: totalOfClicksData, isLoading } = useSWR(`/api/link/${link.key}/stats?tab=total`, async key =>
+  const { data: totalOfClicksData, isLoading } = useSWR(`/api/links/stats?public`, async key =>
     isPublicDefaultLink ? await axios.get<StatsRow[]>(key).then(res => res.data) : null
   )
 

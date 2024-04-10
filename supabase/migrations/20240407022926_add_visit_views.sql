@@ -1,12 +1,12 @@
 DROP VIEW IF EXISTS "stats_most_clicked";
-DROP VIEW IF EXISTS "stats_clicks";
-DROP VIEW IF EXISTS "stats_browser";
-DROP VIEW IF EXISTS "stats_city";
-DROP VIEW IF EXISTS "stats_country";
-DROP VIEW IF EXISTS "stats_device";
-DROP VIEW IF EXISTS "stats_os";
-DROP VIEW IF EXISTS "stats_referrer";
-DROP VIEW IF EXISTS "stats_region";
+DROP FUNCTION IF EXISTS "stats_clicks";
+DROP FUNCTION IF EXISTS "stats_browser";
+DROP FUNCTION IF EXISTS "stats_city";
+DROP FUNCTION IF EXISTS "stats_country";
+DROP FUNCTION IF EXISTS "stats_device";
+DROP FUNCTION IF EXISTS "stats_os";
+DROP FUNCTION IF EXISTS "stats_referrer";
+DROP FUNCTION IF EXISTS "stats_region";
 
 CREATE OR REPLACE VIEW "stats_most_clicked" AS
 SELECT
@@ -20,104 +20,138 @@ FROM
 GROUP BY
   "key";
 
-CREATE OR REPLACE VIEW "stats_clicks" AS
+CREATE
+OR REPLACE FUNCTION stats_clicks(time_zone_param text, date_trunc_param text, key_param text, created_at_param timestamp with time zone) RETURNS TABLE("key" text, "name" timestamp without time zone, "value" bigint) AS $$ BEGIN RETURN QUERY
 SELECT
-  "key",
-  DATE_TRUNC('day', "createdAt") AS "name",
+  "link_visits"."key",
+  DATE_TRUNC(date_trunc_param, "link_visits"."createdAt" at time zone time_zone_param) AS "name",
   COUNT(*) AS "value"
 FROM
   "link_visits"
-  WHERE "linkId" in (
-    SELECT "id" FROM "links" WHERE "userId" = (select auth.uid()) 
-  )
+WHERE
+  "link_visits"."key" = key_param
+  AND "link_visits"."createdAt" > created_at_param
 GROUP BY
-  "name",
-  "key";
+  "link_visits"."key",
+  "name"
+ORDER BY "name";
 
+END;
 
-CREATE OR REPLACE VIEW "stats_browser" AS
+$$ LANGUAGE plpgsql;
+
+CREATE
+OR REPLACE FUNCTION stats_browser(key_param text, created_at_param timestamp with time zone) RETURNS TABLE("key" text, "name" text, "value" bigint) AS $$ BEGIN RETURN QUERY
 SELECT
-  "key",
-  "browser" as "name",
+  "link_visits"."key",
+  "link_visits"."browser" as "name",
   COUNT(*) AS "value"
 FROM
   "link_visits"
-  WHERE "linkId" in (
-    SELECT "id" FROM "links" WHERE "userId" = (select auth.uid()) 
-  )
+WHERE
+  "link_visits"."key" = key_param
+  AND "link_visits"."createdAt" > created_at_param
 GROUP BY
-  "name",
-  "key";
+  "link_visits"."key",
+  "name";
 
-CREATE OR REPLACE VIEW "stats_city" AS
+END;
+
+$$ LANGUAGE plpgsql;
+
+CREATE
+OR REPLACE FUNCTION stats_city(key_param text, created_at_param timestamp with time zone) RETURNS TABLE("key" text, "name" text, "country" text, "value" bigint) AS $$ BEGIN RETURN QUERY
 SELECT
-  "key",
-  "city" as "name",
-  "country",
+  "link_visits"."key",
+  "link_visits"."city" as "name",
+  "link_visits"."country",
   COUNT(*) AS "value"
 FROM
   "link_visits"
-  WHERE "linkId" in (
-    SELECT "id" FROM "links" WHERE "userId" = (select auth.uid()) 
-  )
+WHERE
+  "link_visits"."key" = key_param
+  AND "link_visits"."createdAt" > created_at_param
 GROUP BY
-  "name",
-  "country",
-  "key";
+  "link_visits"."key",
+  "link_visits"."country",
+  "name";
 
-CREATE OR REPLACE VIEW "stats_country" AS
+END;
+
+$$ LANGUAGE plpgsql;
+
+CREATE
+OR REPLACE FUNCTION stats_country(key_param text, created_at_param timestamp with time zone) RETURNS TABLE("key" text, "name" text, "value" bigint) AS $$ BEGIN RETURN QUERY
 SELECT
-  "key",
-  "country" as "name",
+  "link_visits"."key",
+  "link_visits"."country" as "name",
   COUNT(*) AS "value"
 FROM
   "link_visits"
-  WHERE "linkId" in (
-    SELECT "id" FROM "links" WHERE "userId" = (select auth.uid()) 
-  )
+WHERE
+  "link_visits"."key" = key_param
+  AND "link_visits"."createdAt" > created_at_param
 GROUP BY
-  "name",
-  "key";
+  "link_visits"."key",
+  "name";
 
-CREATE OR REPLACE VIEW "stats_device" AS
+END;
+
+$$ LANGUAGE plpgsql;
+
+CREATE
+OR REPLACE FUNCTION stats_device(key_param text, created_at_param timestamp with time zone) RETURNS TABLE("key" text, "name" text, "value" bigint) AS $$ BEGIN RETURN QUERY
 SELECT
-  "key",
-  "device" as "name",
+  "link_visits"."key",
+  "link_visits"."device" as "name",
   COUNT(*) AS "value"
 FROM
   "link_visits"
-  WHERE "linkId" in (
-    SELECT "id" FROM "links" WHERE "userId" = (select auth.uid()) 
-  )
+WHERE
+  "link_visits"."key" = key_param
+  AND "link_visits"."createdAt" > created_at_param
 GROUP BY
-  "name",
-  "key";
+  "link_visits"."key",
+  "name";
 
-CREATE OR REPLACE VIEW "stats_os" AS
+END;
+
+$$ LANGUAGE plpgsql;
+
+CREATE
+OR REPLACE FUNCTION stats_os(key_param text, created_at_param timestamp with time zone) RETURNS TABLE("key" text, "name" text, "value" bigint) AS $$ BEGIN RETURN QUERY
 SELECT
-  "key",
-  "os" as "name",
+  "link_visits"."key",
+  "link_visits"."os" as "name",
   COUNT(*) AS "value"
 FROM
   "link_visits"
-  WHERE "linkId" in (
-    SELECT "id" FROM "links" WHERE "userId" = (select auth.uid()) 
-  )
+WHERE
+  "link_visits"."key" = key_param
+  AND "link_visits"."createdAt" > created_at_param
 GROUP BY
-  "name",
-  "key";
+  "link_visits"."key",
+  "name";
 
+END;
 
-CREATE OR REPLACE VIEW "stats_referrer" AS
+$$ LANGUAGE plpgsql;
+
+CREATE
+OR REPLACE FUNCTION stats_referrer(key_param text, created_at_param timestamp with time zone) RETURNS TABLE("key" text, "name" text, "value" bigint) AS $$ BEGIN RETURN QUERY
 SELECT
-  "key",
-  "referrer" as "name",
+  "link_visits"."key",
+  "link_visits"."referrer" as "name",
   COUNT(*) AS "value"
 FROM
   "link_visits"
-  WHERE "linkId" in (
-    SELECT "id" FROM "links" WHERE "userId" = (select auth.uid()) 
-  )
+WHERE
+  "link_visits"."key" = key_param
+  AND "link_visits"."createdAt" > created_at_param
 GROUP BY
-  "name",
-  "key";
+  "link_visits"."key",
+  "name";
+
+END;
+
+$$ LANGUAGE plpgsql;

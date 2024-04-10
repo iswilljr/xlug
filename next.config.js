@@ -20,7 +20,7 @@ const nextConfig = {
   },
   experimental: {
     typedRoutes: true,
-    optimizePackageImports: ['iconoir-react'],
+    optimizePackageImports: ['iconoir-react', 'lucide-react', '@tremor/react'],
   },
   async redirects() {
     return [

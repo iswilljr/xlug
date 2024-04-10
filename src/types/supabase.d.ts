@@ -90,107 +90,9 @@ export interface Database {
       }
     }
     Views: {
-      public_stats_browser: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      public_stats_city: {
-        Row: {
-          country: string | null
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      public_stats_clicks: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      public_stats_country: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      public_stats_device: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
       public_stats_most_clicked: {
         Row: {
           key: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      public_stats_os: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      public_stats_referrer: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      stats_browser: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      stats_city: {
-        Row: {
-          country: string | null
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      stats_clicks: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      stats_country: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      stats_device: {
-        Row: {
-          key: string | null
-          name: string | null
           value: number | null
         }
         Relationships: []
@@ -202,25 +104,88 @@ export interface Database {
         }
         Relationships: []
       }
-      stats_os: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
-      stats_referrer: {
-        Row: {
-          key: string | null
-          name: string | null
-          value: number | null
-        }
-        Relationships: []
-      }
     }
     Functions: {
-      [_ in never]: never
+      stats_browser: {
+        Args: {
+          key_param: string
+          created_at_param: string
+        }
+        Returns: Array<{
+          key: string
+          name: string
+          value: number
+        }>
+      }
+      stats_city: {
+        Args: {
+          key_param: string
+          created_at_param: string
+        }
+        Returns: Array<{
+          key: string
+          name: string
+          country: string
+          value: number
+        }>
+      }
+      stats_clicks: {
+        Args: {
+          time_zone_param: string
+          date_trunc_param: string
+          key_param: string
+          created_at_param: string
+        }
+        Returns: Array<{
+          key: string
+          name: string
+          value: number
+        }>
+      }
+      stats_country: {
+        Args: {
+          key_param: string
+          created_at_param: string
+        }
+        Returns: Array<{
+          key: string
+          name: string
+          value: number
+        }>
+      }
+      stats_device: {
+        Args: {
+          key_param: string
+          created_at_param: string
+        }
+        Returns: Array<{
+          key: string
+          name: string
+          value: number
+        }>
+      }
+      stats_os: {
+        Args: {
+          key_param: string
+          created_at_param: string
+        }
+        Returns: Array<{
+          key: string
+          name: string
+          value: number
+        }>
+      }
+      stats_referrer: {
+        Args: {
+          key_param: string
+          created_at_param: string
+        }
+        Returns: Array<{
+          key: string
+          name: string
+          value: number
+        }>
+      }
     }
     Enums: {
       [_ in never]: never

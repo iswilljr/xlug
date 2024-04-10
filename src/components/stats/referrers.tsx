@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { generateHostIconFromUrl } from '@/utils/links'
+import { useStatsInterval } from '@/store/stats-interval'
 import { StatsBarList } from './bar-list'
 import type { LinkRow, StatsRow } from '@/types/tables'
 
@@ -10,7 +11,10 @@ interface ReferrerStatsProps {
 }
 
 export function ReferrerStats({ link }: ReferrerStatsProps) {
-  const { data, isLoading } = useSWR<StatsRow[]>(`/api/link/${link.key}/stats?tab=referrer`)
+  const { interval, timeZone } = useStatsInterval()
+  const { data, isLoading } = useSWR<StatsRow[]>(
+    `/api/link/${link.key}/stats?tab=referrer&interval=${interval}&timeZone=${timeZone}`
+  )
 
   const pages = useMemo(
     () =>

@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import { inter } from '@/utils/fonts'
 import { generateBaseMetadata } from '@/utils/metadata'
 import { SessionProvider } from '@/providers/session'
+import { TimeZoneProvider } from '@/store/stats-interval'
 import { SWRProvider } from '@/providers/swr'
 import { ThemeProvider } from '@/providers/theme'
 import { Toaster } from '@/providers/toaster'
@@ -21,6 +22,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
             <SWRProvider>
               {children}
               <Toaster />
+              <TimeZoneProvider />
             </SWRProvider>
           </ThemeProvider>
         </SessionProvider>

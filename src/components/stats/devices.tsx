@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
 import { Button } from '@/ui/button'
 import { cn } from '@/utils/cn'
+import { useStatsInterval } from '@/store/stats-interval'
 import { StatsBarList } from './bar-list'
 import type { LinkRow, StatsRow } from '@/types/tables'
 import type { TabEnumSchema } from '@/utils/schemas'
@@ -25,9 +26,12 @@ const deviceTabs = [
 ] as const
 
 export function DeviceStats({ link }: DeviceStatsProps) {
+  const { interval, timeZone } = useStatsInterval()
   const [selectedTab, setSelectedTab] = useState<DeviceTabs>('browser')
 
-  const { data, isLoading } = useSWR<StatsRow[]>(`/api/link/${link.key}/stats?tab=${selectedTab}`)
+  const { data, isLoading } = useSWR<StatsRow[]>(
+    `/api/link/${link.key}/stats?tab=${selectedTab}&interval=${interval}&timeZone=${timeZone}`
+  )
 
   const pages = useMemo(
     () =>

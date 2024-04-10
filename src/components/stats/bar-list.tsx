@@ -1,24 +1,43 @@
+import dynamic from 'next/dynamic'
 import { ScrollArea } from '@/ui/scroll-area'
+import { cn } from '@/utils/cn'
 import { valueFormatter } from '@/utils/formatter'
-import { BarList, type BarListProps } from '@tremor/react'
 import { SystemRestart } from 'iconoir-react'
+import type { BarListProps } from '@tremor/react'
 
 interface StatsBarListProps extends BarListProps {
   loading?: boolean
 }
 
-export function StatsLoader() {
+const BarList = dynamic(() => import('@tremor/react/dist/components/vis-elements/BarList/BarList'), {
+  ssr: false,
+  loading(props) {
+    return <StatsLoader />
+  },
+})
+
+export function StatsLoader({ className }: { className?: string }) {
   return (
-    <div className='flex h-64 w-full flex-col items-center justify-center gap-1 text-neutral-400 dark:text-neutral-500'>
+    <div
+      className={cn(
+        'flex h-64 w-full flex-col items-center justify-center gap-1 text-neutral-400 dark:text-neutral-500',
+        className
+      )}
+    >
       <SystemRestart className='size-8 animate-spin ' />
       <p className='text-sm'>Loading...</p>
     </div>
   )
 }
 
-export function StatsEmpty() {
+export function StatsEmpty({ className }: { className?: string }) {
   return (
-    <div className='flex h-64 w-full flex-col items-center justify-center gap-1 text-neutral-400 dark:text-neutral-500'>
+    <div
+      className={cn(
+        'flex h-64 w-full flex-col items-center justify-center gap-1 text-neutral-400 dark:text-neutral-500',
+        className
+      )}
+    >
       <p className='text-sm'>No data</p>
     </div>
   )
