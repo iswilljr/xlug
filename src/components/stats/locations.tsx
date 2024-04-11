@@ -25,12 +25,10 @@ const locationTabs = [
 ] as const
 
 export function LocationStats({ link }: LocationStatsProps) {
-  const { interval, timeZone } = useStatsInterval()
+  const { searchParams } = useStatsInterval()
   const [selectedTab, setSelectedTab] = useState<LocationTabs>('country')
 
-  const { data, isLoading } = useSWR<StatsRow[]>(
-    `/api/link/${link.key}/stats?tab=${selectedTab}&interval=${interval}&timeZone=${timeZone}`
-  )
+  const { data, isLoading } = useSWR<StatsRow[]>(`/api/link/${link.key}/stats?tab=${selectedTab}&${searchParams}`)
 
   const pages = useMemo(
     () =>

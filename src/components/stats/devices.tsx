@@ -27,12 +27,10 @@ const deviceTabs = [
 ] as const
 
 export function DeviceStats({ link }: DeviceStatsProps) {
-  const { interval, timeZone } = useStatsInterval()
+  const { searchParams } = useStatsInterval()
   const [selectedTab, setSelectedTab] = useState<DeviceTabs>('browser')
 
-  const { data, isLoading } = useSWR<StatsRow[]>(
-    `/api/link/${link.key}/stats?tab=${selectedTab}&interval=${interval}&timeZone=${timeZone}`
-  )
+  const { data, isLoading } = useSWR<StatsRow[]>(`/api/link/${link.key}/stats?tab=${selectedTab}&${searchParams}`)
 
   const pages = useMemo(
     () =>

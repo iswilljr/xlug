@@ -23,10 +23,8 @@ const AreaChart = dynamic(() => import('@tremor/react/dist/components/chart-elem
 })
 
 export function ClickStats({ link }: ClickStatsProps) {
-  const { interval, timeZone } = useStatsInterval()
-  const { data, isLoading } = useSWR<StatsRow[]>(
-    `/api/link/${link.key}/stats?tab=clicks&interval=${interval}&timeZone=${timeZone}`
-  )
+  const { interval, searchParams } = useStatsInterval()
+  const { data, isLoading } = useSWR<StatsRow[]>(`/api/link/${link.key}/stats?tab=clicks&${searchParams}`)
 
   const clicksData = useMemo(() => {
     if (data == null || data.length === 0) return []

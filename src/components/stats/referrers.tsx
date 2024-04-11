@@ -11,10 +11,8 @@ interface ReferrerStatsProps {
 }
 
 export function ReferrerStats({ link }: ReferrerStatsProps) {
-  const { interval, timeZone } = useStatsInterval()
-  const { data, isLoading } = useSWR<StatsRow[]>(
-    `/api/link/${link.key}/stats?tab=referrer&interval=${interval}&timeZone=${timeZone}`
-  )
+  const { searchParams } = useStatsInterval()
+  const { data, isLoading } = useSWR<StatsRow[]>(`/api/link/${link.key}/stats?tab=referrer&${searchParams}`)
 
   const pages = useMemo(
     () =>

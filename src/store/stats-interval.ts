@@ -10,16 +10,18 @@ type Interval = '1h' | '24h' | '7d' | '30d' | '90d' | 'all'
 interface StatsInterval {
   timeZone: string
   interval: Interval
+  searchParams: string
   setInterval: (interval: Interval) => void
 }
 
 export const useStatsInterval = create(
   persist<StatsInterval>(
-    set => ({
+    (set, get) => ({
       interval: '30d',
       timeZone: '',
+      searchParams: '&interval=30d',
       setInterval(interval) {
-        set({ interval })
+        set({ interval, searchParams: `interval=${interval}&timeZone=${get().timeZone}` })
       },
     }),
     {
@@ -31,7 +33,12 @@ export const useStatsInterval = create(
 
 export function TimeZoneProvider() {
   useEffect(() => {
-    useStatsInterval.setState({ timeZone: getTimeZone() })
+    const timeZone = getTimeZone()
+
+    useStatsInterval.setState({
+      timeZone,
+      searchParams: `interval=${useStatsInterval.getState().interval}&timeZone=${timeZone}`,
+    })
   }, [])
 
   return null
