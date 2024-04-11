@@ -1,4 +1,4 @@
-import { AppWindow, HomeSimple } from 'iconoir-react'
+import { AppWindowIcon, HomeIcon } from 'lucide-react'
 import type { Route } from 'next'
 
 interface MenuItem {
@@ -7,12 +7,12 @@ interface MenuItem {
 }
 
 interface AvatarMenuItem extends MenuItem {
-  icon: typeof HomeSimple
+  icon: typeof HomeIcon
 }
 
 export const avatarMenu: AvatarMenuItem[] = [
-  { label: 'Home', href: '/', icon: HomeSimple },
-  { label: 'Dashboard', href: '/dashboard', icon: AppWindow },
+  { label: 'Home', href: '/', icon: HomeIcon },
+  { label: 'Dashboard', href: '/dashboard', icon: AppWindowIcon },
   // { label: 'Settings', href: '/Settings', icon: Settings },
 ]
 

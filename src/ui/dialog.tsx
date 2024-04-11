@@ -1,7 +1,7 @@
 'use client'
 
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Xmark } from 'iconoir-react'
+import { XIcon } from 'lucide-react'
 import { forwardRef, useMemo } from 'react'
 import { useClasses } from '@/hooks/use-classes'
 import { useWithinDrawer } from '@/hooks/use-within-drawer'
@@ -51,7 +51,7 @@ const DialogContent = forwardRef<React.ElementRef<typeof DialogPrimitive.Content
               className='absolute right-2 top-2 z-20 min-h-fit rounded-full p-1 hover:bg-neutral-200 focus:ring-2 focus:ring-offset-2'
               size='icon'
             >
-              <Xmark className='h-5 w-5' />
+              <XIcon className='h-5 w-5' />
               <span className='sr-only'>Close</span>
             </Button>
           </DialogPrimitive.Close>

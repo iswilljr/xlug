@@ -68,9 +68,6 @@ dependencies:
   html-to-image:
     specifier: 1.11.11
     version: 1.11.11
-  iconoir-react:
-    specifier: 7.5.0
-    version: 7.5.0(react@18.2.0)
   lucide-react:
     specifier: 0.366.0
     version: 0.366.0(react@18.2.0)
@@ -92,6 +89,9 @@ dependencies:
   react-hook-form:
     specifier: 7.51.2
     version: 7.51.2(react@18.2.0)
+  react-hotkeys-hook:
+    specifier: 4.5.0
+    version: 4.5.0(react-dom@18.2.0)(react@18.2.0)
   react-qr-code:
     specifier: 2.0.12
     version: 2.0.12(react@18.2.0)
@@ -3507,14 +3507,6 @@ packages:
     hasBin: true
     dev: true
 
-  /iconoir-react@7.5.0(react@18.2.0):
-    resolution: {integrity: sha512-BreNjTeCquoYCLsvM6YLai/hvVEEAUz661TkXm7Kh/YvfG0tLqdhTsvYnL4yj/owYahqtLctvVwjjEDSWZmfNw==}
-    peerDependencies:
-      react: ^16.8.6 || ^17 || ^18
-    dependencies:
-      react: 18.2.0
-    dev: false
-
   /iconv-lite@0.6.3:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
@@ -4632,6 +4624,16 @@ packages:
       react: ^16.8.0 || ^17 || ^18
     dependencies:
       react: 18.2.0
+    dev: false
+
+  /react-hotkeys-hook@4.5.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Samb85GSgAWFQNvVt3PS90LPPGSf9mkH/r4au81ZP1yOIFayLC3QAvqTgGtJ8YEDMXtPmaVBs6NgipHO6h4Mug==}
+    peerDependencies:
+      react: '>=16.8.1'
+      react-dom: '>=16.8.1'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-is@16.13.1:

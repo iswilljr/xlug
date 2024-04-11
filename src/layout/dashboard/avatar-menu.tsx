@@ -1,20 +1,24 @@
 'use client'
 
-import Link from 'next/link'
 import { toast } from 'sonner'
+import { useTheme } from 'next-themes'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
-import { LogOut } from 'iconoir-react'
+import { CommandIcon, LogOutIcon, MonitorIcon, MoonIcon, SunIcon } from 'lucide-react'
 import { Avatar } from '@/components/avatar'
+import { useCommandMenu } from '@/store/command-menu'
 import { Button } from '@/ui/button'
-import { Popover } from '@/ui/popover'
+import { DropdownMenu } from '@/ui/dropdown-menu'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/ui/select'
 import { avatarMenu } from './links'
 
 export function AvatarMenu() {
   const router = useRouter()
   const session = useSession()
   const supabase = useSupabaseClient()
+  const onOpenChange = useCommandMenu(s => s.onOpenChange)
+  const { theme, setTheme } = useTheme()
   const [isMenuOpen, setMenuOpen] = useState(false)
 
   const signOut = useCallback(async () => {
@@ -29,43 +33,99 @@ export function AvatarMenu() {
   }, [router, supabase.auth])
 
   return (
-    <Popover
+    <DropdownMenu
       align='end'
-      open={isMenuOpen}
-      onOpenChange={setMenuOpen}
-      className='px-0 sm:w-60 sm:max-w-[12rem]'
       trigger={
         <Button className='rounded-full' size='icon' variant='ghost'>
           <Avatar />
         </Button>
       }
-    >
-      {session && (
-        <div className='px-5 pb-2 text-sm'>
-          <h2 className='truncate font-medium'>{session.user.user_metadata?.full_name ?? 'Default'}</h2>
-          <p className='truncate text-neutral-500 dark:text-neutral-400'>{session.user.email}</p>
-        </div>
-      )}
-      <div className='text-sm text-neutral-500 dark:text-neutral-400'>
-        {avatarMenu.map(link => (
-          <Link
-            key={link.href}
-            className='flex items-center gap-2 px-5 py-2 hover:bg-neutral-200/50 dark:hover:bg-neutral-900'
-            href={link.href}
-            onClick={() => setMenuOpen(false)}
-          >
-            <link.icon className='h-5 w-5' />
-            <span>{link.label}</span>
-          </Link>
-        ))}
-        <button
-          onClick={signOut}
-          className='flex w-full items-center gap-2 px-5 py-2 text-left hover:bg-neutral-200/50 dark:hover:bg-neutral-900'
-        >
-          <LogOut className='h-5 w-5' />
-          <span>Log out</span>
-        </button>
-      </div>
-    </Popover>
+      menu={[
+        {
+          type: 'label',
+          label: (
+            <div className='flex flex-col space-y-1'>
+              <p className='text-sm font-medium leading-none'>{session?.user.user_metadata?.full_name ?? 'Default'}</p>
+              <p className='text-muted-foreground text-xs leading-none'>{session?.user.email}</p>
+            </div>
+          ),
+        },
+        { type: 'separator' },
+        {
+          type: 'group',
+          items: avatarMenu.map(item => ({
+            label: item.label,
+            shortcut: <item.icon className='size-4' />,
+            onClick: () => router.push(item.href),
+          })),
+        },
+        { type: 'separator' },
+        {
+          type: 'group',
+          items: [
+            {
+              label: 'Command Menu',
+              onClick: () => onOpenChange(true),
+              shortcut: (
+                <span className='flex items-center gap-1'>
+                  <span className='flex size-6 items-center justify-center rounded-md border border-neutral-300 bg-neutral-200 p-1 dark:border-neutral-800 dark:bg-neutral-900'>
+                    <CommandIcon className='size-4' />
+                  </span>
+                  <span className='flex size-6 items-center justify-center rounded-md border border-neutral-300 bg-neutral-200 p-1 text-sm dark:border-neutral-800 dark:bg-neutral-900'>
+                    K
+                  </span>
+                </span>
+              ),
+            },
+            {
+              className: 'justify-between focus:!bg-transparent',
+              label: (
+                <>
+                  Appearance
+                  <Select defaultValue={theme} onValueChange={setTheme}>
+                    <SelectTrigger aria-placeholder='Apariencia' className='h-auto w-28 py-1'>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value='system'>
+                        <span className='flex items-center justify-start gap-2 text-xs'>
+                          <MonitorIcon className='size-3' />
+                          System
+                        </span>
+                      </SelectItem>
+                      <SelectItem value='dark'>
+                        <span className='flex items-center justify-start gap-2 text-xs'>
+                          <MoonIcon className='size-3' />
+                          Dark
+                        </span>
+                      </SelectItem>
+                      <SelectItem value='light'>
+                        <span className='flex items-center justify-start gap-2 text-xs'>
+                          <SunIcon className='size-3' />
+                          Light
+                        </span>
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </>
+              ),
+            },
+          ],
+        },
+        { type: 'separator' },
+        {
+          type: 'group',
+          items: [
+            {
+              label: 'Logout',
+              onClick: signOut,
+              shortcut: <LogOutIcon className='size-4' />,
+            },
+          ],
+        },
+      ]}
+      open={isMenuOpen}
+      onOpenChange={setMenuOpen}
+    />
   )
 }

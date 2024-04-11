@@ -1,7 +1,7 @@
 'use client'
 
 import { forwardRef, useMemo } from 'react'
-import { Xmark } from 'iconoir-react'
+import { XIcon } from 'lucide-react'
 import { Drawer as DrawerPrimitive } from 'vaul'
 import { useClasses } from '@/hooks/use-classes'
 import { cn } from '@/utils/cn'
@@ -48,7 +48,7 @@ const DrawerContent = forwardRef<React.ElementRef<typeof DrawerPrimitive.Content
               className='absolute right-2 top-2 z-20 min-h-fit rounded-full p-1 hover:bg-neutral-200 focus:ring-2 focus:ring-offset-2'
               size='icon'
             >
-              <Xmark className='h-5 w-5' />
+              <XIcon className='h-5 w-5' />
               <span className='sr-only'>Close</span>
             </Button>
           </DrawerPrimitive.Close>
