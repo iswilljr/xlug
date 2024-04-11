@@ -1,17 +1,10 @@
 'use client'
 
-import useSWR from 'swr'
-import axios from 'redaxios'
 import Image from 'next/image'
-import { Skeleton } from '@/ui/skeleton'
-import { useMemo, useState } from 'react'
-import { BarChartIcon } from 'lucide-react'
+import { useMemo } from 'react'
 import { generateHostIconFromUrl, generateShortLink, prettyUrl } from '@/utils/links'
 import { PublicLinkMoreOptionsButton, type PublicLinkMoreOptionsButtonProps } from './public-more-options'
-import { formatHumanReadable } from '@/utils/formatter'
-import { PUBLIC_DEFAULT_LINK_KEY } from '@/config/constants'
-import { LinkStatsDialog } from '../dialogs/link-stats-dialog'
-import type { LinkRow, StatsRow } from '@/types/tables'
+import type { LinkRow } from '@/types/tables'
 
 interface PublicLinkCardProps
   extends Pick<PublicLinkMoreOptionsButtonProps, 'disableDeleteOption' | 'disableStatsOption'> {
@@ -26,13 +19,6 @@ export function PublicLinkCard({ link, ...props }: PublicLinkCardProps) {
       destination: prettyUrl(link.destination),
     }),
     [link.destination, link.key]
-  )
-
-  const [isStatsDialogOpen, setStatsDialogOpen] = useState(false)
-  const isPublicDefaultLink = link.key === PUBLIC_DEFAULT_LINK_KEY
-
-  const { data: totalOfClicksData, isLoading } = useSWR(`/api/links/stats?public`, async key =>
-    isPublicDefaultLink ? await axios.get<StatsRow[]>(key).then(res => res.data) : null
   )
 
   return (
@@ -50,25 +36,6 @@ export function PublicLinkCard({ link, ...props }: PublicLinkCardProps) {
           <a target='_blank' rel='noreferrer' href={data.link} className='truncate font-medium hover:underline'>
             {link.key}
           </a>
-          {isPublicDefaultLink && (
-            <>
-              {isLoading ? (
-                <Skeleton className='h-7 w-20' />
-              ) : (
-                <LinkStatsDialog
-                  link={link}
-                  open={isStatsDialogOpen}
-                  onOpenChange={setStatsDialogOpen}
-                  trigger={
-                    <button className='inline-flex shrink-0 items-center gap-1 rounded-md bg-neutral-900/10 px-2 py-1 text-sm dark:bg-neutral-50/10'>
-                      <BarChartIcon className='size-4' />
-                      {`${formatHumanReadable(totalOfClicksData?.[0]?.value ?? 0)} Clicks`}
-                    </button>
-                  }
-                />
-              )}
-            </>
-          )}
         </div>
         <div className='flex items-center gap-2'>
           <a

@@ -66,7 +66,7 @@ export function LinkCard({ link }: LinkCardProps) {
         <div className='flex flex-shrink-0 items-center justify-center gap-1'>
           <LinkStatsDialog
             trigger={
-              <button className='inline-flex shrink-0 items-center gap-1 rounded-md bg-neutral-900/10 px-2 py-1 text-sm dark:bg-neutral-50/10'>
+              <button className='inline-flex shrink-0 items-center gap-1 rounded-md bg-neutral-200/50 px-2 py-1 text-sm dark:bg-neutral-800/80'>
                 <BarChartIcon className='size-4' />
                 {`${formatHumanReadable(totalOfClicks[link.key]?.value ?? 0)} Clicks`}
               </button>
