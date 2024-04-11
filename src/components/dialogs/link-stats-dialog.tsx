@@ -18,6 +18,15 @@ export interface LinkStatsDialogProps {
   onOpenChange?: (value: boolean) => void
 }
 
+const intervalItems = [
+  { label: 'Last hour', value: '1h', icon: ClockIcon },
+  { label: 'Last 24 hours', value: '24h', icon: ClockIcon },
+  { label: 'Last 7 days', value: '7d', icon: CalendarIcon },
+  { label: 'Last 30 days', value: '30d', icon: CalendarIcon },
+  { label: 'Last 90 days', value: '90d', icon: CalendarIcon },
+  { label: 'All time', value: 'all', icon: CalendarClockIcon },
+]
+
 export function LinkStatsDialog({ link, open, trigger, onOpenChange }: LinkStatsDialogProps) {
   const { interval, setInterval } = useStatsInterval()
 
@@ -47,42 +56,14 @@ export function LinkStatsDialog({ link, open, trigger, onOpenChange }: LinkStats
             <SelectValue placeholder='Select interval' />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value='1h'>
-              <span className='flex items-center gap-2'>
-                <ClockIcon className='size-4' />
-                Last hour
-              </span>
-            </SelectItem>
-            <SelectItem value='24h'>
-              <span className='flex items-center gap-2'>
-                <ClockIcon className='size-4' />
-                Last 24 hours
-              </span>
-            </SelectItem>
-            <SelectItem value='7d'>
-              <span className='flex items-center gap-2'>
-                <CalendarIcon className='size-4' />
-                Last 7 days
-              </span>
-            </SelectItem>
-            <SelectItem value='30d'>
-              <span className='flex items-center gap-2'>
-                <CalendarIcon className='size-4' />
-                Last 30 days
-              </span>
-            </SelectItem>
-            <SelectItem value='90d'>
-              <span className='flex items-center gap-2'>
-                <CalendarIcon className='size-4' />
-                Last 90 days
-              </span>
-            </SelectItem>
-            <SelectItem value='all'>
-              <span className='flex items-center gap-2'>
-                <CalendarClockIcon className='size-4' />
-                All time
-              </span>
-            </SelectItem>
+            {intervalItems.map(item => (
+              <SelectItem key={item.value} value={item.value}>
+                <span className='flex items-center gap-2'>
+                  <item.icon className='size-4' />
+                  {item.label}
+                </span>
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>

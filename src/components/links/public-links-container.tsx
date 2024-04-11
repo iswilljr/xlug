@@ -37,7 +37,6 @@ export function PublicLinksContainer() {
       <li>
         <PublicLinkCard
           disableDeleteOption
-          disableStatsOption={false}
           link={{
             id: 'github',
             userId: null,
@@ -51,7 +50,7 @@ export function PublicLinksContainer() {
       {links.map(link => {
         return (
           <li key={link.key}>
-            <PublicLinkCard disableDeleteOption={false} disableStatsOption link={link} />
+            <PublicLinkCard disableStatsOption link={link} />
           </li>
         )
       })}

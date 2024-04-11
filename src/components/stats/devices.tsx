@@ -7,6 +7,7 @@ import { useMemo, useState } from 'react'
 import { Button } from '@/ui/button'
 import { cn } from '@/utils/cn'
 import { useStatsInterval } from '@/store/stats-interval'
+import { HOST_ICON_PLACEHOLDER } from '@/config/constants'
 import { StatsBarList } from './bar-list'
 import type { LinkRow, StatsRow } from '@/types/tables'
 import type { TabEnumSchema } from '@/utils/schemas'
@@ -83,23 +84,23 @@ export function DeviceStats({ link }: DeviceStatsProps) {
   )
 }
 
+const defaults: Record<string, string> = {
+  unknown: HOST_ICON_PLACEHOLDER,
+  desktop: 'https://uaparser.js.org/images/types/default.png',
+  Android: '/icons/android.png',
+  'Mac OS': '/icons/macos.png',
+  Linux: '/icons/linux.png',
+  iOS: '/icons/ios.png',
+}
+
+const types: Record<string, string> = {
+  device: 'types',
+  browser: 'browsers',
+  os: 'os',
+}
+
 function DeviceIcon({ display, tab }: { display: string; tab: string }) {
-  const defaults: Record<string, string> = {
-    unknown: 'https://uaparser.js.org/images/browsers/default.png',
-    desktop: 'https://uaparser.js.org/images/types/default.png',
-    Android: '/icons/android.png',
-    'Mac OS': '/icons/macos.png',
-    Linux: '/icons/linux.png',
-    iOS: '/icons/ios.png',
-  }
-
-  const types: Record<string, string> = {
-    device: 'types',
-    browser: 'browsers',
-    os: 'os',
-  }
-
-  const type = types[tab]
+  const type = useMemo(() => types[tab], [tab])
 
   const [src, setSrc] = useState(
     defaults[display] ?? `https://uaparser.js.org/images/${type}/${display.toLowerCase()}.png`

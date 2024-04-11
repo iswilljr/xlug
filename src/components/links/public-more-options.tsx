@@ -22,8 +22,8 @@ export interface PublicLinkMoreOptionsButtonProps {
 
 export function PublicLinkMoreOptionsButton({
   link,
-  disableDeleteOption = true,
-  disableStatsOption = true,
+  disableDeleteOption = false,
+  disableStatsOption = false,
 }: PublicLinkMoreOptionsButtonProps) {
   const [, setLinks] = useLocalStorage<LinkRow[]>(LINKS_DATA_KEY, {
     defaultValue: [],

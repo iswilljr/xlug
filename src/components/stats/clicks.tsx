@@ -1,15 +1,15 @@
 'use client'
 
 import useSWR from 'swr'
-import { isSameDay, isSameHour, isSameMinute } from 'date-fns'
+import dynamic from 'next/dynamic'
 import { useMemo } from 'react'
+import { isSameDay, isSameHour, isSameMinute } from 'date-fns'
 import { formatDay, getRangeOfDays } from '@/utils/dates'
 import { ScrollArea } from '@/ui/scroll-area'
 import { valueFormatter } from '@/utils/formatter'
 import { useStatsInterval } from '@/store/stats-interval'
 import { StatsLoader, StatsEmpty } from './bar-list'
 import type { LinkRow, StatsRow } from '@/types/tables'
-import dynamic from 'next/dynamic'
 
 interface ClickStatsProps {
   link: LinkRow
@@ -33,23 +33,23 @@ export function ClickStats({ link }: ClickStatsProps) {
 
     const rangeOfDays = getRangeOfDays({ interval, start: data[0].name })
 
-    return rangeOfDays.map(day => {
-      const found = data.find(p => {
-        const date = new Date(p.name)
+    return rangeOfDays.map(rangeDate => {
+      const found = data.find(clickData => {
+        const currentDate = new Date(clickData.name)
 
         if (interval === '1h') {
-          return isSameMinute(date, day)
+          return isSameMinute(currentDate, rangeDate)
         }
 
         if (interval === '24h') {
-          return isSameHour(date, day)
+          return isSameHour(currentDate, rangeDate)
         }
 
-        return isSameDay(date, day)
+        return isSameDay(currentDate, rangeDate)
       })
 
       return {
-        name: formatDay(found?.name ?? day, interval),
+        name: formatDay(found?.name ?? rangeDate, interval),
         Clicks: found?.value ?? 0,
       }
     })
