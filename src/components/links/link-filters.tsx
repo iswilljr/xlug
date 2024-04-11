@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { Plus, Search } from 'iconoir-react'
+import { PlusIcon, SearchIcon } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { FilterQueryParams } from '@/config/constants'
 import { Button } from '@/ui/button'
@@ -31,14 +31,14 @@ export function LinkFilters() {
         name='query'
         rootClassName='w-full'
         placeholder='Search...'
-        icon={Search}
+        icon={SearchIcon}
         defaultValue={initialQueryValue.current ?? ''}
         onChange={e => setDebouncedQuery(e.target.value)}
       />
       <CreateLinkDialog
         trigger={
           <Button aria-label='Create Link' className='h-9 w-9 px-2 sm:min-w-[7rem]'>
-            <Plus className='sm:hidden' />
+            <PlusIcon className='sm:hidden' />
             <span className='hidden sm:inline-block'>Create Link</span>
           </Button>
         }

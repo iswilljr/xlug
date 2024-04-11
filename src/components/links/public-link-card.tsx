@@ -53,7 +53,7 @@ export function PublicLinkCard({ link, ...props }: PublicLinkCardProps) {
           {isPublicDefaultLink && (
             <>
               {isLoading ? (
-                <Skeleton className='h-6 w-20' />
+                <Skeleton className='h-7 w-20' />
               ) : (
                 <LinkStatsDialog
                   link={link}

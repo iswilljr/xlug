@@ -4,7 +4,7 @@ import Image from 'next/image'
 import QRCode from 'react-qr-code'
 import { toast } from 'sonner'
 import { useCallback, useMemo, useRef } from 'react'
-import { Download, JpegFormat, PasteClipboard, PngFormat, SvgFormat } from 'iconoir-react'
+import { DownloadIcon, ImageIcon, CopyIcon } from 'lucide-react'
 import { generateHostIconFromUrl, generateShortLink } from '@/utils/links'
 import { Button } from '@/ui/button'
 import { Dialog } from '@/ui/dialog'
@@ -75,11 +75,7 @@ export function QRCodeDialog({ open, link, trigger, onOpenChange }: QRCodeDialog
           </div>
         </div>
         <div className='flex flex-col gap-2 sm:flex-row'>
-          <Button
-            className='w-full'
-            onClick={copyQRCodeToClipboard}
-            icon={<PasteClipboard className='h-4 w-4 stroke-2' />}
-          >
+          <Button className='w-full' onClick={copyQRCodeToClipboard} icon={<CopyIcon className='h-4 w-4 stroke-2' />}>
             Copy
           </Button>
           <DropdownMenu
@@ -88,22 +84,22 @@ export function QRCodeDialog({ open, link, trigger, onOpenChange }: QRCodeDialog
             items={[
               {
                 label: 'As JPEG',
-                icon: <JpegFormat />,
+                icon: <ImageIcon />,
                 onClick: () => downloadImage({ type: 'jpeg' }),
               },
               {
                 label: 'As PNG',
-                icon: <PngFormat />,
+                icon: <ImageIcon />,
                 onClick: () => downloadImage({ type: 'png' }),
               },
               {
                 label: 'As SVG',
-                icon: <SvgFormat />,
+                icon: <ImageIcon />,
                 onClick: () => downloadImage({ type: 'svg' }),
               },
             ]}
             trigger={
-              <Button className='w-full' icon={<Download className='h-4 w-4 stroke-2' />}>
+              <Button className='w-full' icon={<DownloadIcon className='h-4 w-4 stroke-2' />}>
                 Export
               </Button>
             }

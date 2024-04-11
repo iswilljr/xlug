@@ -2,7 +2,7 @@
 
 import axios from 'redaxios'
 import { toast } from 'sonner'
-import { Shuffle } from 'iconoir-react'
+import { ShuffleIcon } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -154,7 +154,7 @@ export function CreateLinkDialogBase({
                 form.setValue('key', RandomKey())
               }}
             >
-              <Shuffle className='h-4 w-4 stroke-2' />
+              <ShuffleIcon className='h-4 w-4 stroke-2' />
               <span>Randomize</span>
             </Button>
           </Form.Input>

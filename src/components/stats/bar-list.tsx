@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import { ScrollArea } from '@/ui/scroll-area'
 import { cn } from '@/utils/cn'
 import { valueFormatter } from '@/utils/formatter'
-import { SystemRestart } from 'iconoir-react'
+import { LoaderIcon } from 'lucide-react'
 import type { BarListProps } from '@tremor/react'
 
 interface StatsBarListProps extends BarListProps {
@@ -24,7 +24,7 @@ export function StatsLoader({ className }: { className?: string }) {
         className
       )}
     >
-      <SystemRestart className='size-8 animate-spin ' />
+      <LoaderIcon className='size-8 animate-spin ' />
       <p className='text-sm'>Loading...</p>
     </div>
   )
