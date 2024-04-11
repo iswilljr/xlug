@@ -15,7 +15,7 @@ export function LinksContainer() {
   return (
     <>
       {isLoading && (
-        <ul className='grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4'>
+        <ul className='grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]'>
           {skeletons.map(skeleton => (
             <li key={skeleton}>
               <LinkSkeletonCard />
@@ -25,7 +25,7 @@ export function LinksContainer() {
       )}
       {!isLoading && isEmpty && <LinksEmpty />}
       {!isLoading && !isEmpty && (
-        <ul className='grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4'>
+        <ul className='grid grid-cols-1 gap-4 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]'>
           {links.map(link => (
             <li key={link.id}>
               <LinkCard link={link} />

@@ -77,7 +77,7 @@ export function LinkMoreOptionsButton({ link }: LinkMoreOptionsButtonProps) {
           },
         ]}
         trigger={
-          <Button size='icon' variant='ghost' aria-label='Open more options menu' className='w-auto px-1'>
+          <Button size='icon' variant='ghost' aria-label='Open more options menu' className='size-auto p-1'>
             <MoreVerticalIcon className='h-5 w-5' />
           </Button>
         }
