@@ -4,7 +4,7 @@ import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
 import { filterLinks, type FilterOptions } from '@/utils/filters'
 import { createStoreWithInitProps } from './create-store'
-import type { LinkRow } from '@/types/tables'
+import type { LinkRow, StatsRow } from '@/types/tables'
 
 export interface LinksInitProps {
   query: string
@@ -13,8 +13,10 @@ export interface LinksInitProps {
 export interface LinksState extends LinksInitProps {
   links: LinkRow[]
   data: LinkRow[]
+  totalOfClicks: Record<string, StatsRow>
   isLoading: boolean
   setLoading: (loading: boolean) => void
+  setTotalOfClicks: (totalOfClicks: StatsRow[]) => void
   setLinks: (links: LinkRow[]) => void
   setFilters: (options: FilterOptions) => void
 }
@@ -26,9 +28,15 @@ export const { LinksProvider, useLinksState, useLinksStore } = createStoreWithIn
         data: [],
         links: [],
         isLoading: true,
+        totalOfClicks: {},
         query: initProps.query,
         setLoading(isLoading) {
           set({ isLoading })
+        },
+        setTotalOfClicks(totalOfClicks) {
+          set({
+            totalOfClicks: Object.fromEntries(totalOfClicks.map(clicks => [clicks.key, clicks])),
+          })
         },
         setLinks(links) {
           set(state => {

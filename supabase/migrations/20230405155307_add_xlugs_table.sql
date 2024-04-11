@@ -25,9 +25,9 @@ with check (true);
 create policy "Enable update for users based on userId" on "links"
 as permissive for update
 to authenticated
-using (auth.uid() = "userId");
+using ((select auth.uid()) = "userId");
 
 create policy "Enable delete for users based on userId" on "links"
 as permissive for delete
 to authenticated
-using (auth.uid() = "userId");
+using ((select auth.uid()) = "userId");

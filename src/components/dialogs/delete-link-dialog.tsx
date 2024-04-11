@@ -60,9 +60,9 @@ export function DeleteLinkDialog({ open, link, trigger, onOpenChange }: DeleteLi
       trigger={trigger}
       withCloseButton={false}
       onOpenChange={onOpenChange}
-      className='overflow-hidden p-0 pt-2 dark:bg-neutral-900 sm:max-w-sm sm:pt-0'
+      className='overflow-hidden p-0 pt-2 dark:bg-neutral-950 sm:max-w-sm sm:pt-0'
     >
-      <div className='mx-auto max-w-xs p-8 text-center sm:max-w-sm'>
+      <div className='mx-auto max-w-xs p-8 text-center dark:bg-neutral-900/50 sm:max-w-sm'>
         <Image src={data.logo} alt={link.key} width={40} height={40} className='mx-auto h-10 w-10 rounded-full' />
         <h3 className='mx-auto max-w-[80%] truncate text-lg font-medium'>{`Delete ${link.key}`}</h3>
         <p className='text-sm text-neutral-500 dark:text-neutral-400'>
@@ -70,7 +70,11 @@ export function DeleteLinkDialog({ open, link, trigger, onOpenChange }: DeleteLi
         </p>
       </div>
       <Separator />
-      <Form form={form} onSubmit={form.handleSubmit(deleteLink)} className='space-y-4 bg-neutral-50 p-8 dark:bg-darker'>
+      <Form
+        form={form}
+        onSubmit={form.handleSubmit(deleteLink)}
+        className='space-y-4 bg-neutral-50 p-8 dark:bg-neutral-950'
+      >
         <Form.Input
           required
           pattern={link.key}

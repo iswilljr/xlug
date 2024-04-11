@@ -1,11 +1,10 @@
 'use client'
 
 import useSWR from 'swr'
-import axios from 'redaxios'
 import { useEffect } from 'react'
 import { LINKS_DATA_KEY } from '@/config/constants'
 import { LinksProvider as LinkStateProvider, useLinksState } from '@/store/links'
-import type { LinkRow } from '@/types/tables'
+import type { LinkRow, StatsRow } from '@/types/tables'
 
 interface LinksData {
   links: LinkRow[]
@@ -22,9 +21,12 @@ export function LinksProvider({ children, ...props }: LinksStateProviderProps) {
 }
 
 function LinksDataProvider({ children }: LinksStateProviderProps) {
-  const [setLinks, setLoading] = useLinksState(state => [state.setLinks, state.setLoading] as const)
+  const [setLinks, setTotalOfClicks, setLoading] = useLinksState(
+    state => [state.setLinks, state.setTotalOfClicks, state.setLoading] as const
+  )
 
-  const { data, isLoading } = useSWR(LINKS_DATA_KEY, key => axios.get<LinksData>(`/api/${key}`).then(res => res.data))
+  const { data, isLoading } = useSWR<LinksData>(`/api/${LINKS_DATA_KEY}`)
+  const { data: totalOfClicksData } = useSWR<StatsRow[]>('/api/links/stats')
 
   useEffect(() => {
     setLoading(isLoading)
@@ -33,6 +35,12 @@ function LinksDataProvider({ children }: LinksStateProviderProps) {
 
     setLinks(data.links)
   }, [data, isLoading, setLinks, setLoading])
+
+  useEffect(() => {
+    if (!totalOfClicksData) return
+
+    setTotalOfClicks(totalOfClicksData)
+  }, [setTotalOfClicks, totalOfClicksData])
 
   return children
 }

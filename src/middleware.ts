@@ -1,15 +1,15 @@
 import { AppMiddleware, LinksMiddleware } from './utils/middleware'
 import { APP_PAGES } from './config/constants'
-import { NextResponse, type NextRequest } from 'next/server'
+import { NextResponse, type NextRequest, type NextFetchEvent } from 'next/server'
 
-export function middleware(req: NextRequest) {
+export function middleware(req: NextRequest, ev: NextFetchEvent) {
   if (APP_PAGES.includes(req.nextUrl.pathname)) {
-    return AppMiddleware(req)
+    return AppMiddleware(req, ev)
   }
 
   const key = req.nextUrl.pathname.slice(1)
 
-  if (!key.includes('/')) return LinksMiddleware(req)
+  if (!key.includes('/')) return LinksMiddleware(req, ev)
 
   return NextResponse.next()
 }

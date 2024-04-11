@@ -36,7 +36,7 @@ export function PublicLinksContainer() {
     <ul className='space-y-2'>
       <li>
         <PublicLinkCard
-          withDeleteOption={false}
+          disableDeleteOption
           link={{
             id: 'github',
             userId: null,
@@ -50,7 +50,7 @@ export function PublicLinksContainer() {
       {links.map(link => {
         return (
           <li key={link.key}>
-            <PublicLinkCard link={link} />
+            <PublicLinkCard disableStatsOption link={link} />
           </li>
         )
       })}

@@ -2,21 +2,23 @@ import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { CustomError, routeHandler } from '@/utils/handler'
-import { DestinationSchema, LinkSchema, RandomKey } from '@/utils/schemas'
+import { LinkSchema, PublicLinkSchema, RandomKey } from '@/utils/schemas'
 import { extractMetadata } from '@/utils/metadata'
 import type { Database } from '@/types/supabase'
 
+export const dynamic = 'force-dynamic'
+
 export const POST = routeHandler(async req => {
   const body = await req.json()
-  const destinationParam = body.destination
-  const destination = DestinationSchema.parse(destinationParam)
+  const linkData = PublicLinkSchema.parse(body)
 
-  const metadata = await extractMetadata(destination).catch(() => null)
+  const description =
+    linkData.description ?? (await extractMetadata(linkData.destination).catch(() => null))?.description
 
   const link = LinkSchema.parse({
-    destination,
-    key: RandomKey(),
-    description: metadata?.description,
+    description,
+    destination: linkData.destination,
+    key: linkData.key ?? RandomKey(),
   })
 
   const supabase = createRouteHandlerClient<Database>({ cookies })

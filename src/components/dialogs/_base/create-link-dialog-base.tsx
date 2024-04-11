@@ -2,7 +2,7 @@
 
 import axios from 'redaxios'
 import { toast } from 'sonner'
-import { Shuffle } from 'iconoir-react'
+import { ShuffleIcon } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -100,8 +100,8 @@ export function CreateLinkDialogBase({
     async function getMetadata() {
       const url = new URL(destination)
       const res = await axios.get(`/api/metadata?url=${url.toString()}`)
-      const metadata = res.data
-      if (metadata.description) form.setValue('description', metadata.description)
+      const { description } = res.data ?? {}
+      if (typeof description === 'string') form.setValue('description', description)
     }
 
     if (
@@ -117,13 +117,13 @@ export function CreateLinkDialogBase({
       open={open}
       trigger={trigger}
       onOpenChange={onOpenChange}
-      className="gap-0 overflow-hidden bg-white p-0 pt-2 dark:bg-neutral-900 sm:pt-0 sm:[&_[data-orientation='vertical']]:!hidden"
+      className="gap-0 overflow-hidden bg-white p-0 pt-2 dark:bg-neutral-950 sm:pt-0 sm:[&_[data-orientation='vertical']]:!hidden"
     >
-      <div className='z-10 flex flex-col items-center justify-center space-y-3 border-b border-neutral-200 bg-white p-6 transition-all dark:border-neutral-800 dark:bg-neutral-900 sm:sticky sm:top-0 sm:px-16'>
+      <div className='z-10 flex flex-col items-center justify-center space-y-3 border-b border-neutral-200 bg-white p-6 transition-all dark:border-neutral-800 dark:bg-neutral-900/50 sm:sticky sm:top-0 sm:px-16'>
         <IconLogo className='h-10 w-10' />
         <h3 className='max-w-sm truncate text-lg font-medium'>{title}</h3>
       </div>
-      <Form form={form} onSubmit={form.handleSubmit(handleSubmit)} className='bg-neutral-50 dark:bg-darker'>
+      <Form form={form} onSubmit={form.handleSubmit(handleSubmit)} className='bg-neutral-50 dark:bg-neutral-950'>
         <div className='space-y-6 p-6 sm:px-16'>
           <Form.Input
             type='url'
@@ -154,7 +154,7 @@ export function CreateLinkDialogBase({
                 form.setValue('key', RandomKey())
               }}
             >
-              <Shuffle className='h-4 w-4 stroke-2' />
+              <ShuffleIcon className='h-4 w-4 stroke-2' />
               <span>Randomize</span>
             </Button>
           </Form.Input>
@@ -162,7 +162,7 @@ export function CreateLinkDialogBase({
         <div className='relative flex items-center px-6 py-2 sm:px-16'>
           <Separator className='relative'>
             <span className='absolute inset-0 flex items-center justify-center'>
-              <p className='bg-neutral-50 px-2 text-sm text-neutral-500 dark:bg-darker dark:text-neutral-400'>
+              <p className='bg-neutral-50 px-2 text-sm text-neutral-500 dark:bg-neutral-950 dark:text-neutral-400'>
                 Optional
               </p>
             </span>
@@ -178,7 +178,7 @@ export function CreateLinkDialogBase({
             render={({ field }) => <Textarea {...field} />}
           />
         </div>
-        <div className='z-10 border-t border-neutral-300 bg-neutral-50 p-6 transition-all dark:border-neutral-800 dark:bg-darker  sm:sticky sm:bottom-0 sm:px-16'>
+        <div className='z-10 border-t border-neutral-300 bg-neutral-50 p-6 transition-all dark:border-neutral-800 dark:bg-neutral-950  sm:sticky sm:bottom-0 sm:px-16'>
           <Button loading={isSubmitting} className='w-full'>
             {actionLabel}
           </Button>

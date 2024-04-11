@@ -5,13 +5,38 @@ import useSWRMutate from 'swr/mutation'
 import useLocalStorage from 'use-local-storage-state'
 import { ZodError } from 'zod'
 import { toast } from 'sonner'
-import { Link as IconLink, Send } from 'iconoir-react'
+import { SendHorizonalIcon } from 'lucide-react'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { DestinationSchema } from '@/utils/schemas'
 import { LINKS_DATA_KEY, MAX_PUBLIC_LINKS } from '@/config/constants'
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
 import type { LinkRow } from '@/types/tables'
+
+const LinkIcon = (props: React.SVGAttributes<SVGSVGElement>) => (
+  <svg
+    viewBox='0 0 24 24'
+    width={24}
+    height={24}
+    fill='none'
+    strokeWidth={2}
+    xmlns='http://www.w3.org/2000/svg'
+    {...props}
+  >
+    <path
+      stroke='currentColor'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M14 11.998C14 9.506 11.683 7 8.857 7H7.143C4.303 7 2 9.238 2 11.998c0 2.378 1.71 4.368 4 4.873a5.3 5.3 0 0 0 1.143.124'
+    />
+    <path
+      stroke='currentColor'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M10 11.998c0 2.491 2.317 4.997 5.143 4.997h1.714c2.84 0 5.143-2.237 5.143-4.997 0-2.379-1.71-4.37-4-4.874A5.304 5.304 0 0 0 16.857 7'
+    />
+  </svg>
+)
 
 export function CreatePublicLinkForm() {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -57,9 +82,9 @@ export function CreatePublicLinkForm() {
         required
         type='url'
         ref={inputRef}
-        icon={IconLink}
+        icon={LinkIcon}
         name='destination'
-        className='shadow-md dark:bg-neutral-900'
+        className='h-auto py-2 pr-20 shadow-md dark:bg-neutral-900'
         placeholder='Shorten your link'
         disabled={hasReachedMaxPublicLinks}
         rightSection={
@@ -69,8 +94,8 @@ export function CreatePublicLinkForm() {
             size='icon'
             variant='outline'
             aria-label='Create public link'
-            className='h-7 w-7 dark:bg-neutral-800 dark:hover:bg-neutral-700/90'
-            icon={<Send className='h-4 w-4' />}
+            className='h-7 w-7 bg-transparent text-neutral-400 hover:border-neutral-900 dark:bg-neutral-800 dark:text-neutral-500 dark:hover:border-neutral-50'
+            icon={<SendHorizonalIcon className='h-4 w-4' />}
           />
         }
       />

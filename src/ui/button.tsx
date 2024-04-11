@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { forwardRef } from 'react'
-import { SystemRestart } from 'iconoir-react'
+import { LoaderIcon } from 'lucide-react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/utils/cn'
 
@@ -50,7 +50,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(buttonVariants({ variant, size, className }))}
         {...props}
       >
-        {(loading || icon) && (loading ? <SystemRestart className='animate-spin' /> : icon)}
+        {(loading || icon) && (loading ? <LoaderIcon className='animate-spin' /> : icon)}
         {children}
       </button>
     )

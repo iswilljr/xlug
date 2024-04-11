@@ -4,26 +4,33 @@ import useLocalStorage from 'use-local-storage-state'
 import { toast } from 'sonner'
 import { useCallback, useState } from 'react'
 import { useClipboard } from 'use-clipboard-copy'
-import { Copy, Expand, MoreVert, QrCode, Trash } from 'iconoir-react'
+import { CopyIcon, ExpandIcon, MoreVerticalIcon, QrCodeIcon, BarChartIcon, TrashIcon } from 'lucide-react'
 import { LINKS_DATA_KEY } from '@/config/constants'
 import { generateShortLink } from '@/utils/links'
 import { Button } from '@/ui/button'
 import { DropdownMenu } from '@/ui/dropdown-menu'
 import { QRCodeDialog } from '../dialogs/qr-code-dialog'
 import { ExpandedLinkDialog } from '../dialogs/expanded-link-dialog'
+import { LinkStatsDialog } from '../dialogs/link-stats-dialog'
 import type { LinkRow } from '@/types/tables'
 
 export interface PublicLinkMoreOptionsButtonProps {
   link: LinkRow
-  withDeleteOption?: boolean
+  disableStatsOption?: boolean
+  disableDeleteOption?: boolean
 }
 
-export function PublicLinkMoreOptionsButton({ link, withDeleteOption = true }: PublicLinkMoreOptionsButtonProps) {
+export function PublicLinkMoreOptionsButton({
+  link,
+  disableDeleteOption = false,
+  disableStatsOption = false,
+}: PublicLinkMoreOptionsButtonProps) {
   const [, setLinks] = useLocalStorage<LinkRow[]>(LINKS_DATA_KEY, {
     defaultValue: [],
     storageSync: false,
   })
   const [isExpandDialogOpen, setExpandDialogOpen] = useState(false)
+  const [isStatsDialogOpen, setStatsDialogOpen] = useState(false)
   const [isQRCodeDialogOpen, setQRCodeDialogOpen] = useState(false)
   const clipboard = useClipboard()
 
@@ -49,23 +56,30 @@ export function PublicLinkMoreOptionsButton({ link, withDeleteOption = true }: P
         items={[
           {
             label: 'Expand',
-            icon: <Expand className='h-4 w-4' />,
+            icon: <ExpandIcon className='h-4 w-4' />,
             onClick: () => setExpandDialogOpen(true),
           },
           {
-            label: 'Copy Link',
-            icon: <Copy className='h-4 w-4' />,
+            label: 'Stats',
+            disabled: disableStatsOption,
+            icon: <BarChartIcon className='h-4 w-4' />,
+            shortcut: <p className='rounded-full bg-sky-500 px-2 py-0.5 text-[10px] font-bold text-white'>New</p>,
+            onClick: () => setStatsDialogOpen(true),
+          },
+          {
+            label: 'Copy',
+            icon: <CopyIcon className='h-4 w-4' />,
             onClick: copyAction,
           },
           {
             label: 'Qr Code',
-            icon: <QrCode className='h-4 w-4' />,
+            icon: <QrCodeIcon className='h-4 w-4' />,
             onClick: () => setQRCodeDialogOpen(true),
           },
           {
             label: 'Delete',
-            disabled: !withDeleteOption,
-            icon: <Trash className='h-4 w-4' />,
+            disabled: disableDeleteOption,
+            icon: <TrashIcon className='h-4 w-4' />,
             className:
               'text-red-500 focus:text-red-500 dark:text-red-400 dark:focus:text-red-300 dark:focus:bg-red-800',
             onClick: deleteAction,
@@ -73,12 +87,13 @@ export function PublicLinkMoreOptionsButton({ link, withDeleteOption = true }: P
         ]}
         trigger={
           <Button size='icon' variant='ghost' aria-label='Open more options menu' className='w-auto px-1'>
-            <MoreVert className='h-5 w-5' />
+            <MoreVerticalIcon className='h-5 w-5' />
           </Button>
         }
       />
       <QRCodeDialog open={isQRCodeDialogOpen} onOpenChange={setQRCodeDialogOpen} link={link} />
       <ExpandedLinkDialog open={isExpandDialogOpen} onOpenChange={setExpandDialogOpen} link={link} />
+      <LinkStatsDialog open={isStatsDialogOpen} onOpenChange={setStatsDialogOpen} link={link} />
     </>
   )
 }

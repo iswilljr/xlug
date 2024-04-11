@@ -47,6 +47,12 @@ export const LinkSchema = z.object({
   description: DescriptionSchema,
 })
 
+export const PublicLinkSchema = z.object({
+  key: KeySchema.optional(),
+  destination: DestinationSchema,
+  description: DescriptionSchema.optional(),
+})
+
 export const EditLinkSchema = LinkSchema.partial()
 
 export const LinkRowSchema = LinkSchema.extend({
@@ -61,5 +67,8 @@ export const LinkRowSchema = LinkSchema.extend({
     }
   }),
 })
+
+export const TabEnumSchema = z.enum(['clicks', 'browser', 'city', 'country', 'device', 'os', 'referrer'])
+export const IntervalEnumSchema = z.enum(['1h', '24h', '7d', '30d', '90d', 'all'])
 
 export const RandomKey = customAlphabet('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', 7)

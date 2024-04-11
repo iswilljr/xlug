@@ -5,7 +5,6 @@ import useSWRMutate from 'swr/mutation'
 import { mutate } from 'swr'
 import { toast } from 'sonner'
 import { useCallback } from 'react'
-import { LINKS_DATA_KEY } from '@/config/constants'
 import { useWithinDrawer } from '@/hooks/use-within-drawer'
 import { CreateLinkDialogBase } from './_base/create-link-dialog-base'
 import type { Link } from '@/utils/schemas'
@@ -26,7 +25,7 @@ export function CreateLinkDialog({ initialValues, open, trigger, onOpenChange }:
   const createLink = useCallback(
     async (data: Link) => {
       await create(data)
-      await mutate(LINKS_DATA_KEY)
+      await mutate('/api/links')
       toast.success('Link created successfully.')
     },
     [create]

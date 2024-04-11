@@ -1,5 +1,9 @@
 import axios from 'redaxios'
 import { BASE_URL, HOST_ICON_PLACEHOLDER, ICON_FROM_HOST_URL } from '@/config/constants'
+import { userAgent, type NextRequest, type NextResponse } from 'next/server'
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import type { LinkRow } from '@/types/tables'
+import type { Database } from '@/types/supabase'
 
 interface ExistsData {
   exists: boolean
@@ -38,4 +42,21 @@ export async function validateLinkKey(key: string) {
   }
 
   return 'Key already exists'
+}
+
+export async function recordLinkVisit(link: Pick<LinkRow, 'id' | 'key'>, req: NextRequest, res: NextResponse) {
+  const ua = userAgent(req)
+  const supabase = createMiddlewareClient<Database>({ req, res })
+
+  await supabase.from('link_visits').insert({
+    key: link.key,
+    os: ua.os.name,
+    linkId: link.id,
+    city: req.geo?.city,
+    device: ua.device.type ?? 'desktop',
+    region: req.geo?.region,
+    browser: ua.browser.name,
+    country: req.geo?.country,
+    referrer: req.headers.get('referer') ?? 'direct',
+  })
 }

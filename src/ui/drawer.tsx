@@ -1,7 +1,7 @@
 'use client'
 
 import { forwardRef, useMemo } from 'react'
-import { Cancel } from 'iconoir-react'
+import { XIcon } from 'lucide-react'
 import { Drawer as DrawerPrimitive } from 'vaul'
 import { useClasses } from '@/hooks/use-classes'
 import { cn } from '@/utils/cn'
@@ -10,9 +10,8 @@ import { ScrollArea } from './scroll-area'
 import type { ClassNamesProps } from '@/types/classnames'
 
 type DrawerClasses = 'root' | 'trigger' | 'header' | 'title' | 'description' | 'content' | 'indicator' | 'footer'
-type DrawerPrimitiveRootProps = React.ComponentProps<typeof DrawerPrimitive.Root>
 
-type DrawerRootProps = DrawerPrimitiveRootProps &
+type DrawerRootProps = React.ComponentProps<typeof DrawerPrimitive.Root> &
   Omit<DrawerContentProps, 'onDrag' | 'title'> &
   ClassNamesProps<DrawerClasses> & {
     description?: React.ReactNode
@@ -49,7 +48,7 @@ const DrawerContent = forwardRef<React.ElementRef<typeof DrawerPrimitive.Content
               className='absolute right-2 top-2 z-20 min-h-fit rounded-full p-1 hover:bg-neutral-200 focus:ring-2 focus:ring-offset-2'
               size='icon'
             >
-              <Cancel className='h-5 w-5' />
+              <XIcon className='h-5 w-5' />
               <span className='sr-only'>Close</span>
             </Button>
           </DrawerPrimitive.Close>
