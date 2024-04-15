@@ -59,7 +59,7 @@ export function PublicLinksContainer() {
           <LinkSkeletonCard isPublicLink />
         </li>
       ))}
-      <li className='rounded-md border border-neutral-200 bg-white p-4 text-sm text-neutral-600 shadow-md transition-colors dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400'>
+      <li className='rounded-md border border-neutral-300 bg-white p-4 text-sm text-neutral-600 shadow-md transition-colors dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-400'>
         Note: You can only create 3 public links, delete one of the links or{' '}
         <Link href='/login' className='font-semibold text-neutral-900 hover:underline dark:text-neutral-200'>
           login
