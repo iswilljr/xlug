@@ -4,14 +4,10 @@ import { Slot } from '@radix-ui/react-slot'
 import { createContext, forwardRef, useContext, useId } from 'react'
 import { Controller, FormProvider, useFormContext } from 'react-hook-form'
 import { Label, type LabelProps } from '@/ui/label'
-import { useClasses } from '@/hooks/use-classes'
 import { cn } from '@/utils/cn'
 import { Input } from './input'
 import type { ControllerProps, FieldPath, FieldValues, UseFormReturn } from 'react-hook-form'
-import type { ClassNamesProps } from '@/types/classnames'
 import type { PartialFields } from '@/types/helpers'
-
-type FormInputClasses = 'root' | 'label' | 'control' | 'description' | 'message'
 
 interface FormProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -32,15 +28,14 @@ interface FormInputProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends PartialFields<React.ComponentProps<typeof FormField<TFieldValues, TName>>, 'render'>,
-    Omit<React.ComponentProps<typeof Input>, 'defaultValue' | 'name'>,
-    ClassNamesProps<FormInputClasses> {
+    Omit<React.ComponentProps<typeof Input>, 'defaultValue' | 'name'> {
   description?: React.ReactNode
   label?: React.ReactNode
   withError?: boolean
 }
 
-const FormFieldContext = createContext<FormFieldContextValue>({} as any)
-const FormItemContext = createContext<FormItemContextValue>({} as any)
+const FormFieldContext = createContext({} as unknown as FormFieldContextValue)
+const FormItemContext = createContext({} as unknown as FormItemContextValue)
 
 const useFormField = () => {
   const fieldContext = useContext(FormFieldContext)
@@ -179,7 +174,6 @@ const FormInput = <
 >({
   children,
   control,
-  classNames,
   className,
   defaultValue,
   description,
@@ -191,8 +185,6 @@ const FormInput = <
   withError = true,
   ...props
 }: FormInputProps<TFieldValues, TName>) => {
-  const classes = useClasses({ root: className }, classNames)
-
   return (
     <FormField
       control={control}
@@ -201,13 +193,13 @@ const FormInput = <
       defaultValue={defaultValue}
       shouldUnregister={shouldUnregister}
       render={({ field, fieldState, formState }) => (
-        <FormItem className={classes.root}>
-          {label && <FormLabel className={classes.label}>{label}</FormLabel>}
+        <FormItem className={className}>
+          {label && <FormLabel>{label}</FormLabel>}
           <FormControl {...props}>
             {render ? render({ field, fieldState, formState }) : <Input {...field} />}
           </FormControl>
-          {description && <FormDescription className={classes.description}>{description}</FormDescription>}
-          {withError && <FormMessage className={classes.message} />}
+          {description && <FormDescription>{description}</FormDescription>}
+          {withError && <FormMessage />}
           {children}
         </FormItem>
       )}
