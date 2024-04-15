@@ -1,30 +1,17 @@
 'use client'
 
-import { forwardRef, useMemo } from 'react'
+import { forwardRef } from 'react'
 import { XIcon } from 'lucide-react'
 import { Drawer as DrawerPrimitive } from 'vaul'
-import { useClasses } from '@/hooks/use-classes'
 import { cn } from '@/utils/cn'
 import { Button } from './button'
 import { ScrollArea } from './scroll-area'
-import type { ClassNamesProps } from '@/types/classnames'
-
-type DrawerClasses = 'root' | 'trigger' | 'header' | 'title' | 'description' | 'content' | 'indicator' | 'footer'
-
-type DrawerRootProps = React.ComponentProps<typeof DrawerPrimitive.Root> &
-  Omit<DrawerContentProps, 'onDrag' | 'title'> &
-  ClassNamesProps<DrawerClasses> & {
-    description?: React.ReactNode
-    footer?: React.ReactNode
-    title?: React.ReactNode
-    trigger?: React.ReactNode
-  }
 
 interface DrawerContentProps extends React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> {
   withCloseButton?: boolean
 }
 
-const DrawerRoot = DrawerPrimitive.Root
+const Drawer = DrawerPrimitive.Root
 const DrawerPortal = DrawerPrimitive.Portal
 const DrawerTrigger = DrawerPrimitive.Trigger
 
@@ -35,12 +22,13 @@ const DrawerContent = forwardRef<React.ElementRef<typeof DrawerPrimitive.Content
       <DrawerPrimitive.Content
         ref={ref}
         className={cn(
-          'fixed bottom-0 z-50 grid w-full gap-4 rounded-2xl rounded-b-none border border-neutral-200 bg-white px-6 pb-6 pt-2 shadow-lg outline-none [animation-duration:300ms] dark:border-neutral-800 dark:bg-neutral-950',
+          'drawer fixed bottom-0 z-50 grid w-full gap-0 overflow-hidden rounded-2xl rounded-b-none border border-neutral-300 bg-white p-0 pt-2 shadow-lg outline-none [animation-duration:300ms] dark:border-neutral-800 dark:bg-neutral-950 sm:max-w-sm sm:pt-0',
           className
         )}
         {...props}
       >
-        {children}
+        <DrawerIndicator />
+        <ScrollArea className='content'>{children}</ScrollArea>
         {withCloseButton && (
           <DrawerPrimitive.Close asChild>
             <Button
@@ -103,48 +91,6 @@ const DrawerTitle = forwardRef<
   />
 ))
 
-function Drawer({
-  children,
-  className,
-  classNames,
-  closeThreshold = 0.5,
-  description,
-  dismissible,
-  footer,
-  onDrag,
-  onOpenChange,
-  onRelease,
-  open,
-  shouldScaleBackground,
-  title,
-  trigger,
-  ...props
-}: DrawerRootProps) {
-  const classes = useClasses({ root: ['drawer', className], content: 'content' }, classNames)
-  const hasHeader = useMemo(() => Boolean(description ?? title), [description, title])
-
-  return (
-    <DrawerRoot {...{ closeThreshold, dismissible, onDrag, onOpenChange, onRelease, open, shouldScaleBackground }}>
-      {trigger && (
-        <DrawerTrigger className={classes.trigger} asChild>
-          {trigger}
-        </DrawerTrigger>
-      )}
-      <DrawerContent className={classes.root} {...props}>
-        <DrawerIndicator className={classes.indicator} />
-        {hasHeader && (
-          <DrawerHeader className={classes.header}>
-            {title && <DrawerTitle className={classes.title}>{title}</DrawerTitle>}
-            {description && <DrawerDescription className={classes.description}>{description}</DrawerDescription>}
-          </DrawerHeader>
-        )}
-        <ScrollArea className={classes.content}>{children}</ScrollArea>
-        {footer && <DrawerFooter className={classes.footer}>{footer}</DrawerFooter>}
-      </DrawerContent>
-    </DrawerRoot>
-  )
-}
-
 DrawerContent.displayName = DrawerPrimitive.Content.displayName
 DrawerDescription.displayName = DrawerPrimitive.Description.displayName
 DrawerFooter.displayName = 'DrawerFooter'
@@ -154,4 +100,4 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 DrawerPortal.displayName = DrawerPrimitive.Portal.displayName
 DrawerTitle.displayName = DrawerPrimitive.Title.displayName
 
-export { Drawer }
+export { Drawer, DrawerContent, DrawerTrigger, DrawerHeader, DrawerTitle, DrawerDescription, DrawerFooter }

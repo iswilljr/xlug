@@ -5,19 +5,10 @@ import useSWRMutate from 'swr/mutation'
 import { mutate } from 'swr'
 import { toast } from 'sonner'
 import { useCallback } from 'react'
-import { useWithinDrawer } from '@/hooks/use-within-drawer'
 import { CreateLinkDialogBase } from './_base/create-link-dialog-base'
 import type { Link } from '@/utils/schemas'
 
-interface CreateLinkDialogProps {
-  initialValues?: Link
-  open?: boolean
-  trigger?: React.ReactNode
-  onOpenChange?: (value: boolean) => void
-}
-
-export function CreateLinkDialog({ initialValues, open, trigger, onOpenChange }: CreateLinkDialogProps) {
-  const { modalOpen, onModalOpenChange } = useWithinDrawer({ open, onOpenChange })
+export function CreateLinkDialog() {
   const { trigger: create } = useSWRMutate('create-link', (_key, { arg }: { arg: Link }) =>
     axios.post(`/api/link/${arg.key}`, arg)
   )
@@ -31,13 +22,5 @@ export function CreateLinkDialog({ initialValues, open, trigger, onOpenChange }:
     [create]
   )
 
-  return (
-    <CreateLinkDialogBase
-      trigger={trigger}
-      open={modalOpen}
-      onSubmit={createLink}
-      onOpenChange={onModalOpenChange}
-      initialValues={initialValues}
-    />
-  )
+  return <CreateLinkDialogBase onSubmit={createLink} />
 }

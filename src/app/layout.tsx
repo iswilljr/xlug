@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import { inter } from '@/utils/fonts'
 import { CommandMenu } from '@/components/command-menu'
+import { ModalProvider } from '@/components/dialogs'
 import { generateBaseMetadata } from '@/utils/metadata'
 import { SessionProvider } from '@/providers/session'
 import { TimeZoneProvider } from '@/store/stats-interval'
@@ -24,6 +25,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
               {children}
               <Toaster />
               <CommandMenu />
+              <ModalProvider />
               <TimeZoneProvider />
             </SWRProvider>
           </ThemeProvider>

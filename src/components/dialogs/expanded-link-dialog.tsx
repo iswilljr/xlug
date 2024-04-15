@@ -3,19 +3,16 @@
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { generateHostIconFromUrl } from '@/utils/links'
-import { Dialog } from '@/ui/dialog'
+import { formatDateToNow } from '@/utils/dates'
+import { ModalContent } from '@/ui/modal'
 import { Separator } from '@/ui/separator'
 import type { LinkRow } from '@/types/tables'
-import { formatDateToNow } from '@/utils/dates'
 
 export interface QRCodeDialogProps {
-  open: boolean
   link: Omit<LinkRow, 'id' | 'userId'>
-  trigger?: React.ReactNode
-  onOpenChange: (value: boolean) => void
 }
 
-export function ExpandedLinkDialog({ open, link, trigger, onOpenChange }: QRCodeDialogProps) {
+export function ExpandedLinkDialog({ link }: QRCodeDialogProps) {
   const data = useMemo(
     () => ({
       timeAgo: formatDateToNow(link.createdAt),
@@ -26,13 +23,7 @@ export function ExpandedLinkDialog({ open, link, trigger, onOpenChange }: QRCode
   )
 
   return (
-    <Dialog
-      open={open}
-      trigger={trigger}
-      withCloseButton={false}
-      onOpenChange={onOpenChange}
-      className='gap-0 overflow-hidden p-0 pt-2 dark:bg-neutral-950 sm:max-w-sm sm:pt-0'
-    >
+    <ModalContent withCloseButton={false}>
       <div className='w-full min-w-0 items-center p-4 text-center dark:bg-neutral-900/50'>
         <Image alt={link.key} src={data.logo} width={40} height={40} className='mx-auto h-10 w-10 rounded-full' />
         <h2 className='line-clamp-1 break-all text-lg font-semibold'>{link.key}</h2>
@@ -47,6 +38,6 @@ export function ExpandedLinkDialog({ open, link, trigger, onOpenChange }: QRCode
           {link.description ?? 'No description provided.'}
         </p>
       </div>
-    </Dialog>
+    </ModalContent>
   )
 }

@@ -7,10 +7,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/ui/button'
-import { Dialog } from '@/ui/dialog'
 import { Form } from '@/ui/form'
 import { Separator } from '@/ui/separator'
 import { Textarea } from '@/ui/textarea'
+import { ModalContent } from '@/ui/modal'
+import { popAllModals } from '@/components/dialogs'
 import { siteConfig } from '@/config/site'
 import { validateLinkKey } from '@/utils/links'
 import { type Link, LinkSchema, RandomKey } from '@/utils/schemas'
@@ -20,10 +21,7 @@ import { IconLogo } from '../../logo'
 export interface CreateLinkDialogBaseProps {
   actionLabel?: string
   initialValues?: Link
-  open: boolean
   title?: string
-  trigger?: React.ReactNode
-  onOpenChange: (value: boolean) => void
   onSubmit: (data: Link) => Promise<any>
 }
 
@@ -32,10 +30,7 @@ const resolver = zodResolver(LinkSchema)
 export function CreateLinkDialogBase({
   actionLabel = 'Create link',
   initialValues,
-  open,
   title = 'Create a new link',
-  trigger,
-  onOpenChange,
   onSubmit,
 }: CreateLinkDialogBaseProps) {
   const isSubmittingRef = useRef(false)
@@ -74,7 +69,8 @@ export function CreateLinkDialogBase({
         if (!valid) return
 
         await onSubmit(data)
-        onOpenChange(false)
+
+        popAllModals()
 
         form.reset()
       } catch (error) {
@@ -84,7 +80,7 @@ export function CreateLinkDialogBase({
         isSubmittingRef.current = false
       }
     },
-    [form, onOpenChange, onSubmit, validateKey]
+    [form, onSubmit, validateKey]
   )
 
   useEffect(() => {
@@ -113,13 +109,8 @@ export function CreateLinkDialogBase({
   }, [destination, form, initialValues])
 
   return (
-    <Dialog
-      open={open}
-      trigger={trigger}
-      onOpenChange={onOpenChange}
-      className="gap-0 overflow-hidden bg-white p-0 pt-2 dark:bg-neutral-950 sm:pt-0 sm:[&_[data-orientation='vertical']]:!hidden"
-    >
-      <div className='z-10 flex flex-col items-center justify-center space-y-3 border-b border-neutral-200 bg-white p-6 transition-all dark:border-neutral-800 dark:bg-neutral-900/50 sm:sticky sm:top-0 sm:px-16'>
+    <ModalContent className='sm:max-w-lg sm:[&_[data-orientation="vertical"]]:!hidden'>
+      <div className='z-10 flex flex-col items-center justify-center space-y-3 border-b border-neutral-300 bg-white p-6 transition-all dark:border-neutral-800 dark:bg-neutral-900/50 sm:sticky sm:top-0 sm:px-16'>
         <IconLogo className='h-10 w-10' />
         <h3 className='max-w-sm truncate text-lg font-medium'>{title}</h3>
       </div>
@@ -142,13 +133,12 @@ export function CreateLinkDialogBase({
             control={form.control}
             placeholder={siteConfig.examples.key}
             onChange={e => setKey(e.target.value)}
-            classNames={{ label: 'flex items-center gap-1' }}
           >
             <Button
               type='button'
               variant='ghost'
               disabled={isSubmitting}
-              className='absolute -top-2 right-0 flex min-h-fit items-center gap-1 p-0 text-sm text-neutral-500 transition-colors hover:bg-transparent hover:text-neutral-800 disabled:bg-transparent disabled:ring-0 dark:text-neutral-400 dark:hover:bg-transparent'
+              className='absolute -top-0 right-0 flex min-h-fit items-center gap-1 p-0 text-sm text-neutral-500 transition-colors hover:bg-transparent hover:text-neutral-800 disabled:bg-transparent disabled:ring-0 dark:text-neutral-400 dark:hover:bg-transparent'
               onClick={() => {
                 form.clearErrors('key')
                 form.setValue('key', RandomKey())
@@ -184,6 +174,6 @@ export function CreateLinkDialogBase({
           </Button>
         </div>
       </Form>
-    </Dialog>
+    </ModalContent>
   )
 }
