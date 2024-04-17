@@ -15,6 +15,7 @@ export interface Database {
           linkId: string
           os: string
           referrer: string
+          referrerURL: string
           region: string
         }
         Insert: {
@@ -28,6 +29,7 @@ export interface Database {
           linkId: string
           os?: string
           referrer?: string
+          referrerURL?: string
           region?: string
         }
         Update: {
@@ -41,6 +43,7 @@ export interface Database {
           linkId?: string
           os?: string
           referrer?: string
+          referrerURL?: string
           region?: string
         }
         Relationships: [

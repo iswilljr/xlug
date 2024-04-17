@@ -4,7 +4,7 @@ import useSWR from 'swr'
 import axios from 'redaxios'
 import useLocalStorage from 'use-local-storage-state'
 import { toast } from 'sonner'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { useClipboard } from 'use-clipboard-copy'
 import { CopyIcon, ExpandIcon, MoreVerticalIcon, QrCodeIcon, BarChartIcon, TrashIcon } from 'lucide-react'
 import { LINKS_DATA_KEY, PUBLIC_DEFAULT_LINK_KEY } from '@/config/constants'
@@ -12,10 +12,8 @@ import { generateShortLink } from '@/utils/links'
 import { formatHumanReadable } from '@/utils/formatter'
 import { Button } from '@/ui/button'
 import { DropdownMenu } from '@/ui/dropdown-menu'
+import { pushModal } from '@/components/dialogs'
 import { Skeleton } from '@/ui/skeleton'
-import { QRCodeDialog } from '../dialogs/qr-code-dialog'
-import { ExpandedLinkDialog } from '../dialogs/expanded-link-dialog'
-import { LinkStatsDialog } from '../dialogs/link-stats-dialog'
 import type { LinkRow, StatsRow } from '@/types/tables'
 
 export interface PublicLinkMoreOptionsButtonProps {
@@ -33,9 +31,6 @@ export function PublicLinkMoreOptionsButton({
     defaultValue: [],
     storageSync: false,
   })
-  const [isExpandDialogOpen, setExpandDialogOpen] = useState(false)
-  const [isStatsDialogOpen, setStatsDialogOpen] = useState(false)
-  const [isQRCodeDialogOpen, setQRCodeDialogOpen] = useState(false)
   const clipboard = useClipboard()
 
   const copyAction = useCallback(() => {
@@ -66,17 +61,13 @@ export function PublicLinkMoreOptionsButton({
           {isLoading ? (
             <Skeleton className='h-7 w-20' />
           ) : (
-            <LinkStatsDialog
-              link={link}
-              open={isStatsDialogOpen}
-              onOpenChange={setStatsDialogOpen}
-              trigger={
-                <button className='inline-flex shrink-0 items-center gap-1 rounded-md bg-neutral-200/50 px-2 py-1 text-sm dark:bg-neutral-800/80'>
-                  <BarChartIcon className='size-4' />
-                  {`${formatHumanReadable(totalOfClicksData?.[0]?.value ?? 0)} Clicks`}
-                </button>
-              }
-            />
+            <button
+              onClick={() => pushModal('LinkStats', { link })}
+              className='inline-flex shrink-0 items-center gap-1 rounded-md bg-neutral-200/50 px-2 py-1 text-sm dark:bg-neutral-800/80'
+            >
+              <BarChartIcon className='size-4' />
+              {`${formatHumanReadable(totalOfClicksData?.[0]?.value ?? 0)} Clicks`}
+            </button>
           )}
         </>
       )}
@@ -86,14 +77,14 @@ export function PublicLinkMoreOptionsButton({
           {
             label: 'Expand',
             icon: <ExpandIcon className='h-4 w-4' />,
-            onClick: () => setExpandDialogOpen(true),
+            onClick: () => pushModal('ExpandedLink', { link }),
           },
           {
             label: 'Stats',
             disabled: disableStatsOption,
             icon: <BarChartIcon className='h-4 w-4' />,
             shortcut: <p className='rounded-full bg-sky-500 px-2 py-0.5 text-[10px] font-bold text-white'>New</p>,
-            onClick: () => setStatsDialogOpen(true),
+            onClick: () => pushModal('LinkStats', { link }),
           },
           {
             label: 'Copy',
@@ -103,7 +94,7 @@ export function PublicLinkMoreOptionsButton({
           {
             label: 'Qr Code',
             icon: <QrCodeIcon className='h-4 w-4' />,
-            onClick: () => setQRCodeDialogOpen(true),
+            onClick: () => pushModal('QRCode', { link }),
           },
           {
             label: 'Delete',
@@ -120,9 +111,6 @@ export function PublicLinkMoreOptionsButton({
           </Button>
         }
       />
-      <QRCodeDialog open={isQRCodeDialogOpen} onOpenChange={setQRCodeDialogOpen} link={link} />
-      <ExpandedLinkDialog open={isExpandDialogOpen} onOpenChange={setExpandDialogOpen} link={link} />
-      <LinkStatsDialog open={isStatsDialogOpen} onOpenChange={setStatsDialogOpen} link={link} />
     </div>
   )
 }

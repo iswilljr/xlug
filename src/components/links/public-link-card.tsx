@@ -22,7 +22,7 @@ export function PublicLinkCard({ link, ...props }: PublicLinkCardProps) {
   )
 
   return (
-    <div className='flex w-full items-center gap-2 rounded-lg border border-neutral-200 bg-white p-4 shadow-md transition-colors dark:border-neutral-800 dark:bg-neutral-900'>
+    <div className='flex w-full items-center gap-2 rounded-lg border border-neutral-300 bg-white p-4 shadow-md transition-colors dark:border-neutral-800 dark:bg-neutral-900'>
       <Image
         width={40}
         height={40}

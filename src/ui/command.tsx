@@ -4,7 +4,7 @@ import { forwardRef } from 'react'
 import { SearchIcon } from 'lucide-react'
 import { Command as CommandPrimitive } from 'cmdk'
 import { cn } from '@/utils/cn'
-import { Dialog } from '@/ui/dialog'
+import { Dialog, DialogContent } from '@/ui/dialog'
 
 interface CommandDialogProps extends React.ComponentProps<typeof Dialog> {}
 
@@ -22,12 +22,14 @@ const Command = forwardRef<
   />
 ))
 
-const CommandDialog = ({ children, className, withCloseButton = false, ...props }: CommandDialogProps) => {
+const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
-    <Dialog className={cn('gap-0 overflow-hidden p-0 pt-2 sm:pt-0')} withCloseButton={withCloseButton} {...props}>
-      <Command className='[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-neutral-500 dark:[&_[cmdk-group-heading]]:text-neutral-400 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5'>
-        {children}
-      </Command>
+    <Dialog {...props}>
+      <DialogContent className={cn('gap-0 overflow-hidden p-0 sm:max-w-lg sm:pt-0')} withCloseButton={false}>
+        <Command className='[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-neutral-500 dark:[&_[cmdk-group-heading]]:text-neutral-400 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5'>
+          {children}
+        </Command>
+      </DialogContent>
     </Dialog>
   )
 }

@@ -15,7 +15,7 @@ export default function Login({ searchParams }: DefaultPageProps) {
     : searchParams.redirectTo
 
   return (
-    <section className='w-full max-w-md overflow-hidden rounded-2xl border border-neutral-200 shadow-lg dark:border-neutral-800'>
+    <section className='w-full max-w-md overflow-hidden rounded-2xl border border-neutral-300 shadow-lg dark:border-neutral-800'>
       <div className='flex flex-col items-center justify-center space-y-1 bg-white px-6 py-8 text-center dark:bg-neutral-950 sm:px-16'>
         <Link href='/' aria-label='Go to the home page'>
           <IconLogo className='h-10 w-10' />

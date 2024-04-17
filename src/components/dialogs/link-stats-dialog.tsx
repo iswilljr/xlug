@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import { useMemo } from 'react'
 import { CalendarClockIcon, CalendarIcon, ClockIcon } from 'lucide-react'
@@ -7,15 +9,12 @@ import { LocationStats } from '@/components/stats/locations'
 import { ReferrerStats } from '@/components/stats/referrers'
 import { generateHostIconFromUrl } from '@/utils/links'
 import { useStatsInterval } from '@/store/stats-interval'
-import { Dialog } from '@/ui/dialog'
+import { ModalContent } from '@/ui/modal'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/ui/select'
 import type { LinkRow } from '@/types/tables'
 
 export interface LinkStatsDialogProps {
   link: LinkRow
-  open?: boolean
-  trigger?: React.ReactNode
-  onOpenChange?: (value: boolean) => void
 }
 
 const intervalItems = [
@@ -27,7 +26,7 @@ const intervalItems = [
   { label: 'All time', value: 'all', icon: CalendarClockIcon },
 ]
 
-export function LinkStatsDialog({ link, open, trigger, onOpenChange }: LinkStatsDialogProps) {
+export function LinkStatsDialog({ link }: LinkStatsDialogProps) {
   const { interval, setInterval } = useStatsInterval()
 
   const data = useMemo(
@@ -39,14 +38,8 @@ export function LinkStatsDialog({ link, open, trigger, onOpenChange }: LinkStats
   )
 
   return (
-    <Dialog
-      open={open}
-      trigger={trigger}
-      withCloseButton={false}
-      onOpenChange={onOpenChange}
-      className='gap-0 overflow-hidden p-0 pt-2 dark:bg-neutral-950 sm:max-w-5xl sm:pt-0'
-    >
-      <div className='flex items-center justify-between gap-2 border-b border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900/50'>
+    <ModalContent className='sm:max-w-5xl' withCloseButton={false}>
+      <div className='flex items-center justify-between gap-2 border-b border-neutral-300 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900/50'>
         <div className='flex items-center gap-1'>
           <Image alt={data.alt} src={data.logo} width={40} height={40} className='mx-auto size-8 rounded-full' />
           <h3 className='max-w-sm truncate text-lg font-medium'>{link.key}</h3>
@@ -73,6 +66,6 @@ export function LinkStatsDialog({ link, open, trigger, onOpenChange }: LinkStats
         <LocationStats link={link} />
         <ReferrerStats link={link} />
       </div>
-    </Dialog>
+    </ModalContent>
   )
 }

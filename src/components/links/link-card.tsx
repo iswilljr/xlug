@@ -1,15 +1,15 @@
 'use client'
 
 import Image from 'next/image'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { BarChartIcon } from 'lucide-react'
 import { Separator } from '@/ui/separator'
 import { formatDateToNow } from '@/utils/dates'
 import { generateHostIconFromUrl, generateShortLink, prettyUrl } from '@/utils/links'
 import { useLinksState } from '@/store/links'
 import { formatHumanReadable } from '@/utils/formatter'
-import { LinkStatsDialog } from '../dialogs/link-stats-dialog'
 import { LinkMoreOptionsButton } from './more-options'
+import { pushModal } from '../dialogs'
 import type { LinkRow } from '@/types/tables'
 
 interface LinkCardProps {
@@ -19,7 +19,6 @@ interface LinkCardProps {
 export function LinkCard({ link }: LinkCardProps) {
   const totalOfClicks = useLinksState(s => s.totalOfClicks)
 
-  const [open, onOpenChange] = useState(false)
   const data = useMemo(
     () => ({
       dateTime: new Date(link.createdAt).toISOString(),
@@ -32,7 +31,7 @@ export function LinkCard({ link }: LinkCardProps) {
   )
 
   return (
-    <div className='grid max-w-full items-start gap-2 rounded-lg border border-neutral-200 bg-white p-4 shadow-md transition-colors dark:border-neutral-800 dark:bg-neutral-900'>
+    <div className='grid max-w-full items-start gap-2 rounded-lg border border-neutral-300 bg-white p-4 shadow-md transition-colors dark:border-neutral-800 dark:bg-neutral-900'>
       <div className='flex w-full min-w-0 items-center gap-4'>
         <div className='flex flex-shrink-0 items-center'>
           <Image
@@ -64,17 +63,13 @@ export function LinkCard({ link }: LinkCardProps) {
           </div>
         </div>
         <div className='flex flex-shrink-0 items-center justify-center gap-1'>
-          <LinkStatsDialog
-            trigger={
-              <button className='inline-flex shrink-0 items-center gap-1 rounded-md bg-neutral-200/50 px-2 py-1 text-sm dark:bg-neutral-800/80'>
-                <BarChartIcon className='size-4' />
-                {`${formatHumanReadable(totalOfClicks[link.key]?.value ?? 0)} Clicks`}
-              </button>
-            }
-            open={open}
-            onOpenChange={onOpenChange}
-            link={link}
-          />
+          <button
+            onClick={() => pushModal('LinkStats', { link })}
+            className='inline-flex shrink-0 items-center gap-1 rounded-md bg-neutral-200/50 px-2 py-1 text-sm dark:bg-neutral-800/80'
+          >
+            <BarChartIcon className='size-4' />
+            {`${formatHumanReadable(totalOfClicks[link.key]?.value ?? 0)} Clicks`}
+          </button>
           <LinkMoreOptionsButton link={link} />
         </div>
       </div>
