@@ -141,7 +141,7 @@ const DropdownMenu = ({
   )
 
   return (
-    <Drawer open={isMobile} onOpenChange={onModalOpenChange}>
+    <Drawer open={isMobile && modalOpen} onOpenChange={onModalOpenChange}>
       <DropdownMenuRoot modal={!isMobile} onOpenChange={onModalOpenChange} open={modalOpen}>
         {trigger && <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>}
 
