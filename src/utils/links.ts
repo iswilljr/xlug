@@ -13,12 +13,24 @@ export function generateShortLink(key: string) {
   return new URL(`/${key}`, BASE_URL).toString()
 }
 
-export function prettyUrl(url: string) {
+interface PrettyUrlOptions {
+  domainOnly?: boolean
+}
+
+export function prettyUrl(url: string, options: PrettyUrlOptions = {}) {
+  if (options.domainOnly) {
+    url = new URL('/', url).toString()
+  }
+
   return url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 }
 
 export function generateHostIconFromUrl(url: string | URL) {
   try {
+    if (!url.toString().startsWith('http')) {
+      url = `https://${url.toString()}`
+    }
+
     const host = new URL(url).host
     return `${ICON_FROM_HOST_URL}/${host}?fallback=${HOST_ICON_PLACEHOLDER}`
   } catch (error) {
@@ -46,6 +58,7 @@ export async function validateLinkKey(key: string) {
 
 export async function recordLinkVisit(link: Pick<LinkRow, 'id' | 'key'>, req: NextRequest, res: NextResponse) {
   const ua = userAgent(req)
+  const referrer = req.headers.get('referer')
   const supabase = createMiddlewareClient<Database>({ req, res })
 
   await supabase.from('link_visits').insert({
@@ -57,6 +70,7 @@ export async function recordLinkVisit(link: Pick<LinkRow, 'id' | 'key'>, req: Ne
     region: req.geo?.region,
     browser: ua.browser.name,
     country: req.geo?.country,
-    referrer: req.headers.get('referer') ?? 'direct',
+    referrer: referrer ? prettyUrl(referrer, { domainOnly: true }) : 'direct',
+    referrerURL: referrer ?? 'direct',
   })
 }
