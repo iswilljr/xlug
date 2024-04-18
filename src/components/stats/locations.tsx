@@ -33,6 +33,7 @@ export function LocationStats({ link }: LocationStatsProps) {
   const pages = useMemo(
     () =>
       data?.map(location => ({
+        key: `${location.country ?? 'X'}-${location.name}`,
         name: countryLists[location.name as CountryCode] ?? location.name,
         value: location.value,
         icon: function Icon() {
