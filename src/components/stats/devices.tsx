@@ -7,7 +7,7 @@ import { useMemo, useState } from 'react'
 import { Button } from '@/ui/button'
 import { cn } from '@/utils/cn'
 import { useStatsInterval } from '@/store/stats-interval'
-import { HOST_ICON_PLACEHOLDER } from '@/config/constants'
+import { HOST_ICON_PLACEHOLDER, STAT_IMAGES_URL } from '@/config/constants'
 import { StatsBarList } from './bar-list'
 import type { LinkRow, StatsRow } from '@/types/tables'
 import type { TabEnumSchema } from '@/utils/schemas'
@@ -52,14 +52,14 @@ export function DeviceStats({ link }: DeviceStatsProps) {
     <div className='rounded-lg border border-neutral-300 shadow-md dark:border-neutral-800'>
       <div className='flex items-center justify-between border-b border-neutral-300 p-4 dark:border-neutral-800'>
         <p className='font-medium'>Devices</p>
-        <ul className='inline-flex h-9 items-center justify-center rounded-lg bg-neutral-100 p-1 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400'>
+        <ul className='inline-flex h-9 items-center justify-center rounded-lg bg-neutral-200 p-1 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400'>
           {deviceTabs.map(tab => (
             <li key={tab.value}>
               <Button
                 variant='ghost'
                 size='sm'
                 className={cn(
-                  'relative min-h-0 px-3 py-1 text-sm',
+                  'relative min-h-0 px-3 py-1 text-sm hover:bg-transparent',
                   tab.value === selectedTab && 'text-neutral-950 dark:text-white'
                 )}
                 onClick={() => setSelectedTab(tab.value)}
@@ -84,7 +84,7 @@ export function DeviceStats({ link }: DeviceStatsProps) {
 
 const defaults: Record<string, string> = {
   unknown: HOST_ICON_PLACEHOLDER,
-  desktop: 'https://uaparser.js.org/images/types/default.png',
+  desktop: `${STAT_IMAGES_URL}/images/types/default.png`,
   Android: '/icons/android.png',
   'Mac OS': '/icons/macos.png',
   Linux: '/icons/linux.png',
@@ -100,9 +100,7 @@ const types: Record<string, string> = {
 function DeviceIcon({ display, tab }: { display: string; tab: string }) {
   const type = useMemo(() => types[tab], [tab])
 
-  const [src, setSrc] = useState(
-    defaults[display] ?? `https://uaparser.js.org/images/${type}/${display.toLowerCase()}.png`
-  )
+  const [src, setSrc] = useState(defaults[display] ?? `${STAT_IMAGES_URL}/images/${type}/${display.toLowerCase()}.png`)
 
   return (
     <Image
