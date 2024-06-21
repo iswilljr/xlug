@@ -11,7 +11,7 @@ const nextConfig = {
         hostname: 'unavatar.io',
       },
       {
-        hostname: 'uaparser.js.org',
+        hostname: 'uaparser.dev',
       },
       {
         hostname: 'flag.vercel.app',

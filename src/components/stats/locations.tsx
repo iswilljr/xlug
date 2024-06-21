@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { useMemo, useState } from 'react'
 import { Button } from '@/ui/button'
 import { cn } from '@/utils/cn'
+import { STAT_IMAGES_URL } from '@/config/constants'
 import { useStatsInterval } from '@/store/stats-interval'
 import { StatsBarList } from './bar-list'
 import type { LinkRow, StatsRow } from '@/types/tables'
@@ -43,7 +44,7 @@ export function LocationStats({ link }: LocationStatsProps) {
                 alt={location.name}
                 src={
                   (location.country ?? location.name) === 'unknown'
-                    ? 'https://uaparser.js.org/images/browsers/default.png'
+                    ? `${STAT_IMAGES_URL}/images/browsers/default.png`
                     : `https://flag.vercel.app/m/${location.country ?? location.name}.svg`
                 }
                 width={20}
@@ -61,14 +62,14 @@ export function LocationStats({ link }: LocationStatsProps) {
       <div className='flex items-center justify-between border-b border-neutral-300 p-4 dark:border-neutral-800'>
         <p className='font-medium'>Locations</p>
 
-        <ul className='inline-flex h-9 items-center justify-center rounded-lg bg-neutral-100 p-1 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400'>
+        <ul className='inline-flex h-9 items-center justify-center rounded-lg bg-neutral-200 p-1 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400'>
           {locationTabs.map(tab => (
             <li key={tab.value}>
               <Button
                 variant='ghost'
                 size='sm'
                 className={cn(
-                  'relative min-h-0 px-3 py-1 text-sm',
+                  'relative min-h-0 px-3 py-1 text-sm hover:bg-transparent',
                   tab.value === selectedTab && 'text-neutral-950 dark:text-white'
                 )}
                 onClick={() => setSelectedTab(tab.value)}
