@@ -168,7 +168,7 @@ export function CreateLinkDialogBase({
             render={({ field }) => <Textarea {...field} />}
           />
         </div>
-        <div className='z-10 border-t border-neutral-300 bg-neutral-50 p-6 transition-all dark:border-neutral-800 dark:bg-neutral-950  sm:sticky sm:bottom-0 sm:px-16'>
+        <div className='z-10 border-t border-neutral-300 bg-neutral-50 p-6 transition-all dark:border-neutral-800 dark:bg-neutral-950 sm:sticky sm:bottom-0 sm:px-16'>
           <Button loading={isSubmitting} className='w-full'>
             {actionLabel}
           </Button>

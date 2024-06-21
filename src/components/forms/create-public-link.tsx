@@ -12,6 +12,7 @@ import { LINKS_DATA_KEY, MAX_PUBLIC_LINKS } from '@/config/constants'
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
 import type { LinkRow } from '@/types/tables'
+import { useTimeAgo } from '@/hooks/use-time-ago'
 
 const LinkIcon = (props: React.SVGAttributes<SVGSVGElement>) => (
   <svg
@@ -39,6 +40,7 @@ const LinkIcon = (props: React.SVGAttributes<SVGSVGElement>) => (
 )
 
 export function CreatePublicLinkForm() {
+  const timeAgo = useTimeAgo(new Date('2024-04-21T19:44:11.798Z'))
   const inputRef = useRef<HTMLInputElement>(null)
   const [isSubmitting, setSubmitting] = useState(false)
   const [links, setLinks] = useLocalStorage<LinkRow[]>(LINKS_DATA_KEY, { defaultValue: [] })
@@ -85,7 +87,7 @@ export function CreatePublicLinkForm() {
         icon={LinkIcon}
         name='destination'
         className='h-auto py-2 pr-20 shadow-md dark:bg-neutral-900'
-        placeholder='Shorten your link'
+        placeholder={`Shorten your link ${timeAgo}`}
         disabled={hasReachedMaxPublicLinks}
         rightSection={
           <Button

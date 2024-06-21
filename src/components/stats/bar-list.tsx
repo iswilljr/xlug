@@ -24,7 +24,7 @@ export function StatsLoader({ className }: { className?: string }) {
         className
       )}
     >
-      <LoaderIcon className='size-8 animate-spin ' />
+      <LoaderIcon className='size-8 animate-spin' />
       <p className='text-sm'>Loading...</p>
     </div>
   )
