@@ -2,7 +2,7 @@ import axios from 'redaxios'
 import { BASE_URL, HOST_ICON_PLACEHOLDER, ICON_FROM_HOST_URL } from '@/config/constants'
 import { userAgent, type NextRequest, type NextResponse } from 'next/server'
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { geolocation } from '@vercel/FUNCTIONS'
+import { geolocation } from '@vercel/functions'
 import type { LinkRow } from '@/types/tables'
 import type { Database } from '@/types/supabase'
 
