@@ -1,9 +1,18 @@
+import { Redis } from '@upstash/redis'
 import { NextResponse, type NextRequest, type NextFetchEvent } from 'next/server'
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { AUTH_PAGES, REDIRECT_ON_AUTH_PAGES } from '@/config/constants'
 import { KeySchema } from './schemas'
 import { recordLinkVisit } from './links'
 import type { Database } from '@/types/supabase'
+
+const redisUrl = process.env.REDIS_KV_REST_API_URL ?? ''
+const redisToken = process.env.REDIS_KV_REST_API_TOKEN ?? ''
+
+const redis = new Redis({
+  url: redisUrl,
+  token: redisToken,
+})
 
 export async function AppMiddleware(req: NextRequest, ev: NextFetchEvent) {
   const res = NextResponse.next()
@@ -57,6 +66,13 @@ export async function LinksMiddleware(req: NextRequest, ev: NextFetchEvent) {
     const supabase = createMiddlewareClient<Database>({ req, res })
     const key = KeySchema.parse(req.nextUrl.pathname.slice(1))
 
+    const cachedLink = await redis.get<{ id: string; key: string; destination: string }>(key)
+
+    if (cachedLink) {
+      ev.waitUntil(recordLinkVisit(cachedLink, req, res))
+      return NextResponse.redirect(cachedLink.destination)
+    }
+
     const { data } = await supabase
       .from('links')
       .select('id, key, destination')
@@ -66,7 +82,7 @@ export async function LinksMiddleware(req: NextRequest, ev: NextFetchEvent) {
 
     if (!data) throw Error('Link not found')
 
-    ev.waitUntil(recordLinkVisit(data, req, res))
+    ev.waitUntil(Promise.all([redis.set(key, data), recordLinkVisit(data, req, res)]))
 
     return NextResponse.redirect(data.destination)
   } catch (error) {
