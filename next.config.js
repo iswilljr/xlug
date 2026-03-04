@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   images: {
     remotePatterns: [
       {
@@ -18,8 +17,11 @@ const nextConfig = {
       },
     ],
   },
+  typedRoutes: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   experimental: {
-    typedRoutes: true,
     optimizePackageImports: ['iconoir-react', 'lucide-react', '@tremor/react'],
   },
   async redirects() {

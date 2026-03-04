@@ -9,10 +9,9 @@ export const metadata = generateBaseMetadata({
   description: 'Start shorting and managing long URLs.',
 })
 
-export default function Login({ searchParams }: DefaultPageProps) {
-  const redirectTo: string | null = Array.isArray(searchParams.redirectTo)
-    ? searchParams.redirectTo[0]
-    : searchParams.redirectTo
+export default async function Login({ searchParams }: DefaultPageProps) {
+  const params = await searchParams
+  const redirectTo: string | null = Array.isArray(params.redirectTo) ? params.redirectTo[0] : params.redirectTo
 
   return (
     <section className='w-full max-w-md overflow-hidden rounded-2xl border border-neutral-300 shadow-lg dark:border-neutral-800'>

@@ -10,7 +10,7 @@ export interface RouteHandlerOptions<P extends boolean, S extends boolean> {
 }
 
 interface RouteHandlerContext<Q extends Record<string, string>, P extends boolean, S extends boolean> {
-  params: Q
+  params: Promise<Q>
   session: P extends true ? Session : S extends true ? Session | null : never
 }
 

@@ -47,8 +47,8 @@ export function ClickStats({ link }: ClickStatsProps) {
   }, [data, interval])
 
   return (
-    <div className='l-800 sm:col-span-2'>
-      <div className='ex bbor or items-cenderrneutral-300efr-nal-300 flexct p 4 dark:border-neutral-800'>
+    <div className='rounded-lg border border-neutral-300 shadow-md dark:border-neutral-800 sm:col-span-2'>
+      <div className='flex items-center justify-between border-b border-neutral-300 p-4 dark:border-neutral-800'>
         <p className='font-medium'>Visits</p>
         <p className='text-xs font-medium uppercase text-neutral-400 dark:text-neutral-500'>Clicks</p>
       </div>
@@ -71,7 +71,6 @@ export function ClickStats({ link }: ClickStatsProps) {
               startEndOnly
               connectNulls
               showTooltip
-              xAxisLabel='24H Temperature Readout (Zurich)'
               yAxisWidth={50}
             />
           )}

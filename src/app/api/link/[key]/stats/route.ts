@@ -37,7 +37,10 @@ export const GET = routeHandler(
   async (_req, ctx) => {
     const supabase = createRouteHandlerClient<Database>({ cookies })
 
-    const isPublic = ctx?.params?.key === PUBLIC_DEFAULT_LINK_KEY
+    const ctxParams = await ctx.params
+    const key = ctxParams.key
+
+    const isPublic = key === PUBLIC_DEFAULT_LINK_KEY
 
     const timeZone = _req.nextUrl.searchParams.get('timeZone')
     const tabValue = TabEnumSchema.parse(_req.nextUrl.searchParams.get('tab') ?? 'clicks')
@@ -54,7 +57,7 @@ export const GET = routeHandler(
     const interval = getInterval()
 
     const params = {
-      key_param: ctx.params.key,
+      key_param: key,
       created_at_param: interval.toISOString(),
       ...(tabValue === 'clicks'
         ? {

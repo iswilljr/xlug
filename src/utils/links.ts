@@ -2,6 +2,7 @@ import axios from 'redaxios'
 import { BASE_URL, HOST_ICON_PLACEHOLDER, ICON_FROM_HOST_URL } from '@/config/constants'
 import { userAgent, type NextRequest, type NextResponse } from 'next/server'
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+import { geolocation } from '@vercel/FUNCTIONS'
 import type { LinkRow } from '@/types/tables'
 import type { Database } from '@/types/supabase'
 
@@ -61,15 +62,17 @@ export async function recordLinkVisit(link: Pick<LinkRow, 'id' | 'key'>, req: Ne
   const referrer = req.headers.get('referer')
   const supabase = createMiddlewareClient<Database>({ req, res })
 
+  const geo = geolocation(req)
+
   await supabase.from('link_visits').insert({
     key: link.key,
     os: ua.os.name,
     linkId: link.id,
-    city: req.geo?.city,
+    city: geo?.city,
     device: ua.device.type ?? 'desktop',
-    region: req.geo?.region,
+    region: geo?.region,
     browser: ua.browser.name,
-    country: req.geo?.country,
+    country: geo?.country,
     referrer: referrer ? prettyUrl(referrer, { domainOnly: true }) : 'direct',
     referrerURL: referrer ?? 'direct',
   })

@@ -5,7 +5,8 @@ import { LinksProvider } from '@/providers/links'
 import type { DefaultPageProps } from '@/types/params'
 
 export default async function Page({ searchParams }: DefaultPageProps) {
-  const queryParam = searchParams[FilterQueryParams.query]
+  const params = await searchParams
+  const queryParam = params[FilterQueryParams.query]
   const query = Array.isArray(queryParam) ? queryParam[0] : queryParam
 
   return (

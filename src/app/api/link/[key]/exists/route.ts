@@ -9,7 +9,10 @@ export const dynamic = 'force-dynamic'
 export const GET = routeHandler(async (_req, ctx) => {
   const supabase = createRouteHandlerClient<Database>({ cookies })
 
-  const { data } = await supabase.from('links').select('*').eq('key', ctx.params.key).maybeSingle().throwOnError()
+  const params = await ctx.params
+  const key = params.key
+
+  const { data } = await supabase.from('links').select('*').eq('key', key).maybeSingle().throwOnError()
 
   return NextResponse.json({ exists: data != null })
 })

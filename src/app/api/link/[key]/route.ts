@@ -38,7 +38,8 @@ export const POST = routeHandler(
 
 export const PATCH = routeHandler(
   async (req, ctx) => {
-    const key = KeySchema.safeParse(ctx.params.key)
+    const ctxParams = await ctx.params
+    const key = KeySchema.safeParse(ctxParams.key)
     if (!key.success) throw new CustomError('Invalid Key')
 
     const json = await req.json()
@@ -68,7 +69,8 @@ export const PATCH = routeHandler(
 
 export const DELETE = routeHandler(
   async (_req, ctx) => {
-    const key = KeySchema.safeParse(ctx.params.key)
+    const ctxParams = await ctx.params
+    const key = KeySchema.safeParse(ctxParams.key)
     if (!key.success) throw new CustomError('Invalid Key')
 
     const supabase = createRouteHandlerClient<Database>({ cookies })
