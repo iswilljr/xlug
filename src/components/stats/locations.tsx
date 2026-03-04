@@ -87,7 +87,7 @@ export function LocationStats({ link }: LocationStatsProps) {
           ))}
         </ul>
       </div>
-      <StatsBarList data={pages} loading={isLoading} />
+      <StatsBarList data={pages} color='purple' loading={isLoading} />
     </div>
   )
 }

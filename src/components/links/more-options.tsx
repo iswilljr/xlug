@@ -45,7 +45,7 @@ export function LinkMoreOptionsButton({ link }: LinkMoreOptionsButtonProps) {
         {
           label: 'Stats',
           icon: <BarChartIcon className='h-4 w-4' />,
-          shortcut: <p className='rounded-full bg-sky-500 px-2 py-0.5 text-[10px] font-bold text-white'>New</p>,
+          shortcut: <p className='rounded-full bg-green-500 px-2 py-0.5 text-[10px] font-bold text-white'>New</p>,
           onClick: () => pushModal('LinkStats', { link }),
         },
         {

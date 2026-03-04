@@ -42,7 +42,7 @@ export function ReferrerStats({ link }: ReferrerStatsProps) {
         <p className='font-medium'>URLS</p>
         <p className='text-xs font-medium uppercase text-neutral-400 dark:text-neutral-500'>Referrers</p>
       </div>
-      <StatsBarList data={pages} loading={isLoading} />
+      <StatsBarList data={pages} color='yellow' loading={isLoading} />
     </div>
   )
 }

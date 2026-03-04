@@ -43,7 +43,7 @@ export function StatsEmpty({ className }: { className?: string }) {
   )
 }
 
-export function StatsBarList({ loading, data, ...props }: StatsBarListProps) {
+export function StatsBarList({ loading, data, color = 'green', ...props }: StatsBarListProps) {
   return (
     <ScrollArea>
       <div className='max-h-72 min-h-72'>
@@ -53,7 +53,7 @@ export function StatsBarList({ loading, data, ...props }: StatsBarListProps) {
           ) : data.length === 0 ? (
             <StatsEmpty />
           ) : (
-            <BarList data={data} valueFormatter={valueFormatter} {...props} />
+            <BarList data={data} color={color} valueFormatter={valueFormatter} {...props} />
           )}
         </div>
       </div>

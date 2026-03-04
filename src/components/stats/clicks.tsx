@@ -1,7 +1,6 @@
 'use client'
 
 import useSWR from 'swr'
-import dynamic from 'next/dynamic'
 import { useMemo } from 'react'
 import { isSameDay, isSameHour, isSameMinute } from 'date-fns'
 import { formatDay, getRangeOfDays } from '@/utils/dates'
@@ -9,18 +8,12 @@ import { ScrollArea } from '@/ui/scroll-area'
 import { valueFormatter } from '@/utils/formatter'
 import { useStatsInterval } from '@/store/stats-interval'
 import { StatsLoader, StatsEmpty } from './bar-list'
+import { AreaChart } from './area-chart'
 import type { LinkRow, StatsRow } from '@/types/tables'
 
 interface ClickStatsProps {
   link: LinkRow
 }
-
-const AreaChart = dynamic(() => import('@tremor/react/dist/components/chart-elements/AreaChart/AreaChart'), {
-  ssr: false,
-  loading(props) {
-    return <StatsLoader className='h-72' />
-  },
-})
 
 export function ClickStats({ link }: ClickStatsProps) {
   const { interval, searchParams } = useStatsInterval()
@@ -54,8 +47,8 @@ export function ClickStats({ link }: ClickStatsProps) {
   }, [data, interval])
 
   return (
-    <div className='rounded-lg border border-neutral-300 shadow-md dark:border-neutral-800 sm:col-span-2'>
-      <div className='flex items-center justify-between border-b border-neutral-300 p-4 dark:border-neutral-800'>
+    <div className='00 border shadow-md dark:border-neutral-800 sm:col-span-2'>
+      <div className='lex bor items-centerder-neutral-300 flex items-center p-4 dark:border-neutral-800'>
         <p className='font-medium'>Visits</p>
         <p className='text-xs font-medium uppercase text-neutral-400 dark:text-neutral-500'>Clicks</p>
       </div>
@@ -73,6 +66,12 @@ export function ClickStats({ link }: ClickStatsProps) {
               valueFormatter={valueFormatter}
               className='h-72'
               showLegend={false}
+              colors={['emerald', 'blue']}
+              fill='solid'
+              startEndOnly
+              connectNulls
+              showTooltip={false}
+              xAxisLabel='24H Temperature Readout (Zurich)'
               yAxisWidth={30}
             />
           )}

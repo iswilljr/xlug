@@ -77,7 +77,7 @@ export function DeviceStats({ link }: DeviceStatsProps) {
           ))}
         </ul>
       </div>
-      <StatsBarList data={pages} loading={isLoading} />
+      <StatsBarList data={pages} color='red' loading={isLoading} />
     </div>
   )
 }
